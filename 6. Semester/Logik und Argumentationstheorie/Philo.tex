@@ -1,0 +1,1056 @@
+\documentclass{scrartcl}
+
+\usepackage{ucs}
+\usepackage[utf8x]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{color}
+\usepackage{tabularx}
+\usepackage[table]{xcolor}
+\usepackage{enumerate}
+\usepackage{lscape}
+
+\setlength\parindent{0pt}
+
+\newcommand*\xor{\mathbin{\oplus}}
+
+\title{Logik und Argumentationstheorie \\ Zusammenfassung}
+\author{Thomas Mohr}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section{Was ist formale Logik?}
+
+\subsection{Der Gegenstand der formalen Logik}
+
+\begin{quote}
+	''Der Gegenstand der Logik ist die deduktive Gültigkeit von Argumenten, d.h. die logische Folgerungsbeziehung, die zwischen den Prämissen und der Konklusion eines Argumentes bestehen muss, wenn dieses Argument deduktiv gültig sein soll.''
+\end{quote}
+
+\begin{quote}
+	''Ein Argument ist eine Folge von Aussagesätzen, mit der der Anspruch verbunden ist, dass ein Teil dieser Sätze (die Prämissen) einen Satz der Folge in dem Sinne stützen, dass es rational ist, die Konklusion für wahr zu halten, falls die Prämissen wahr sind.''
+\end{quote}
+
+\begin{itemize}
+	\item Argument 1: \\
+	\begin{tabularx}{\linewidth}{c c X}
+		Prämissen & (1) & Wenn Marie zu Lisas Party kommt, dann kommt Klaus ebenfalls zu Lisas Party. \\ 
+		& (2) & Marie kommt zu Lisas Party. \\ 
+		\hline 
+		Konklusion &  & Klaus kommt ebenfalls zu Lisas Party.
+	\end{tabularx} \\
+	
+	Wir schreiben: \\
+	
+	\begin{tabular}{l}
+		Wenn Marie zu Lisas Party kommt, dann kommt Klaus ebenfalls zu Lisas Party. \\ 
+		Marie kommt zu Lisas Party. \\ 
+		\hline 
+		Klaus kommt ebenfalls zu Lisas Party. \\ 
+	\end{tabular} 
+	\item Argument 2: \\
+	\begin{tabularx}{\linewidth}{X}
+		Immer wenn Marie bis jetzt zu einer Party gekommen ist, dann ist auch Klaus zu der Party gekommen. \\
+		Marie kommt zu Lisas Party. \\
+		\hline
+		Klaus kommt zu Lisas Party.
+	\end{tabularx} 
+\end{itemize}
+
+Argument 1 ist deduktiv gültig, Argument 2 dagegen nicht. \\
+
+Wenn die Prämissen von Argument 1 wahr sind, dann muss auch die Konklusion von Argument 1 wahr sein. \\
+
+Für Argument 2 gilt das nicht: Auch wenn die Prämissen von Argument 2 wahr sind, könnte die Konklusion falsch sein. Klaus könnte dieses eine Mal nicht zu der Party gehen, obwohl Marie dahin geht.
+
+\begin{description}
+	\item[Deduktive Gültigkeit (1)] \mbox{}\\  Ein Argument ist genau dann deduktiv gültig, wenn die Konklusion wahr sein muss, falls die Prämissen wahr sind.
+	\item[Deduktive Gültigkeit (2)] \mbox{}\\ Ein Argument ist genau dann deduktiv gültig, wenn aufgrund seiner logischen Form gilt, dass die Konklusion wahr sein muss, falls die Prämissen wahr sind.
+\end{description}
+
+\begin{description}
+	\item[Gültigkeit] \mbox{}\\ Ein Argument ist genau dann gültig, wenn es tatsächlich rational ist, seine Konklusion für wahr zu halten, falls die Prämissen wahr sind.
+\end{description}
+
+\begin{description}
+	\item[Schlüssigkeit] \mbox{}\\ Ein Argument ist schlüssig genau dann, wenn es gültig ist und alle seine Prämissen wahr sind.
+\end{description}
+
+\begin{description}
+	\item[Formale Logik] \mbox{}\\ Der Gegenstandsbereich der formalen Logik umfasst die logischen Eigenschaften von Aussagen und Argumenten.
+\end{description}
+
+\subsection{Die Methode der formalen Logik}
+
+\begin{description}
+	\item[Extension] \mbox{}\\ Die Extension eines wahrheitswertfähigen Ausdrucks (d.i. eines Aussagesatzes) ist sein \textbf{Wahrheitswert}. Die Extension eines (wahrheitswertfähigen oder nicht-wahrheitswertfähigen) Ausdrucks, der ein Teil eines wahrheitsfähigen Ausdrucks ist, ist das, was für den Wahrheitswert des Gesamtausdrucks relevant ist.
+\end{description}
+
+\begin{description}
+	\item[Intension] \mbox{}\\ Die Intension eines wahrheitswertfähigen Ausdrucks ist \textbf{die Menge der Bedingungen, die erfüllt sein müssen, damit der Ausdruck wahr ist, kurz: seine Wahrheitsbedingungen}. Die Intension eines Ausdrucks, der ein Teil eines wahrheitswertfähigen Ausdrucks ist, ist das, was für die Wahrheitsbedingungen des Gesamtausdrucks relevant ist.
+\end{description}
+
+Alle wahrheitswertfähigen Sätze der natürlichen Sprache - ob einfach oder zusammengesetzt - haben Intensionen. Diese Intensionen zweier Sätze können sich sogar unterscheiden, obwohl die Extension aller Bestandteile beider Sätze übereinstimmen. So z.B. im Fall des folgenden Satzpaares: \\
+
+''Alle Säugetiere haben ein Herz.'' \\
+''Alle Säugetiere haben eine Niere.'' \\
+
+Die Extension eines Prädikates wie ''ein Herz haben'' und ''eine Niere haben'' ist die Menge der Gegenstände, die unter das fragliche Prädikat fallen. Da de facto alle Lebewesen, die ein Herz haben auch eine Niere haben, haben die Ausdrücke ''haben ein Herz'' und ''haben eine Niere'' dieselbe Extension. Folglich gilt, dass die Extensionen aller Bestandteile beider Sätze übereinstimmen. \\
+
+Dennoch sind die Wahrheitsbedingungen (die Intensionen) beider Sätze verschieden. Die Bedingungen, die erfüllt sein müssen, damit alle Säugetiere ein Herz haben, sind nicht dieselben, wie die Bedingungen, die erfüllt sein müssen, damit alle Säugetiere eine Niere haben. \\
+
+In der Sprache der Aussagenlogik haben einfache Sätze, d.h. Sätze die keine aussagenlogischen Konstanten enthalten, keine Wahrheitsbedingungen (d.i. keine Intensionen). \\
+
+Zusammengesetzte Sätze haben allerdings auch in der Aussagenlogik eine Art von Wahrheitsbedingungen. Sie sind wahr genau dann, wenn ihre Teilsätze bestimmte Wahrheitswerte aufweisen. Wenn das der Fall ist, nennen wir die entsprechenden Satzverbindungen \textbf{extensional} oder auch \textbf{wahrheitsfunktional}. Aussagenlogische Konstanten sind also extensionale Satzverbindungen.
+
+\subsubsection{Objektsprache und Metasprache}
+
+\begin{description}
+	\item[Objektsprache] \mbox{}\\ Die Sprache über die gesprochen wird.
+\end{description}
+
+\begin{description}
+	\item[Metasprache] \mbox{}\\ Die Sprache, in der über die Objektsprache gesprochen wird.
+\end{description}
+
+Die Zeichen der Metasprache werden gebraucht, die der Objektsprache werden erwähnt. \\
+
+Im Kontext dieser Veranstaltung handelt es sich bei der Objektsprache und der Metasprache allerdings um verschiedene Sprachen. Die Metasprache ist das Deutsche. Die Objektsprache ist zunächst die Sprache der Aussagenlogik und später die der Prädikatenlogik.
+
+\begin{description}
+	\item[Quine-Corners] \mbox{}\\ $ \lceil \alpha \rceil $ ist zu lesen als das Ergebnis des Hinschreibens von $ \alpha $.
+\end{description}
+
+\section{Aussagenlogik}
+
+\subsection{Vokabular, Syntax, Semantik}
+
+\begin{description}
+	\item[Vokabular] \mbox{}\\ Das Vokabular einer Sprache ist die Menge ihrer grundlegenden Ausdrücke.
+\end{description}
+
+\begin{description}
+	\item[Syntax] \mbox{}\\ Die Syntax einer Sprache ist immer - aber nicht notwendigerweise - eine Menge von Regeln, die bestimmen auf welche Weise die grundlegenden Ausdrücke einer Sprache zusammengefügt werden dürfen, so dass wiederum Ausdrücke der fraglichen Sprache entstehen.
+\end{description}
+
+\begin{description}
+	\item[Wohlgeformte Ausdrücke] \mbox{}\\ Ausdrücke die gemäß der Syntax einer Sprache $ S $ als Ausdrücke von $ S $ gelten, heißen wohlgeformte Ausdrücke von oderin $ S $.
+\end{description}
+
+\begin{description}
+	\item[Semantik] \mbox{}\\ Die Semantik einer Sprache besteht immer - aber nicht notwendigerweise - aus einer Zuordnung von Bedeutungen zu jedem grundlegenden Ausdruck der Sprache und Regeln, die bestimmen, wie sich aus den Bedeutungen der grundlegenden Ausdrücke der Sprache die Bedeutungen zusammengesetzter wohlgeformter Ausdrücke der Sprache ergeben.
+\end{description}
+
+\begin{description}
+	\item[Freges Kompositionalitätsprinzip für Bedeutungen] \mbox{}\\ Die Bedeutung eines Satzes ergibt sich aus den Bedingungen seiner Bestandteile und der Art ihrer Zusammensetzung.
+\end{description}
+
+\begin{description}
+	\item[Freges Kompositionalitätsprinzip für Intensionen] \mbox{}\\ Die Intension eines Satzes ergibt sich aus den Intensionen seiner Bestandteile und der Art ihrer Zusammensetzung.
+\end{description}
+
+\begin{description}
+	\item[Freges Kompositionalitätsprinzip für Extensionen] \mbox{}\\ Die Extension eines Satzes ergibt sich aus den Extensionen seiner Bestandteile und der Art ihrer Zusammensetzung.
+\end{description}
+
+\subsection{Die Sprache AL}
+
+Die Sprache, die wir im Folgenden einführen werden, ist die sog. Aussagenlogik oder propositionale Logik.
+
+\subsubsection{Vokabular und Syntax der Sprache AL}
+
+\renewcommand{\arraystretch}{1.5}
+\begin{tabularx}{\linewidth}{l l X}
+	Satzbuchstaben & \multicolumn{2}{l}{''$ p $'',''$ q $'',''$ r $'',\ldots,''$ p_1 $'',''$ p_2 $'',$ \ldots $,''$ p_n $'',''$ q_1 $'',''$ q_2 $'',\ldots,''$ q_n $'',''$ r_1 $'',$ \ldots $} \\
+	\hline
+	Junktoren & Negation & ''$ \neg $'' (''Es ist nicht der Fall, dass $ \ldots $'') oder ''non $ \ldots $'' \\
+	& Konjunktion & ''$ \wedge $'' ('',$ \ldots $ und $ \ldots $,) \\
+	\hline
+	Hilfszeichen & \multicolumn{2}{l}{''('' und '')''}
+\end{tabularx}
+
+\begin{description}
+	\item[Syntax von AL] \mbox{}\\ Ein wohlgeformter Ausdruck von AL soll wohlgeformte Formel von AL oder kurz wff von AL heißen.
+\end{description}
+
+Damit erhalten wir die folgende Syntax von AL:
+\begin{enumerate}[(i)]
+	\item Alle Satzbuchstaben aus dem Vokabular von AL sind wffs von AL.
+	\item Wenn $ \alpha $ eine wff von AL ist, dann ist auch $ \lceil (\neg \alpha) \rceil $ eine wff von AL.
+	\item Wenn $ \alpha $ und $ \beta $ wff der Aussagenlogik sind, dann ist auch $ \lceil (\alpha \wedge \beta) \rceil $ eine wff der Aussagenlogik.
+	\item Nichts was nicht entsprechend der Regeln (i) bis (iii) gebildet worden ist, ist eine wff der Aussagenlogik.
+\end{enumerate}
+
+Die Syntax von AL besteht in einer rekursiven (oder induktiven) Definition des Begriffes wff von AL. \\
+
+Eine Definition $ D $ eines Begriffes $ F $ ist eine rekursive Definition, wenn Folgendes gilt:
+\begin{enumerate}[(a)]
+	\item In einer \textbf{Basisklausel} wird eine begrenzte Anzahl von Gegenständen benannt, die unter $ F $ fallen.
+	\item In einer oder mehreren \textbf{Rekursionsklauseln} werden Relationen bestimmt, sodass gilt: Wenn ein Gegenstand in der jeweiligen Relation zu einem oder mehreren Gegenständen steht, die unter $ F $ fallen, fällt er ebenfalls unter $ F $.
+	\item In einer \textbf{Abschlussklausel} wird bestimmt, dass nur die Gegenstände unter $ F $ fallen, die entweder aufgrund der Basisklausel oder aufgrund der Rekursionsklausel unter $ F $ fallen.
+\end{enumerate}
+
+Angenommen es wäre wahr, dass alle Menschen von Adam und Eva abstammen. Dann ließe sich der Begriff des Menschseins wie folgt rekursiv definieren: \\
+
+\renewcommand{\arraystretch}{1.5}
+\begin{tabularx}{\linewidth}{l X}
+	Basisklausel & Adam und Eva sind Menschen \\
+	\hline
+	Rekursionsklausel & Alles, was von einem Menschen abstammt, ist ebenfalls ein Mensch. \\
+	\hline
+	Abschlussklausel & Nichts, was nicht Adam oder Eva ist oder von einem Menschen abstammt ist ein Mensch.
+\end{tabularx} 
+
+\paragraph{Anwendung der Syntax von AL} \mbox{}\\
+
+Mit Hilfe der Syntax von AL lässt sich für jede Formel feststellen, ob es sich um eine wff von AL handelt, odernicht. \\
+
+Ersteres ist der Fall, wenn entweder
+\begin{enumerate}[(i)]
+	\item die Basisklausel auf die Formel anwendbar ist (d.i. die Formel aus einem Satzbuchstaben besteht) oder
+	\item die Formel durch Anwenden der Rekursionsklausel der Syntax von AL soweit ''zergliedert'' werden kann, dass die Basisklausel auf alle verbleibenden Teile anwendbar ist (d.i. wenn alle verbliebenen Teile Satzbuchstaben sind).
+\end{enumerate}
+
+Betrachten wir den Vorgang anhand eines Beispiels: ''$ ((\neg (p \wedge q)) \wedge ((\neg r) \wedge q)) $''
+
+\begin{enumerate}
+	\item Es wird festgestellt, ob die Basisklausel anwendbar ist. \\
+	Wenn ja, handelt es sich um eine wff von AL. Wenn nicht, wird zu Schritt 2 übergegangen. \\
+	Im Fall von ''$ ((\neg (p \wedge q)) \wedge ((\neg r) \wedge q)) $'' ist die Basisklausel nicht anwendbar.
+	\item Es wird festgestellt, ob die Formel einen \textbf{Hauptjunktor} hat und welcher das ist. \\
+	''$ ((\neg (p \wedge q)) \wedge ((\neg r) \wedge q)) $'' hat einen Hauptjunktor, nämlich ''$ \wedge $'' (die Konjunktion).
+	\item Es wird diejenige Klausel der Syntax von AL auf die Formel angewandt, in der auf den Hauptjunktor der Formel Bezug genommen wird. \\
+	
+	Da der Hauptjunktor von ''$ ((\neg (p \wedge q)) \wedge ((\neg r) \wedge q)) $'' ''$ \wedge $'' ist, muss in diesem Fall die Rekursionsklausel ($ \text{wff}(\alpha) $ und $ \text{wff}(\beta) \implies \text{wff}(\lceil (\alpha \wedge \beta) \rceil $) angewandt werden. \\
+	
+	Wir erhalten also: ''$ ((\neg (p \wedge q)) \wedge ((\neg r) \wedge q)) $'' ist eine wff von AL, wenn ''$ \neg (p \wedge q) $'' und ''$ ((\neg r) \wedge q) $'' wffs von AL sind. \\
+	
+	Um festzustellen, ob die in dem Konditionalsatz genannten Bedingungen erfüllt sind, werden Schritte analog zu Schritten 1-3 wiederum auf die im Antezedens erwähnte(n) Teilformel(n) angewandt. \\
+	
+	Entsprechend wird weiter verfahren, bis entweder
+	\begin{enumerate}[(i)]
+		\item auf alle in den Bedingungen genannten Teilformeln die Basisklausel anwendbar ist oder
+		\item auf mindestens eine in den Bedingungen genannte Teilformel keiner der Klauseln der Syntax von AL anwendbar ist.
+	\end{enumerate} 
+	
+	Wenn (i), ist die Formel eine wff von AL, wenn (ii) nicht.
+	\item Schritt \\
+	\begin{tabularx}{\linewidth}{l X}
+		Wegen (ii) & ''$ \neg (p \wedge q) $'' ist eine wff von AL, wenn ''$ (p \wedge q) $'' eine wff von AL ist. \\
+		Wegen (iii) & ''$ ((\neg r) \wedge q) $'' ist eine wff von AL, wenn ''$ (\neg r) $'' und ''$ q $'' wffs von AL sind.
+	\end{tabularx}
+	\item Schritt \\
+	\begin{tabularx}{\linewidth}{l X}
+		Wegen (iii) & ''$ (p \wedge q) $'' ist eine wff von AL, wenn ''$ p $'' und ''$ q $'' wffs von AL sind. \\
+		Wegen (ii) & ''$ (\neg r) $'' ist eine wff von AL, wenn ''$ r $'' eine wff von AL ist. \\
+		Basisklausel & ''$ q $'' ist eine wff von AL.
+	\end{tabularx}
+	\item Schritt \\
+	\begin{tabularx}{\linewidth}{l X}
+		Basisklausel & ''$ p $'' ist eine wff von AL. \\
+		Basisklausel & ''$ r $'' ist eine wff von AL.
+	\end{tabularx}
+\end{enumerate}
+
+''$ ((\neg (p \wedge q)) \wedge ((\neg r) \wedge q)) $'' ist eine wff von AL. \\
+
+Für AL sind die Zeichen, die die Bildung neuer wffs erlauben die folgenden Junktoren: \\
+
+\begin{tabularx}{\linewidth}{l X}
+	''$ \vee $'' & Die \textbf{Adjunktion} (''$ \ldots $ oder $ \ldots $'') \\
+	\hline
+	''$ \rightarrow $'' & Die \textbf{Subjunktion} (auch die materielle Implikation oder das Konditional genannt) (''Wenn $ \ldots $, dann $ \ldots $'') \\
+	\hline
+	''$ \leftrightarrow $'' & Die \textbf{Bisubjunktion} (auch die Äquivalenz oder das Bikonditional genannt) (''$ \ldots $ genau dann, wenn $ \ldots $'') \\
+	\hline
+	''$ > $-$ < $'' & Die \textbf{Kontravalenz} (auch Antivalenz genannt) (''Entweder $ \ldots $ oder $ \ldots $'')
+\end{tabularx} \\
+
+Gegeben $ \alpha $ und $ \beta $ sind wffs von AL, dann gilt: \\
+
+\begin{tabularx}{\linewidth}{l l l l}
+	(i) & $ \lceil (\neg ((\neg \alpha) \wedge \neg \beta)) \rceil $ & darf auch abgekürzt werden als & $ \lceil (\alpha \vee \beta) \rceil $ \\
+	(ii) & $ \lceil (\neg (\alpha \wedge \neg \beta)) \rceil $ & darf auch abgekürzt werden als & $ \lceil (\alpha \rightarrow \beta) \rceil $ \\
+	(iii) & $ \lceil ((\alpha \rightarrow \beta) \wedge (\beta \rightarrow \alpha) \rceil $ & darf auch abgekürzt werden als & $ \lceil (\alpha \leftrightarrow \beta) \rceil $ \\
+	(iv) & $ \lceil ((\alpha \vee \beta) \wedge \neg (\alpha \wedge \beta)) \rceil $ & darf auch abgekürzt werden als & $ \lceil (\alpha >$-$< \beta) \rceil $
+\end{tabularx}
+
+\pagebreak
+\paragraph{Operatorpräzedenz / Bindung / Klammerersparungsregel} \mbox{}\\
+
+Junktoren absteigend in ihrer Präzedenz (Bindungsstärke):
+\begin{enumerate}[(i)]
+	\item ''$ \neg $''
+	\item ''$ \wedge $''
+	\item ''$ \vee $''
+	\item ''$ > $-$ < $''
+	\item ''$ \rightarrow $''
+	\item ''$ \leftrightarrow $''
+\end{enumerate}
+
+\begin{tabularx}{\linewidth}{l l l}
+	$ \lceil (\alpha) \rceil $ & darf auch abgekürzt werden als & $ \lceil \alpha \rceil $ \\
+	$ \lceil (\neg \alpha) \wedge \beta \rceil $ & darf auch abgekürzt werden als & $ \lceil \neg \alpha \wedge \beta \rceil $ \\
+	$ \lceil (\alpha \wedge \beta) \vee \gamma \rceil $ & darf auch abgekürzt werden als & $ \lceil \alpha \wedge \beta \vee \gamma \rceil $ \\
+	$ \lceil (\alpha \vee \beta) >$-$< \gamma \rceil $ & darf auch abgekürzt werden als & $ \lceil \alpha \vee \beta >$-$< \gamma \rceil $ \\
+	$ \lceil (\alpha >$-$< \beta) \rightarrow \gamma \rceil $ & darf auch abgekürzt werden als & $ \lceil \alpha >$-$< \beta \rightarrow \gamma \rceil $ \\
+	$ \lceil (\alpha \rightarrow \beta) \leftrightarrow \gamma \rceil $ & darf auch abgekürzt werden als & $ \lceil \alpha \rightarrow \beta \leftrightarrow \gamma \rceil $ \\
+	$ \lceil (\alpha \rightarrow \beta) \rightarrow \gamma \rceil $ & darf auch abgekürzt werden als & $ \lceil \alpha \rightarrow \beta \rightarrow \gamma \rceil $ (linksassoziativ) \\
+	$ \lceil (\alpha \wedge \beta) \wedge \gamma \rceil $ & darf auch abgekürzt werden als & $ \lceil \alpha \wedge \beta \wedge \gamma \rceil $
+\end{tabularx}
+
+\subsubsection{Die Semantik von AL}
+
+Die Ergänzung um eine Semantik nennen wir eine \textbf{Interpretation} von AL. Das Ergebnis der Ergänzung um die entsprechenden syntaktischen Regeln nennen wir einen \textbf{Kalkül}.
+
+\paragraph{Intensionale Interpretation von AL} \mbox{}\\
+
+In einer intensionalen Interpretation wird jeder wff von AL eine Intension zugeordnet. Dies geschieht üblicherweise indem den Satzbuchstaben ($ p,q,\ldots $) einfache Sätze einer natürlichen Sprache zugeordnet werden. Jede intensionale Interpretation von AL enthält auch eine extensionale Interpretation.
+
+\paragraph{Extensionale Interpretation von AL (1)} \mbox{}\\
+
+Eine extensionale Interpretation von AL ist eine Funktion.
+
+\begin{description}
+	\item[Mengen] \mbox{}\\ Eine Menge ist eine Zusammenfassung von unterscheidbaren Objekten zu einem Ganzen. 
+\end{description}
+
+Es gibt zwei Arten, Mengen zu beschreiben: \\
+
+\begin{tabularx}{\linewidth}{l X}
+	Explizite Bezeichnung & \{ Bayern München, Borussia Dortmund, $ \ldots $ \} \\
+	Implizite Bezeichnung & \{ x $ \mid $ x ist ein Verein, der in der ersten Fußballbundesliga spielt \}
+\end{tabularx}
+
+Die Objekte, die zu einer Menge zusammengefasst werden, nennt man die Elemente dieser Menge. Schreibweise: \\
+
+''$ \in $'' = ''ist Element von''\\
+''$ \not \in $'' = ''ist nicht Element von''. \\
+ 
+\begin{tabularx}{\linewidth}{l X}
+	Explizite Schreibweise & HSV $ \in $ \{ HSV, Bayern München, $ \ldots $ \} \\
+	& Blau-Gelb Marburg $ \not \in $ \{ HSV, Bayern München, $ \ldots $ \} \\
+	Implizite Schreibweise & HSV $ \in $ \{ x $ \mid $ x ist ein Verein, der in der ersten Fußballbundesliga spielt \} \\
+	& Blau-Gelb Marburg $ \not \in $ \{ x $ \mid $ x ist ein Verein, der in der ersten Fußballbundesliga spielt \}
+\end{tabularx} 
+
+\begin{description}
+	\item[Tupel] \mbox{}\\ Tupel sind Mengen, deren Elemente außerdem eine bestimmte Reihenfolge aufweisen. Wichtig: Einer-Tupel werden - anders als Einer-Mengen - mit ihrem Element gleichgesetzt. Tupel werden mit Hilfe spitzer Klammern geschrieben.
+\end{description}
+
+$ \langle $ HSV, Borussia Dortmund $ \rangle \neq \langle $ Borussia Dortmund, HSV $ \rangle $ \\
+\{ HSV, Borussia Dortmund \} = \{ Borussia Dortmund, HSV \}
+
+\begin{description}
+	\item[Funktionen] \mbox{}\\ Eine Funktion ist eine Zuordnungsvorschrift, nach der Gegenstände eines Bereiches Gegenständen eines anderen Bereiches zugeordnet werden. Die Gegenstände des zweiten Bereiches (d.h. die Gegenstände denen Gegenstände zugeordnet werden) heißen die \textbf{Argumente} der Funktion und der Bereich aus dem sie stammen heißt \textbf{Argumentationsbereich} oder \textbf{Definitionsbereich}. Die Gegenstände des ersten Bereiches (d.h. die Gegenstände die den Argumenten zugeordnet werden) heißen die \textbf{Werte} der Funktion und der Bereich aus dem sie stammen heißt der \textbf{Wertebereich}.
+\end{description}
+
+\begin{tabularx}{\linewidth}{|X|l|l|l|}
+	\hline
+	Funktion & Argumentbereich & Wertebereich & Stelligkeit \\
+	\hline
+	\hline
+	2 $ x $ & Zahlen & Zahlen & einstellig \\
+	\hline
+	Lieblingsverein von $ x $ & Menschen & Sportvereine & einstellig \\
+	\hline
+	Bürgermeister von $ x $ & Gemeinden & Menschen & einstellig \\
+	\hline
+	$ x + y $ & Zahlen & Zahlen & zweistellig \\
+	\hline
+	Der kürzeste Weg zwischen $ x $ und $ y $ & Orte & Wege & zweistellig \\
+	\hline
+	Letzter Zug, der von $ x $ über $ y $ nach $ z $ fährt & Bahnhöfe & Züge & dreistellig \\
+	\hline
+	Gegenstand den $ x $ $ y $ zu $ t $ gegeben hat & Menschen/Zeitpunkte & Gegenstände & dreistellig \\
+	\hline
+\end{tabularx} \\
+
+Es gilt: \\
+\begin{tabularx}{\linewidth}{l X}
+	(i) & Während alle Gegenstände (Tupel) des Argumentsbereiches einer Funktion auch Argumente dieser Funktion sein müssen, müssen nicht alle Gegenstände des Wertbereichs einer Funktion auch Werte dieser Funktion sein. \\
+	(ii) & Jedem Argument wird ein und nur ein Wert zugeordnet.
+\end{tabularx} \\
+
+''Bruder von $ x $'' bezeichnet z.B. keine Funktion, da nicht jedem Argument genau ein Wert zugeordnet werden kann. Einige Menschen haben keinen Bruder und einige haben mehr als einen Bruder. \\
+
+Es gibt verschiedene Arten, eine Funktion zu bezeichnen. Wie bei Mengen lassen sich explizite und implizite Schreibweisen unterscheiden. \\
+
+Nehmen wir die Funktion $ y = 2x $:
+
+\begin{itemize}
+	\item Explizite Schreibweisen:
+	\begin{itemize}
+		\item Als Tabelle \\
+		\begin{tabular}{|c|c|c|c|c|c|}
+			\hline 
+			$ x $ & 1 & 2 & 3 & 4 & 5 \\ 
+			\hline 
+			$ y = 2x $ & 2 & 4 & 6 & 8 & 10 \\ 
+			\hline 
+		\end{tabular} 
+		\item Als Menge geordneter Paare \\
+		$ \{ \langle 1,2 \rangle, \langle 2,4 \rangle, \langle 3,6 \rangle, \langle 4,5 \rangle, \langle 5,10 \rangle, \ldots \} $
+	\end{itemize}
+	\item Implizite Schreibweisen:
+	\begin{itemize}
+		\item $ F(x) = 2x $
+		\item $ F : x \rightarrow 2x $
+	\end{itemize}
+\end{itemize}
+
+\paragraph{Extensionale Interpretation von AL (2)} \mbox{}\\
+
+Eine extensionale Interpretation (häufig auch \textbf{Modell} genannt) ist eine Funktion, die jeder wff von AL genau einen Wahrheitswert zuordnet. \\
+
+Mit anderen Worten: Der Argumentbereich dieser Funktion ist die Menge \{ x $ \mid $ x wff von AL \} und ihr Wertebereich ist die Menge $ \{ w,f \} $. \\
+
+Gegeben $ \alpha $ und $ \beta $ sind wff von AL und $ I $ ist eine Funktion von \{ x $ \mid $ x wff von AL \} auf $ \{ w,f \} $, dann gilt: \\
+
+\begin{tabularx}{\linewidth}{l X}
+	(i) & $ I(\lceil \neg \alpha \rceil) = w $ genau dann, wenn $ I(\alpha) = f $ \\
+	(ii) & $ I(\lceil \alpha \wedge \beta \rceil) = w $ genau dann, wenn sowohl $ I(\alpha) = w $ als auch $ I(\beta) = w $.
+\end{tabularx} \\
+
+Es gibt genau so viele Interpretationen von AL, wie es mögliche Zuordnungen von Wahrheitswerten zu den Satzbuchstaben der Aussagenlogik gibt.
+
+\paragraph{Wahrheitswerttafeln}
+
+Die Wahrheitswerttafel der Negation: \\
+
+\begin{tabular}{|l r|l r|}
+	\hline
+	Teilaussage: & $ p $ & Zusammengesetzte Aussage: & $ \neg p $ \\
+	\hline
+	Interpretation 1: & $ w $ & & $ f $ \\
+	\hline
+	Interpretation 2: & $ f $ & & $ w $ \\
+	\hline
+\end{tabular} \\
+
+\begin{tabularx}{\linewidth}{l l l}
+	$ \lceil \neg (\neg \alpha \wedge \neg \beta) \rceil $ & darf auch abgekürzt werden als & $ \lceil (\alpha \vee \beta) \rceil $ \\
+	$ \lceil \neg (\alpha \wedge \neg \beta) \rceil $ & darf auch abgekürzt werden als & $ \lceil (\alpha \rightarrow \beta) \rceil $ \\
+	$ \lceil ((\alpha \rightarrow \beta) \wedge (\beta \rightarrow \alpha)) \rceil $ & darf auch abgekürzt werden als & $ \lceil (\alpha \leftrightarrow \beta) \rceil $ \\
+	$ \lceil ((\alpha \vee \beta) \wedge \neg (\alpha \wedge \beta)) \rceil $ & darf auch abgekürzt werden als & $ \lceil (\alpha >$-$< \beta) \rceil $	
+\end{tabularx} \\
+
+Beispiel $ \neg (\neg p \wedge \neg q) $: \\
+
+\begin{tabular}{|l l l l l l|}
+	\hline
+	$ \neg $ & $ (\neg $ & p & $ \wedge $ & $ \neg $ & q) \\
+	\hline
+	\textbf{w} & f & w & f & f & w \\
+	\hline
+	\textbf{w} & f & w & f & w & f \\
+	\hline
+	\textbf{w} & w & f & f & f & w \\
+	\hline
+	\textbf{f} & w & w & w & w & f \\
+	\hline
+\end{tabular}
+
+\section{Die Metalogik von AL}
+
+Wie die Vorsilbe ''Meta-'' bereits deutlich macht, hat die Metalogik von AL die Sprache AL zum Gegenstand. Sie handelt von dieser Sprache. Genauer: Die Metalogik von AL ist die Theorie von der Sprache AL.
+
+\begin{description}
+	\item[Bivalenz-Prinzip] \mbox{}\\ Für jede Interpretation $ I $ der Aussagenlogik gilt: $ I $ weist jeder wohlgeformten Formel der Aussagenlogik \textbf{mindestens} einen Wahrheitswert aus der Menge $ \{ w,f \} $ zu. Keine wohlgeformte Formel der Aussagenlogik bleibt ohne Wahrheitswert.
+\end{description}
+
+\begin{description}
+	\item[Konsistenz-Prinzip] \mbox{}\\ Für jede Interpretation $ I $ der Aussagenlogik gilt: $ I $ weist jeder wohlgeformten Formel der Aussagenlogik \textbf{höchstens} einen Wahrheitswert aus der Menge $ \{ w,f \} $ zu. Keine wohlgeformte Formel der Aussagenlogik kann mehr als einen Wahrheitswert haben.
+\end{description}
+
+\subsection{Zentrale metalogische Begriffe}
+
+\begin{description}
+	\item[Logische Wahrheit in AL] \mbox{}\\ Gegeben $ \alpha $ ist eine wff von AL, dann gilt: $ \alpha $ ist genau dann logisch wahr (eine \textbf{Tautolgie}) in AL, wenn $ \alpha $ für alle Interpretationen von AL wahr ist.
+\end{description}
+
+Schreibweise: ''$ \alpha $ ist logisch wahr'' = ''$ \models_{AL} \alpha $''. \\
+
+Merke: ''$ \models $'' ist kein Zeichen der Aussagenlogik, sondern, wie ''$ \alpha $'' ein Zeichen der Metasprache. Deswegen ist es hier unnötig, Cornerquotes zu setzen.
+
+\begin{description}
+	\item[Deduktive Gültigkeit (3)] \mbox{}\\ Gegeben $ \alpha $ und $ \beta $ sind wffs von AL und $ \alpha $ ist die Konjunktion der Prämissen und $ \beta $ die Konklusion eines Argumentes, dann gilt: Dieses Argument ist genau dann deduktiv gültig in AL, wenn $ \lceil \alpha \rightarrow \beta \rceil $ logisch wahr in AL ist.
+\end{description}
+
+\begin{description}
+	\item[Logische Falschheit (Kontradiktion) in AL] \mbox{}\\ Gegeben $ \alpha $ ist eine wff von AL, dann gilt: $ \alpha $ ist genau dann logisch falsch (eine Kontradiktion) in AL, wenn $ \lceil \neg \alpha \rceil $ logisch wahr ist.
+\end{description}
+
+\begin{description}
+	\item[Logische Äquivalenz in AL] \mbox{}\\ Gegeben $ \alpha $ und $ \beta $ sind wffs von AL, dann gilt: $ \alpha $ und $ \beta $ sind genau dann logisch äquivalent in AL, wenn $ \lceil \alpha \leftrightarrow \beta \rceil $ logisch wahr ist.
+\end{description}
+
+\begin{description}
+	\item[Konträrer Widerspruch in AL] \mbox{}\\ Gegeben $ \alpha $ und $ \beta $ sind wffs von AL, dann gilt: $ \alpha $ und $ \beta $ stehen genau dann in einem konträren Widerspruch zueinander, wenn $ \lceil \neg (\alpha \wedge \beta) \rceil $ logisch wahr ist.
+\end{description}
+
+\begin{description}
+	\item[Kontradiktorischer Widerspruch in AL] \mbox{}\\ Gegeben $ \alpha $ und $ \beta $ sind wffs von AL, dann gilt: $ \alpha $ und $ \beta $ stehen genau dann in einem kontradiktorischen Widerspruch zueinander, wenn $ \lceil \neg (\alpha \leftrightarrow \beta) \rceil $ logisch wahr ist.
+\end{description}
+
+\begin{description}
+	\item[Konsistenz in AL] \mbox{}\\ Gegeben $ \alpha $ und $ \beta $ sind wffs von AL, dann gilt: $ \alpha $ und $ \beta $ sind genau dann miteinander kosistent, wenn $ \lceil \neg (\alpha \wedge \beta) \rceil $ nicht logisch wahr ist (d.h. wenn sie nicht in einem konträren Widerspruch zueinander stehen).
+\end{description}
+
+\subsection{Wichtige aussagenlogische Äquivalenten und aussagenlogisch gültige Argumentschemata}
+
+\renewcommand{\arraystretch}{1.5}
+\begin{tabularx}{\linewidth}{l|l}
+	$ \lceil \alpha \leftrightarrow \neg \neg \alpha \rceil $ & Gesetz der doppelten Negation \\
+	\hline
+	$ \lceil \alpha \wedge \alpha \leftrightarrow \alpha \rceil $ & Idempotenz der Konjunktion \\
+	\hline
+	$ \lceil \alpha \wedge \beta \leftrightarrow \beta \wedge \alpha \rceil $ & Kommutativität der Konjunktion \\
+	\hline
+	$ \lceil \alpha \wedge (\beta \wedge \gamma) \leftrightarrow (\alpha \wedge \beta) \wedge \gamma \rceil $ & Assoziativität der Konjunktion \\
+	\hline
+	$ \lceil \alpha \wedge \beta \leftrightarrow \neg (\neg \alpha \vee \neg \beta) \rceil $ und $ \lceil \neg (\alpha \wedge \beta) \leftrightarrow \neg \alpha \vee \neg  \beta \rceil $ & Erstes DeMorgansches Gesetz \\
+	\hline
+	$ \lceil \alpha \wedge \beta \leftrightarrow \neg (\alpha \rightarrow \neg \beta) \rceil $ &  \\
+	\hline
+	$ \lceil \alpha \vee \alpha \leftrightarrow \alpha \rceil $ & Idempotenz der Adjunktion \\
+	\hline
+	$ \lceil \alpha \vee \beta \leftrightarrow \beta \vee \alpha \rceil $ & Kommutativität der Adjunktion \\
+	\hline
+	$ \lceil \alpha \vee (\beta \vee \gamma) \leftrightarrow (\alpha \vee \beta) \vee \gamma \rceil $ & Assoziativität der Adjunktion \\
+	\hline
+	$ \lceil \alpha \vee \beta \leftrightarrow \neg (\neg \alpha \wedge \neg \beta) \rceil $ und $ \lceil \neg (\alpha \vee \beta) \leftrightarrow \neg \alpha \wedge \neg \beta \rceil $ & Zweites DeMorgansches Gesetz \\
+	\hline
+	$ \lceil \alpha \vee \beta \leftrightarrow \neg  \alpha \rightarrow \beta \rceil $ &  \\
+	\hline
+	$ \lceil \alpha \wedge (\beta \vee \gamma) \leftrightarrow (\alpha \wedge \beta) \vee (\alpha \wedge \gamma) \rceil $ & Erstes Distributivitätsgesetz \\
+	\hline
+	$ \lceil \alpha \vee (\beta \wedge \gamma) \leftrightarrow (\alpha \vee \beta) \wedge (\alpha \vee \gamma) \rceil $ & Zweites Distributitvitätsgesetz \\
+	\hline
+	$ \lceil \alpha \rightarrow \beta \leftrightarrow \neg \beta \rightarrow \neg \alpha \rceil $ & Gesetz der Kontraposition \\
+	\hline
+	$ \lceil \alpha \rightarrow \beta \leftrightarrow \neg (\alpha \wedge \neg \beta) \rceil $ &  \\
+	\hline
+	$ \lceil \alpha \rightarrow \beta \leftrightarrow \neg \alpha \vee \beta \rceil $ &  \\
+	\hline
+	$ \lceil \alpha \rightarrow (\beta \rightarrow \gamma) \leftrightarrow \alpha \wedge \beta \rightarrow \gamma \rceil $ & Importation und Exportation \\
+	\hline
+	$ \lceil (\alpha \leftrightarrow \beta) \leftrightarrow (\beta \leftrightarrow \alpha) \rceil $ & Kommutativität der Bisubjunktion \\
+	\hline
+	$ \lceil (\alpha \leftrightarrow (\beta \leftrightarrow \gamma)) \leftrightarrow ((\alpha \leftrightarrow \beta) \leftrightarrow \gamma) \rceil $ & Assoziativität der Bisubjunktion \\
+	\hline
+	$ \lceil (\alpha \leftrightarrow \beta) \leftrightarrow (\neg \alpha \leftrightarrow \neg \beta) \rceil $ &  \\
+	\hline
+	$ \lceil \neg (\alpha \leftrightarrow \beta) \leftrightarrow (\neg \alpha \leftrightarrow \beta) \rceil $ &  \\
+	\hline
+	$ \lceil \neg (\alpha \leftrightarrow \beta) \leftrightarrow (\alpha \leftrightarrow \neg \beta) \rceil $ &  \\
+	\hline
+	$ \lceil (\alpha \leftrightarrow \beta) \leftrightarrow (\alpha \rightarrow \beta) \wedge (\beta \rightarrow \alpha) \rceil $ &  \\
+\end{tabularx}
+
+\pagebreak
+\paragraph{Wichtige aussagenlogisch gültige Argumentschemata} \mbox{}\\
+
+Gegeben $ \alpha, \beta $ und $ \gamma $ sind Aussagen der Sprache der Aussagenlogik, dann sind die folgenden Aussagen logisch wahr: \\
+
+\Huge
+\begin{tabularx}{\linewidth}{l c}
+	Modus Ponens & $ \substack{\lceil \alpha \rightarrow \beta \rceil \\ \frac{\alpha}{\beta}}  $ \\
+	\hline
+	Modus Tollens & $ \substack{\lceil \alpha \rightarrow \beta \rceil \\ \frac{\lceil \neg \beta \rceil}{\lceil \neg \alpha \rceil}} $ \\
+	\hline
+	Disjunktiver Syllogismus & $ \substack{\lceil \alpha \vee \beta \rceil \\ \frac{\lceil \neg \alpha \rceil}{\beta}} $ \\
+	\hline
+	Konjunktiver Syllogismus & $ \substack{\lceil \neg (\alpha \wedge \beta) \rceil \\ \frac{\alpha}{\lceil \neg \beta \rceil}} $ \\
+	\hline
+	Hypothetischer Syllogismus & $ \substack{\lceil \alpha \rightarrow \beta \rceil \\ \frac{\lceil \gamma \rightarrow \beta \rceil}{\lceil \alpha \rightarrow \gamma \rceil}} $ \\
+	\hline
+	Klassisches Dilemma & $ \substack{\lceil \alpha \rightarrow \beta \rceil \\ \frac{\lceil \gamma \rightarrow \beta \rceil}{\beta}} $ \\
+	\hline
+	Abschwächung der Konjunktion & $ \frac{\lceil \alpha \wedge \beta \rceil}{\alpha} $ \\
+	\hline
+	Abschwächung der Konjunktion & $ \frac{\lceil \alpha \wedge \beta \rceil}{\beta} $ \\
+	\hline
+	Abschwächung der Adjunktion & $ \frac{\alpha}{\lceil \alpha \vee \beta \rceil} $ \\
+	\hline
+	Abschwächung der Adjunktion & $ \frac{\beta}{\lceil \alpha \vee \beta \rceil} $
+\end{tabularx}
+
+\normalsize
+\subsection{Das Einsetzungstheorem und das Substitutionstheorem}
+
+\begin{description}
+	\item[Einsetzungstheorem] \mbox{}\\ Gegeben $ \alpha $ sei eine wff von AL, die $ \gamma $ als echte Teilformel enthält und $ \beta $ sei die Formel, die entsteht, wenn man in $ \alpha $ $ \gamma $ durch die wff von AL $ \delta $ ersetzt, dann gilt: \\
+	Wenn $ \gamma $ und $ \delta $ äquivalent sind, dann sind auch $ \alpha $ und $ \beta $ äquivalent.
+\end{description}
+
+\begin{description}
+	\item[Substitutionstheorem] \mbox{}\\ Gegeben $ \alpha $ sei eine wff von AL bestehend aus den Satzbuchstaben $ \gamma_1,\ldots,\gamma_n $ und $ \beta $ sei diejenige Formel, die entsteht, wenn man jedes $ \gamma_i \in \{ \gamma_1,\ldots,\gamma_n \} $ in $ \alpha $ durch eine beliebige die wff von AL $ \delta $ ersetzt, dann gilt: Wenn $ \alpha $ logisch wahr ist, dann ist auch $ \beta $ logisch wahr.
+\end{description}
+
+\section{Semantische Verfahren zur Feststellung deduktiver Gültigkeit und logischer Wahrheit in AL}
+
+\begin{description}
+	\item[Definitions-Projekt] \mbox{}\\ In Bezug auf jede logische Eigenschaft soll die Frage beantwortet werden: Was ist diese Eigenschaft? Was bedeutet es für ein Argument oder einen Satz, diese Eigenschaft zu haben?
+\end{description}
+
+\begin{description}
+	\item[Anwendungs-Projekt] \mbox{}\\ Für jede logische Eigenschaft sollen Verfahren entwickelt werden, durch die für jedes Argument und jeden Satz eindeutig festgestellt werden kann, ob das Argument oder der Satz die fragliche Eigenschaft aufweist.
+\end{description}
+
+\subsection{Wahrheitswerttafelmethode}
+
+Machen wir uns das Verfahren zunächst anhand der folgenden einfachen wff von AL klar: ''$ p \vee \neg p $'' \\
+
+Schritt 1: Interpretation der Satzbuchstaben. \\
+
+\begin{tabular}{|l|l l l l|}
+	\hline
+	p & p & $ \vee $ & $ \neg $ & p \\
+	\hline
+	w & w & & & w \\
+	\hline
+	f & f & & & f \\
+	\hline
+\end{tabular} \\
+
+Schritt 2: Ableitung der Wahrheitswerte der zusammengesetzten wff von AL aus den Interpretationen der Satzbuchstaben - beginnend mit Teilformeln, die nur einen Junktor enthalten, über zunehmend komplexere Teilformeln, hin zur Hauptformel. \\
+
+\begin{enumerate}[a)]
+	\item ''$ \neg p $'' \\
+	\begin{tabular}{|l|l l l l|}
+		\hline
+		p & p & $ \vee $ & $ \neg $ & p \\
+		\hline
+		w & w & & f & w \\
+		\hline
+		f & f & & w & f \\
+		\hline
+	\end{tabular} 
+	\item ''$ p \vee \neg p $'' \\
+		\begin{tabular}{|l|l l l l|}
+			\hline
+			p & p & $ \vee $ & $ \neg $ & p \\
+			\hline
+			w & w & \cellcolor{gray!25}w & f & w \\
+			\hline
+			f & f & \cellcolor{gray!25}w & w & f \\
+			\hline
+		\end{tabular} 
+\end{enumerate}
+
+Die Tatsache, dass unter dem Hauptjunktor der wff von AL in jeder Zeile ein ''w'' steht, zeigt, dass die wff unter jeder Interpretation der in ihr vorkommenden Satzbuchstaben wahr ist. ''$ p \vee \neg p $'' ist also logisch wahr in AL.
+
+\subsection{Wahrheitsbaummethode}
+
+Die Wahrheitsbaummethode arbeitet nach dem Prinzip des indirekten Beweises. \\
+
+Indirekte Beweise können sowohl für die Wahrheit einer Aussage als auch für die logische Wahrheit einer Aussage erbracht werden. \\
+
+Wenn es sich um einen indirekten Beweis der Wahrheit einer Aussage handelt, wird darin gezeigt, dass aus der Negation derzu beweisenden Aussage eine kontigenterweise falsche Aussage folgt. \\
+
+Da aus einer wahren Aussage keine falsche Aussage folgen kann, ist damit gezeigt, dass die Negation der zu beweisenden Aussage falsch ist und somit, dass die zu beweisende Aussage wahr ist. \\
+
+Dadurch, dass aus der Negation der zu beweisenden Aussage eine kontigenterweise falsche Aussage folgt, lässt sich aber auch nur beweisen, dass die zu beweisende Aussage kontigenterweise wahr ist - nicht, dass sie logisch wahr ist. \\
+
+Daher gilt: Wenn es sich um einen indirekten Beweis der logischen Wahrheit einer Aussage handelt, wird im zweiten Schritt gezeigt, dass aus der Negation der zu beweisenden Aussage eine logisch falsche Aussage (d.i. ein Widerspruch folgt) folgt. \\
+
+Da eine logische Falschheit nur aus einer logischen Falschheit folgen kann, ist damit gezeigt, dass die Negation der zu beweisenden Aussage logisch falsch ist und somit, dass die zu beweisende Aussage logisch wahr ist. \\
+
+Die Wahrheitsbaummethode ist äquivalent zu dem Tableaukalkül, dass wir im Modul Logik gelernt haben. Die zu beweisende Aussage wird negiert und mit $ \alpha $- und $ \beta $-Regeln aufgelöst, bis alle Äste vollständig expandiert sind. \\
+
+Falls alle Äste geschlossen (Der Ast enthält ''$ p $'' und ''$ \neg p $'') sind, gilt, dass die negierte Aussage logisch falsch und damit die unnegierte originale Aussage eine Tautologie ist. Wenn ein Modell (unser Modell, also eine Belegung, die die Aussage erfüllt) gesucht wird, muss die Wahrheitsbaummethode ohne vorhergehende Negierung der Aussage genutzt werden. Das (oder die Modelle) können anhand der offenen Äste abgelesen werden. \\
+
+Ein weiterer Unterschied besteht darin, dass wir links der Äste jeweils die Schrittnummer und rechts davon den Schritt, aus dem dieser Ast entstanden ist, notieren. Im Zweifel solltet ihr nicht atomare Aussagen jeweils mit Quine-Corners (z.B. $ \lceil \neg \alpha \rceil $) umklammern.
+
+\section{Aussagenlogische Kalküle}
+
+Axiomatische Kalküle sind gegenüber der Sprache AL um zwei Elemente erweitert:
+\begin{itemize}
+	\item Axiome und
+	\item Herleitungsregeln (Schlussregeln, Ableitungsregeln, Deduktionsregeln).
+\end{itemize}
+
+Ein Axiom eines aussagenlogischen Kalküls $ K $ ist eine wff in AL, für die gilt:
+\begin{enumerate}[(i)]
+	\item Aus ihr können mithilfe der Herleitungsregeln in $ K $ andere wff von AL hergeleitet werden und
+	\item sie selber muss nicht - und kann nicht - mithilfe von Herleitungsregeln in $ K $ hergeleitet werden.
+\end{enumerate}
+
+\begin{description}
+	\item[Herleitungsregel] \mbox{}\\ Eine Herleitungsregel eines aussagenlogischen Kalküls $ K $ ist eine Regel, die für jede wff in AL, auf die sie anwendbar ist, bestimmt, welche andere(n) wff bzw. wffs in AL aus dieser wff in AL hergeleitet werden dürfen.
+\end{description}
+
+\begin{description}
+	\item[Theorem] \mbox{}\\ Ein Theorem eines aussagenlogischen Kalküls $ K $ ist eine wff in AL, die allein mit Hilfe der Herleitungsregeln von $ K $ aus Axiomen von $ K $ hergeleitet werden kann.
+\end{description}
+
+Es ist zu beachten, dass der Begriff der Herleitung (zu diesem Begriff gleich mehr) hier in keiner Weise semantisch aufgeladen ist. Dass in einem aussagenlogischen Kalkül eine wff in AL $ F_1 $ aus einer anderen wff in AL $ F_2 $ hergeleitet werden kann, heißt also nicht etwa, dass $ F_2 $ wahr ist, wenn $ F_1 $ wahr ist o.ä. (Formeln in Kalkülen sind nicht wahr oder falsch!). Es heißt lediglich, dass die Regeln von $ K $ es erlauben, innerhalb von $ K $ von $ F_1 $ zu $ F_2 $ überzugehen. \\
+
+Der gesuchte Begriff ist der der \textbf{Beweisbarkeit} in einem aussagenlogischen Kalkül. D.h. die Axiome und Herleitungsregeln eines aussagenlogischen Kalküls $ K $ müssen so gewählt sein, dass
+\begin{enumerate}[(i)]
+	\item alle logisch wahren Formeln der Aussagenlogik beweisbar in $ K $ sind und
+	\item alle in $ K $ beweisbaren Formeln der Aussagenlogik logisch wahr sind.
+\end{enumerate}
+
+Für die Bedingungen (i) und (ii) haben sich Namen eingebürgert. Ein Kalkül der (i) erfüllt heißt \textbf{vollständig}. Ein Kalkül der (ii) erfüllt heißt \textbf{korrekt} oder \textbf{widerspruchsfrei}.
+
+\subsection{Beweisbarkeit und Ableitbarkeit in einem Kalkül}
+
+Eine wff in AL $ \alpha $ ist genau dann beweisbar in einem Kalkül $ K $, wenn es in $ K $ einen Beweis für $ \alpha $ gibt. \\
+
+Symbolische Schreibweise: ''$ \alpha $ ist beweisbar in $ K $'' = ''$ \vdash_K \alpha $'' \\
+
+Eine endliche Folge von wffs in AL $ \alpha_1 \, \ldots \, \alpha_n $ ist genau dann ein Beweis von $ \alpha $ in $ K $, wenn für jede wff in AL $ \alpha_i \in \{ \alpha_1 \, \ldots \, \alpha_n\} $ gilt:
+\begin{enumerate}[(i)]
+	\item $ \alpha_i $ ist ein Axiom von $ K $ oder
+	\item $ \alpha_i $ kann aus den vorhergehenden beweisbaren wffs in AL der Folge allein mit Hilfe einer Herleitungsregel von $ K $ hergeleitet werden.
+\end{enumerate}
+
+Daraus ergibt sich: Beweisbare Formeln in $ K $ sind:
+\begin{enumerate}[(i)]
+	\item alle Axiome in $ K $
+	\item alle wffs in AL, die allein mti Hilfe einer Herleitungsregel von $ K $ aus in $ K $ beweisbaren wffs in AL (d.i. Theoremen in $ K $) hergeleitet werden können und
+	\item nichts, was nicht die Bedingung (i) oder (ii) erfüllt, ist eine beweisbare Formeln in $ K $.
+\end{enumerate}
+
+\paragraph{Ableitbarkeit} \mbox{}\\
+
+Eine wff in AL $ \alpha $ ist genau dann in einem Kalkül $ K $ aus der Menge an wffs in AL $ M $ (den sog. Annahmeformeln) ableitbar, wenn es in $ K $ eine \textbf{Ableitung} von $ \alpha $ aus $ M $ gibt. \\
+
+Symbolische Schreibweise: ''$ \alpha $ ist in $ K $ ableitbar'' = ''$ M \vdash_K \alpha $'' \\
+
+Eine endliche Folge von wffs in AL $ \alpha_1 \, \ldots \, \alpha_n $ ist genau dann eine ABleitung von $ a_n $ aus der Menge an wffs in AL $ M $ in $ K $, wenn für jede wff al AL $ \alpha_i $ der Folge gilt:
+\begin{enumerate}[(i)]
+	\item $ \alpha_i $ ist ein Axiom von $ K $ oder
+	\item $ \alpha_i \in M $ oder
+	\item $ \alpha_i $ kann allein mit Hilfe einer Herleitunsgregel von $ K $ aus vorhergehenden Formeln der Folge hergeleitet werden, für die gilt: Sie sind beweisbar oder sie sind Element der Menge $ M $.
+\end{enumerate}
+
+\begin{description}
+	\item[Ableitbarkeit] \mbox{}\\ Eine Formel $ \alpha $ ist genau dann in einem Kalkül $ K $ aus der Menge an Formeln $ M $ ableitbar, wenn $ \alpha $ in einem Kalkül beweisbar ist, der sich aus $ K $ ergibt, wenn man die FOrmeln aus $ M $ als Axiome zu $ K $ hinzufügt.
+\end{description}
+
+\subsection{Der Kalkül AK}
+
+Der folgende aussagenlogische Kalkül soll \textbf{Kalkül AK} heißen. \\
+
+Axiome von AK: Gegeben $ \alpha,\beta $ und $ \gamma $ sind wffs in AL, dann sind die folgenden wffs von AL Axiome von AK:
+
+\begin{enumerate}[({A}1)]
+	\item $ \lceil \alpha \rightarrow (\beta \rightarrow \alpha) \rceil $
+	\item $ \lceil (\alpha \rightarrow (\beta \rightarrow \gamma)) \rightarrow ((\alpha \rightarrow \beta) \rightarrow (\alpha \rightarrow \gamma)) \rceil $
+	\item $ \lceil (\neg \alpha \rightarrow \neg \beta) \rightarrow (\beta \rightarrow \alpha) \rceil $
+\end{enumerate}
+
+Die Herleitungsregel von AK:
+
+Modus Ponens (Abk.: MP): $ \substack{\lceil \alpha \rightarrow \beta \rceil \\ \frac{\alpha}{\beta}} $ \\
+
+Beweis von ''$ p \rightarrow p $'' in AK:
+
+\begin{tabularx}{\linewidth}{l l l}
+	1. & $ p \rightarrow ((p \rightarrow p) \rightarrow p) $ & (A1) \\
+	2. & $ (p \rightarrow ((p \rightarrow p) \rightarrow p)) \rightarrow ((p \rightarrow (p \rightarrow p)) \rightarrow (p \rightarrow p)) $ & (A2) \\
+	3. & $ (p \rightarrow (p \rightarrow p)) \rightarrow (p \rightarrow p) $ & MP (1,2) \\
+	4. & $ p \rightarrow (p \rightarrow p) $ & (A1) \\
+	5. & $ p \rightarrow p $ & MP (3,4) \\
+	Q.E.D. & & 
+\end{tabularx} \\
+
+Beweis von ''$ p \rightarrow r $'' unter der Annahme von ''$ p \rightarrow q $'' und ''$ q \rightarrow r $'' in AK:
+
+\begin{tabularx}{\linewidth}{l l l}
+	1. & $ p \rightarrow p $ & Ann. \\
+	2. & $ q \rightarrow r $ & Ann. \\
+	3. & $ (q \rightarrow r) \rightarrow (p \rightarrow (q \rightarrow r)) $ & (A1) \\
+	4. & $ p \rightarrow (q \rightarrow r) $ & MP (2,3) \\
+	5. & $ (p \rightarrow (q \rightarrow r)) \rightarrow ((p \rightarrow q) \rightarrow (p \rightarrow r)) $ & (A2) \\
+	6. & $ (p \rightarrow q) \rightarrow (p \rightarrow r) $ & MP (4,5) \\
+	7. & $ p \rightarrow r $ & MP (1,6) \\
+	Q.E.D. & & 
+\end{tabularx} \\
+
+Ist ein Theorem eines Kalküls einmal bewiesen, darf man es in allen zukünftigen Beweisen wie ein Axiom des Kalküls behandeln. \\
+
+Da wir weiter oben z.B. die Formel ''$ p \rightarrow p $'' bewiesen haben, darf diese Formeln in allen zukünftigen Beweisen wie ein Axiom des Kalküls AK behandelt werden. \\
+
+Aus der Ableitbarkeit der Formel ''$ p \rightarrow r $'' aus den Formeln ''$ p \rightarrow q $'' und ''$ q \rightarrow r $'' ergibt sich also die folgende zulässige Regel in AK (der sog. Kettenschluss): \\
+
+$ \alpha,\beta $ und $ \gamma $ sind wffs in AL:
+\Huge
+$ \substack{\lceil \alpha \rightarrow \beta \rceil \\ \frac{\lceil \beta \rightarrow \gamma \rceil}{\lceil \alpha \rightarrow \gamma \rceil}} $ \\
+
+\normalsize
+Der Kalkül AK ist vollständig und korrekt, der Beweis wird hier jedoch nicht gezeigt.
+
+\section{Prädikatenlogik}
+
+\subsection{Vokabular und Syntax von PL}
+
+\begin{tabularx}{\linewidth}{l|X}
+	Junktoren &	Die Negation ''$ \neg $'' \newline 
+				Die Konjunktion ''$ \wedge $'' \newline
+				Die Adjunktion ''$ \vee $'' \newline
+				Die Subjunktion ''$ \rightarrow $'' \newline
+				Die Bisubjunktion ''$ \leftrightarrow $'' \\
+	\hline
+	Hilfszeichen & ''('' und '')'' \\
+	\hline
+	Einstellige Prädikatbuchstaben & ''F'',''G'',''H'',$ \ldots $,''$ F_1 $'',$ \ldots $,''$ F_n $'',''$ G_1 $'',$ \ldots $,''$ G_n $'',$ \ldots $ \\
+	\hline
+	Zweistellige Prädikatbuchstaben & ''R'',''S'',''T'',$ \ldots $,''$ R_1 $'',$ \ldots $,''$ R_n $'',''$ S_1 $'',$ \ldots $,''$ S_n $'',$ \ldots $ \\
+	\hline
+	'' & '' \\
+	\hline
+	$ n $-stellige Prädikatbuchstaben & ''I'',''J'',''K'',$ \ldots $,''$ I_1 $'',$ \ldots $,''$ I_n $'',''$ J_1 $'',$ \ldots $''$ J_n $'',$ \ldots $ \\
+	\hline
+	Individuenkonstanten & ''a'',''b'',''c'',$ \ldots $,''$ a_1 $'',$ \ldots $,''$ a_n $'',''$ b_1 $'',$ \ldots $,''$ b_n $'',$ \ldots $ \\
+	\hline
+	Individuenvariablen & ''x'',''y'',''z'',$ \ldots $,''$ x_1 $'',$ \ldots $,''$ x_n $'',''$ y_1 $'',$ \ldots $,''$ y_n $'',$ \ldots $ \\
+	\hline
+	Der Allquantor & $ \forall $ \\
+	\hline
+	Der Existenzquantor & $ \exists $
+\end{tabularx}
+
+\paragraph{Die Syntax von PL} \mbox{}\\
+
+Definition 1: Eine \textbf{atomare Formel} von PL ist ein Prädikatbuchstabe, gefolgt von einer seiner Stelligkeit entsprechenden Anzahl von Individuenkonstanten. Nichts sonst ist eine atomare Formel von PL. \\
+
+Definition 2:
+\begin{enumerate}[(i)]
+	\item Jede atomare Formel in PL ist eine wff in PL.
+	\item Wenn $ \alpha $ eine wff in PL ist, dann ist $ \lceil \neg \alpha \rceil $ auch eine wff in PL.
+	\item Wenn $ \alpha $ und $ \beta $ wffs in PL sind, dann sind auch $ \lceil (\alpha \wedge \beta) \rceil $, $ \lceil (\alpha \vee \beta) \rceil $, $ \lceil (\alpha \rightarrow \beta) \rceil $ und $ \lceil (\alpha \leftrightarrow \beta) \rceil $ wffs in PL.
+	\item Wenn $ \alpha $ eine wff in PL ist, $ \tau $ eine Individuenkonstante und $ \chi $ eine Individuenvaribale, die in $ \alpha $ nicht schon vorkommt, dann sind auch $ \lceil \forall_\chi \alpha [\ldots \tau / \chi \ldots] \rceil $ (das Ergebnis, das man erhält, wenn man hinschreibt ''$ \forall $'', gefolgt von $ \chi $, gefolgt von dem Ausdruck, der sich ergibt, wenn man $ \tau $ in $ \alpha $ durch $ \chi $ ersetzt) und $ \lceil \exists_\chi \alpha [\ldots \tau / \chi \ldots] \rceil $ wffs in PL.
+	\item Nichts was nicht gemäß der Regeln (i) bis (iv) gebildet worden ist, ist eine wff in PL.
+\end{enumerate}
+
+Gegeben, die in (iv) genannten Bedingungen, gilt: IN $ \lceil \forall_\chi \alpha [\ldots \tau / \chi \ldots] \rceil $ und $ \lceil \exists_\chi \alpha [\ldots \tau / \chi \ldots] \rceil $ ist $ \chi $ durch ''$ \forall $'', bzw. ''$ \exists $'' gebunden. \\
+
+Definition 3: Eine \textbf{offener Satz} ist das, was man erhält, wen man in einer wff von PL $ \alpha $ eine Individuenkonstante durch eine Individuenvariable ersetzt, die in $ \alpha $ noch nicht vorkommt. Diese Variable ist dann \textbf{frei}. \\
+
+\textbf{Achtung}: Offene Sätze sind \textbf{keine} wffs in PL. Es gilt also: Alle Individuenvariablen, die in einer wff von PL vorkommen, sind durch einen (und nur einen) in dieser Formel vorkommenden Quantor gebunden.
+
+\subsection{Die Semantik von PL}
+
+Ebenso wie für die AL gilt für PL:
+\begin{itemize}
+	\item Wffs müssen interpretiert werden, um semantische Werte zu erhalten.
+	\item Es sind intensionale und extensionale Interpretationen möglich.
+	\item Es gibt jeweils eine Vielzahl möglicher Interpretationen.
+	\item Interpretationen sind Funktionen, die verschiedene einschränkende Bedingungen erfüllen.
+\end{itemize}
+
+Zunächst einmal setzt jede Interpretation von PL einen \textbf{Redebereich} (\textbf{Gegenstandbereich} oder \textbf{Quantifikationsbereich}) voraus. Ein Redebereich ist einfach eine bestimmte Menge von Gegenständen. Wenn der Redebereich nicht explizit angegeben oder durch den Kontext bestimmt ist, geht man davon aus, dass er alle - und das heißt wirklich alle - Gegenstände umfasst. \\
+
+Gegeben einen bestimmten Redebereich $ D $ gilt: Eine Funktion $ I $ ist eine mögliche Interpretation von PL, wenn folgendes gilt:
+\begin{enumerate}[(i)]
+	\item $ I $ ordnet jeder Individuenkonstante von PL einen und nur einen Gegenstand aus $ D $ zu.
+	\item $ I $ ordnet jedem $ n $-stelligen Prädikatbuchstaben von PL eine Menge von $ n $-Tupeln über $ D $ zu.
+	\item Gegeben $ \Phi $ ist ein $ n $-stelliger Prädikatbuchstabe in PL und $ \tau_1 \, \ldots \, \tau_n $ sind Individuenkonstanten in PL, dann gilt: $ I(\Phi \tau_1 \, \ldots \tau_n) $ = w genau dann, wenn $ \langle I(\tau_1) \, \ldots \, I(\tau_n) \rangle \in I(\Phi) $.
+	\item Gegeben $ \alpha $ und $  \beta $ sind wffs in PL, dann gilt:
+	\begin{enumerate}[a)]
+		\item $ I(\alpha) $ = w genau dann, wenn $ I(\lceil \neg \alpha \rceil) $ = w.
+		\item $ I(\lceil \alpha \wedge \beta \rceil) $ = w genau dann, wenn sowohl $ I(\alpha) $ = w als auch $ I(\beta) $ = w.
+		\item $ I(\lceil \alpha \vee \beta \rceil) $ = w genau dann, wenn $ I(\alpha) $ = w oder $ I(\beta) $ = w.
+		\item $ I(\lceil \alpha \rightarrow \beta \rceil) $ = w genau dann, wenn $ I(\lceil \neg \alpha \rceil) $ = w oder $ I(\beta) $ = w.
+		\item $ I(\lceil \alpha \leftrightarrow \beta \rceil) $ = w genau dann, wenn $ I(\alpha) $ = w und $ I(\beta) $ = w oder $ I(\lceil \neg \alpha \rceil) $ = w und $ I(\lceil \neg \beta \rceil) $ = w.
+		\item Gegeben $ \alpha $ ist ein offener Satz in PL, $ \chi $ ist eine Individuenvariable in PL, die in $ \alpha $ ungebunden vorkommt und $ \tau $ ist eine Individuenkonstante, die in $ \alpha $ noch nicht vorkommt, dann gilt:
+		\begin{enumerate}[(a)]
+			\item $ I(\lceil \forall_\chi \alpha [\ldots \chi \ldots] \rceil) $ = w genau dann, wenn für jede $ \tau $-Alternative $ \langle D,I' \rangle $ zu $ \langle D,I \rangle $ gilt: $ I'(\alpha [\ldots \chi / \tau \ldots]) $ = w.
+			\item $ I(\lceil \exists_\chi \alpha [\ldots \chi \ldots] \rceil) $ = w genau dann, wenn für mindestens eine $ \tau $-Alternative $ \langle D,I' \rangle $ zu $ \langle D,I \rangle $ gilt: $ I'(\alpha [\ldots \chi / \tau \ldots]) $ = w.
+		\end{enumerate}
+	\end{enumerate}
+\end{enumerate}
+
+$ \langle D,I' \rangle $ ist genau dann eine $ \tau $-Alternative zu $ \langle D,I \rangle $, wenn gilt:
+\begin{enumerate}[(i)]
+	\item $ D' = D $ und
+	\item $ I = I' $ oder der einzige Unterschieden zwischen $ I $ und $ I' $ ist, dass $ I(\tau) \neq I'(\tau) $.
+\end{enumerate}
+
+Machen wir uns das anhand einer konkreten Interpretation klar. \\
+
+Unser Redebereich bestehe aus Russel und Frege. Also: $ D = \{ Russell,Frege \} $ \\
+
+Wir nehmen an, dass Folgendes der Fall ist:
+\begin{itemize}
+	\item Russell und Frege sind Philospohen.
+	\item Russell ist berühmter als Frege.
+	\item Weder Russell noch Frege sind Künslter.
+	\item Frege, aber nicht Russell, ist der Autor der Begriffsschrift.
+\end{itemize}
+
+Intensionale Interpretation der Individuenkonstanten: \\
+
+\begin{tabularx}{\linewidth}{l l}
+	''a'' & ''Russell'' \\
+	''b'' & ''Frege''
+\end{tabularx} \\
+
+Bedingung (i): \\
+$ I $ ordnet jeder Individuenkonstanten von PL einen und nur einen Gegenstand aus $ D $ zu. \\
+
+Extenionale Interpretation der Individuenkonstanten: \\
+
+$ I(a) $ = Russell \\
+$ I(b) $ = Frege \\
+
+Intensionale Interpretation der Prädikatbuchstaben: \\
+
+\begin{tabularx}{\linewidth}{l l}
+	''Fx'' & ''$ x $ ist Philosoph'' \\
+	''Rxy'' & ''$ x $ ist berühmter als $ y $'' \\
+	''Hx'' & ''$ x $ ist Künstler'' \\
+	''Ix'' & ''$ x $ ist der Autor der Begriffsschrift''
+\end{tabularx} \\
+
+Bedingung (ii): \\
+$ I $ ordnet jedem $ n $-stelligen Prädikatbuchstaben von PL eine Menge von $ n $-Tupeln über $ D $ zu. \\
+
+Extensionale Interpretation der Prädikatbuchstaben: \\
+
+$ I(F) = \{ Russell,Frege \} $ \\
+$ I(R) = \{ \langle Russell,Frege \rangle \} $ \\
+$ I(H) = \{\} $ \\
+$ I(I) = \{ Frege \} $ \\
+
+Intensionale Interpretation der atomaren Formeln in PL: \\
+
+\begin{tabularx}{\linewidth}{l l}
+	''Fa'' & ''Russell ist ein Philosoph.'' \\
+	''Fb'' & ''Frege ist ein Philosoph.'' \\
+	''Rab'' & ''Russell ist berühmter als Frege.'' \\
+	''Rba'' & ''Frege ist berühmter als Russell.'' \\
+	''Ha'' & ''Russel ist Künstler.'' \\
+	''Hb'' & ''Frege ist Künstler.'' \\
+	''Ia'' & ''Russell ist der Autor der Begriffsschrift.'' \\
+	''Ib'' & ''Frege ist der Autor der Begriffsschrift.''
+\end{tabularx} \\
+
+Bedingung (iii): \\
+Gegeben $ \Phi $ ist ein $ n $-stelliger Prädikatbuchstabe in PL und $ \tau_1 \, \ldots \, \tau_n $ sind Individuenkonstanten in PL, dann gilt: $ I(\Phi \tau_1 \, \ldots \, \tau_n) $ = w genau dann, wenn $ \langle I(\tau_1) \, \ldots \, I(\tau_n) \rangle \in I(\Phi) $. \\
+
+Extensionale Interpretation der atomaren Formeln in PL: \\
+
+\begin{tabularx}{\linewidth}{l l l l l}
+	$ I(Fa) $ = w & , da & $ I(a) \in I(F) $ & , also: & Russell $ \in \{ Russell,Frege \} $. \\
+	$ I(Fb) $ = w & , da & $ I(b) \in I(F) $ & , also: & Frege $ \in \{ Russell, Frege \} $. \\
+	$ I(Rab) $ = w & , da & $ I(\langle a,b \rangle) \in I(G) $ & , also: & $ \langle Russell,Frege \rangle \in \{ \langle Russell,Frege \rangle \} $. \\
+	$ I(Rba) $ = f & , da & $ I(\langle a,b \rangle) \not \in I(G) $ & , also: & $ \langle Russell,Frege \rangle \not \in \{ \langle Russell,Frege \rangle \} $. \\
+	$ I(Ha) $ = f & , da & $ I(a) \not \in I(H) $ & , also: & Russell $ \not \in \{\} $. \\
+	$ I(Hb) $ = f & , da & $ I(b) \not \in I(H) $ & , also: & Frege $ \not \in \{\} $. \\
+	$ I(Ia) $ = f & , da & $ I(a) \not \in I(I) $ & , also: & Russell $ \not \in \{ Frege \} $. \\
+	$ I(Ib) $ = w & , da & $ I(b) \in I(I) $ & , also: & Frege $ \in \{ Frege \} $. \\
+\end{tabularx}
+
+Intensionale Interpretationen komplexer wffs in PL ohne Quantoren (Auswahl): \\
+
+\begin{tabularx}{\linewidth}{l l}
+	''$ \neg Ha $'' & ''Es ist nicht der Fall, dass Russell ein Künstler ist.'' \\
+	''$ Fa \wedge Fb $'' & ''Russell ist ein Künstler und Frege ist ein Künstler.'' \\
+	''$ Rab \vee Rba $'' & ''Russell ist berühmter als Frege oder Frege ist berühmter als Russell.'' \\
+	''$ Ha \rightarrow Hb $'' & ''Wenn Russell ein Künstler ist, dann ist auch Frege ein Küsntler.'' \\
+	''$ Fa \leftrightarrow Fb $'' & ''Russell ist ein Philosoph genau dann, wenn Frege ein Philosoph ist.''
+\end{tabularx} \\
+
+Bedingung (iv): \\
+Gegeben $ \alpha $ und $ \beta $ sind wffs in PL, dann gilt: \\
+\begin{tabularx}{\linewidth}{l l l X}
+	(a) & $ I(\lceil \neg \alpha \rceil) $ = w & gdw. & $ I(\alpha) $ = f. \\
+	(b) & $ I(\lceil \alpha \wedge \beta \rceil) $ = w & gdw. & sowohl $ I(\alpha) $ = w als auch $ I(\beta) $ = w. \\
+	(c) & $ I(\lceil \alpha \vee \beta \rceil) $ = w & gdw. & $ I(\alpha) $ = w oder $ I(\beta) $ = w. \\
+	(d) & $ I(\lceil \alpha \rightarrow \beta \rceil) $ = w & gdw. & $ I(\lceil \neg \alpha \rceil) $ = w oder $ I(\beta) $ = w. \\
+	(e) & $ I(\lceil \alpha \leftrightarrow \beta \rceil) $ = w & gdw. & $ I(\alpha) $ = w und $ I(\beta) $ = w oder $ I(\lceil \neg \alpha \rceil) $ = w und $ I(\lceil \neg \beta \rceil) $ = w.
+\end{tabularx}
+
+Extensionale Interpretationen komplexer wffs in PL ohne Quantoren (Auswahl): \\
+
+\begin{tabularx}{\linewidth}{l l l}
+	$ I(\neg Ha) $ = w & , da & $ I(Ha) $ = f. \\
+	$ I(Fa \wedge Fb) $ = w & , da & $ I(Fa) $ = w und $ I(Fb) $ = w. \\
+	$ I(Rab \vee Rba) $ = w & , da & $ I(Gab) $ = w. \\
+	$ I(Ha \rightarrow Hb) $ = w & , da & $ I(Ha) $ = f und $ I(Hb) $ = f. \\
+	$ I(Fa \leftrightarrow Fb) $ = w & , da & $ I(Fa) $ = w und $ I(Fb) $ = w. \\
+\end{tabularx}
+
+Intensionale Interpretation quantifizierter wffs in PL (Auswahl): \\
+
+\begin{tabularx}{\linewidth}{l X}
+	''$ \forall x Fx $'' & ''Für alle Gegenstände im Redebereich gilt: Sie sind Philosophen'' / ''Für alle $ x $ gilt: $ x $ ist ein Philosoph'' / ''Alle sind Philosophen.'' \\
+	''$ \exists x Ix $'' & ''Für mindestens einen Gegenstand aus dem Redebereich gilt: Er ist Autor der Begriffsschrift.'' / ''Für mindestens ein $ x $ gilt: $ x $ ist Autor der Begriffsschrift.'' / ''Einige sind Autoren der Begriffsschrift.'' \\
+	''$ \neg \forall x Ix $'' & ''Es ist nicht der Fall, dass für alle Gegenstände im Redebereich gilt, dass sie Autoren der Begriffsschrift sind.'' \\
+	''$ \forall x \neg Ix $'' & ''Für alle Gegenstände im Redebereich gilt: Sie sind nicht Autoren der Begriffsschrift.'' \\
+	''$ \exists x (Fx \wedge Ix) $'' & ''Für mindestens einen Gegenstand aus dem Redebereich gilt: Er ist Philosoph und Autor der Redeschrift.'' \\
+	''$ \forall x (Ix \rightarrow Fx) $'' & ''Für alle Gegenstände aus dem Redebereich gilt: Wenn sie Autoren der Begriffsschrift sind, dann sind sie auch Philosophen'' (oder kurz: ''Alle Autoren der Begriffsschrift sind Philosophen'') \\
+	''$ \forall x \forall y Rxy $'' & ''Für alle Gegenstände im Redebereich gilt: Sie sind berühmter als alle Gegenstände im Redebereich.'' \\
+	''$ \exists x \exists y Rxy $'' & ''Für mindestens einen Gegenstand im Redebereich gilt: Er ist berühmter als mindestens ein Gegenstand im Redebereich.'' \\
+	''$ \forall x \exists y Rxy $'' & ''Für alle Gegenstände im Redebereich gilt: Sie sind berühmter als mindestens ein Gegenstand im Redebereich.'' \\
+	''$ \exists x \forall y Rxy $'' & ''Für mindestens einen Gegenstand im Redebereich gilt: Er ist berühmter als alle Gegenstände im Redebereich.''
+\end{tabularx} \\
+
+Bedingung (v): \\
+Gegeben $ \alpha $ ist ein offener Satz in PL, $ \chi $ ist eine Individuenvariable in PL, die in $ \alpha $ ungebunden vorkommt und $ \tau $ ist eine Individuenkonstante, die in $ \alpha $ (noch) nicht vorkommt, dann gilt:
+\begin{enumerate}[(a)]
+	\item $ I(\lceil \forall_\chi \alpha [\ldots \chi \ldots] \rceil) $ = w genau dann, wenn für jede $ \tau $-Alternative $ \langle D,I' \rangle $ zu $ \langle D,I \rangle $ gilt: $ I'(\alpha [\ldots \chi / \tau \ldots]) $ = w.
+	\item $ I(\lceil \exists_\chi \alpha [\ldots \chi \ldots] \rceil) $ = w genau dann, wenn für mindestens eine $ \tau $-Alternative $ \langle D,I' \rangle $ zu $ \langle D,I \rangle $ gilt: $ I'(\alpha [\ldots \chi / \tau \ldots]) $ = w.
+\end{enumerate}
+
+$ \langle D,I' \rangle $ ist genau dann eine $ \tau $-Alternative zu $ \langle D,I \rangle $, wenn gilt:
+\begin{enumerate}[(i)]
+	\item $ D' = D $ und
+	\item $ I' = I $ oder der einzige Unterschied zwischen $ I' $ und $ I $ ist, dass $ I'(\tau) \neq I(\tau) $.
+\end{enumerate}
+
+Extensionale Interpretation quantifizierter wffs in PL (Auswahl): \\
+
+Angenommen ''a'' sei die Einsetzungsinstanz für $ \tau $, dann gibt es folgende a-Alternativen zu $ \langle D,I \rangle $: \\
+\begin{tabularx}{\linewidth}{l l}
+	$ I $ & $ I(a) $ = Russell \\
+	& $ I(b) $ = Frege \\
+	$ I' $ & $ I() $ = Russell \\
+	& $ I(a) $ = Frege / $ I(b) $ = Frege
+\end{tabularx} \\
+
+$ I(\forall x Fx) $ = w, da gilt: Sowohl $ I(Fa) $ = w als auch $ I'(Fa) $ = w. \\
+$ I(\exists x Ix) $ = w, da gilt: $ I'(Fa) $ = w. \\
+
+Ein weiteres Beispiel: Redebereich sei D = \{ Hr. Franken, Fr. Licht \} \\
+
+Es gelten folgende Aussagen:
+\begin{itemize}
+	\item Hr. Franken und Fr. Licht beschäftigen sich mit Logik.
+	\item Hr. Franken ist größer als Fr. Licht.
+	\item Weder Hr. Franken noch Fr. Licht sind blond.
+	\item Hr. Franken, aber nicht Fr. Licht, hat einen Doktortitel.
+\end{itemize}
+
+\begin{landscape}
+	\begin{tabularx}{\linewidth}{|l|X|X|}
+		\hline
+		& Intensionale Interpretation & Extensionale Interpretation \\
+		\hline
+		Prädikatenbuchstaben & ''Fx'': ''x beschäftigt sich mit Logik'' & I(F) = \{ Hr. Franken, Fr. Licht \} \\
+		& ''Gxy'': ''x ist größer als y'' & I(F) = \{ $ \langle $ Hr. Franken, Fr. Licht $ \rangle $ \} \\
+		& ''Hx'': ''x ist blond'' & I(F) = \{\} \\
+		& ''Ix'': ''x hat einen Doktortitel'' & I(F) = \{ Hr. Franken \} \\
+		\hline
+		Atomare Formeln & ''Fa'': ''Hr. Franken beschäftigt sich mit Logik'' & I(Fa) = w, da I(a) $ \in $ I(F), also Herr Franken $ \in $ \{ Hr. Franken, Fr. Licht \} \\
+		& ''Gba'': ''Fr. Licht ist größer als Hr. Franken'' & I(Gba) = f, da I($ \langle $ b,a $ \rangle $) $ \not \in $ I(G), also $ \langle $ Fr. Licht, Hr. Franken $ \rangle \not \in $ \{ $ \langle $ Hr. Franken, Fr. Licht $ \rangle $ \} \\
+		& ''Gab'': ''Hr. Franken ist größer als Fr. Licht'' & I(Gab) = w, da I($ \langle $ a,b $ \rangle \in $) I(G), also $ \langle $ Hr. Franken, Fr. Licht $ \rangle \in $ \{ $ \langle $ Hr. Franken, Fr. Licht $ \rangle $ \} \\
+		& ''Ha'': ''Herr Franken ist blond'' & I(Ha) = f, da I(a) $ \not \in $ I(H), also Herr Franken $ \not \in $ \{\} \\
+		& ''Ia'': ''Hr. Franken hat einen Doktortitel'' & I(Ia) = w, da I(a) $ \in $ I(I), also Herr Franken $ \in $ \{ Hr. Franken \} \\
+		\hline
+		Komplexere wff & ''$ \neg $Ha'': ''Es ist nicht der Fall, dass Hr. Franken blond ist.'' & I($ \neg $ Ha) = w, da I(Ha) = f. \\
+		& '' & '' \\
+		\hline
+	\end{tabularx}
+\end{landscape}
+
+\end{document}
