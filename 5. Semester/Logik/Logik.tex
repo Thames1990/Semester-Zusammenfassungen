@@ -1,0 +1,1062 @@
+\documentclass{scrartcl}
+
+\usepackage{ucs}
+\usepackage[utf8x]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage[hidelinks]{hyperref}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+<<<<<<< Updated upstream
+\usepackage{multirow}
+\usepackage{color}
+\usepackage{listings}
+
+\definecolor{pblue}{rgb}{0.13,0.13,1}
+\definecolor{pgreen}{rgb}{0,0.5,0}
+\definecolor{pred}{rgb}{0.9,0,0}
+\definecolor{pgrey}{rgb}{0.46,0.45,0.48}
+\definecolor{light-gray}{gray}{0.95}
+
+\lstset{
+	backgroundcolor=\color{light-gray},
+	language=Prolog,
+	showspaces=false,
+	showtabs=false,
+	breaklines=true,
+	showstringspaces=false,
+	breakatwhitespace=true,
+	commentstyle=\color{pgreen},
+	keywordstyle=\color{pblue},
+	stringstyle=\color{pred},
+	basicstyle=\ttfamily,
+	moredelim=[il][\textcolor{pgrey}]{$$},
+	moredelim=[is][\textcolor{pgrey}]{\%\%}{\%\%}
+}
+=======
+>>>>>>> Stashed changes
+
+\setlength\parindent{0pt}
+
+\title{Logik \\ Zusammenfassung}
+\author{Thomas Mohr}
+\date{}
+
+\begin{document}
+\maketitle
+\pagebreak
+\tableofcontents{}
+\pagebreak
+
+\section{Aussagenlogik}
+
+\subsection{Syntax der Aussagenlogik}
+
+\subsubsection{Erweiterte Syntax der Aussagenlogik}
+
+\begin{itemize}
+	\item $At$ (Atomare Formeln, Variablen)
+	\begin{itemize}
+		\item $A_1$
+		\item $A_2$
+		\item $\ldots$
+		\item $A_n$
+	\end{itemize}
+	\item $Fm$ (Formeln)
+	\begin{itemize}
+		\item $At$
+		\item $(Fm \vee Fm)$ (Disjunktion)
+		\item $(Fm \wedge Fm)$ (Konjunktion)
+		\item $(Fm \implies Fm)$ (Implikation)
+		\item $(Fm \iff Fm)$ (Äquivalenz)
+		\item $\neg Fm$ (Negation)
+	\end{itemize}
+\end{itemize}
+
+\subsubsection{Syntaxbaum}
+
+\begin{itemize}
+	\item Formeln entsprechen Bäumen
+	\begin{itemize}
+		\item Atomare Formeln sind Blätter
+		\item Operatoren in Knoten
+		\item Argumente als Teilbäume
+	\end{itemize}
+	\item Syntaxbäume benötigen keine Klammern
+	\item Zu jeder Formel gehört ein eindeutiger Syntaxbaum
+	\item Jede nichtatomare Formel hat einen Hauptoperator (Wurzel des Baums)
+\end{itemize}
+
+\pagebreak
+\subsubsection{Klammerersparungsregel}
+
+\begin{itemize}
+	\item Äußere Klammer kann entfallen
+	\item Operatoren erhalten Präzedenz
+	\begin{enumerate}
+		\item $\neg$ (Negation)
+		\item $\wedge$ (Konjunktion)
+		\item $\vee$ (Disjunktion)
+		\item $\implies$ (Implikation)
+		\item $\iff$ (Äquivalenz)
+	\end{enumerate}
+	\item Traversiere Baum in \textit{inOrder}
+	\item Wenn der Operator des Sohnes höhere Präzedenz hat, als der des Vaters, dann kann die Klammer des Sohnes entfallen
+\end{itemize}
+
+\subsection{Strukturelle Induktion}
+
+\subsubsection{Induktiver Aufbau von Formeln}
+
+\begin{itemize}
+	\item Sei $O(Fm)$ die Anzahl aller öffnenden Klammern in einer Formel $Fm$. Wir können $O(Fm)$ rekursiv definieren:
+	\begin{enumerate}
+		\item $O(Fm) := 0$, falls \textit{Fm} eine atomate Formel ist
+		\item $O(Fm) := 1 + O(Fm_1) + O(Fm_2)$, \\
+		falls $Fm = (Fm_1 \vee Fm_2)$ oder $Fm = (Fm_1 \wedge Fm_2)$ \\
+		oder $Fm = (Fm_1 \implies Fm_2)$ oder $Fm = (Fm_1 \iff Fm_2)$
+		\item $Fm) := O(Fm_1)$, falls $OFm = \neg Fm_1$ ist
+	\end{enumerate}
+\end{itemize}
+
+\subsubsection{Strukturelle Induktion}
+
+Sei $E$ eine Eigenschaft von Formeln. Wir wollen zeigen, dass $E$ für jede Formel gilt.
+
+\begin{enumerate}
+	\item Zeige: $E(A)$ gilt für jede atomare Formel
+	\item Zeige: Falls $E(Fm_1)$ und $E(Fm_2)$ gilt, dann auch $E((Fm_1 \vee Fm_2))$
+	\item Zeige: Falls $E(Fm_1)$ und $E(Fm_2)$ gilt, dann auch $E((Fm_1 \wedge Fm_2))$
+	\item Zeige: Falls $E(Fm_1)$ und $E(Fm_2)$ gilt, dann auch $E((Fm_1 \implies Fm_2))$
+	\item Zeige: Falls $E(Fm_1)$ und $E(Fm_2)$ gilt, dann auch $E((Fm_1 \iff Fm_2))$
+	\item Zeige: Falls $E(Fm_1)$ gilt, dann auch $E(\neg Fm_1)$
+\end{enumerate}
+
+\subsection{Semantik}
+
+\subsubsection{Belegung}
+
+Partielle Abbildung $\alpha :: At \mapsto \mathbb{B}$ mit Definitionsbereich $dom(\alpha) \subseteq At$.
+
+\begin{equation}
+	F = A_1 \wedge A_2 \vee (A_1 \implies \neg A_3)
+\end{equation}
+
+Wir setzen willkürlich
+\begin{equation}
+	\begin{split}
+		\alpha(A_1) &:= 1 \\
+		\alpha(A_2) &:= 0 \\
+		\alpha(A_3) &:= 1
+	\end{split}
+\end{equation}
+
+und erhalten:
+\begin{equation}
+	\begin{split}
+		\widehat{\alpha}(F) &= \widehat{\alpha}(A_1 \wedge A_2 \vee (A_1 \implies \neg A_3)) \\
+		&= \widehat{\alpha}(A_1 \wedge A_2) \mid \widehat{\alpha}(A_1 \implies \neg A_3) \\
+		&= \widehat{\alpha}(A_1) \& \widehat{\alpha}(A_2) \mid (\widehat{\alpha}(A_1) \implies \widehat{\alpha}(\neg A_3)) \\
+		&= \alpha(A_1) \& \alpha(A_2) \mid (\alpha(A_1) \implies !\widehat{\alpha}(A_3)) \\
+		&= 1 \& 0 \mid (1 \implies !1) \\
+		&= 0
+	\end{split}
+\end{equation}
+
+\subsection{Semantische Folgerung}
+
+\subsubsection{Modell}
+
+\begin{itemize}
+	\item Definition: \\
+	Ein Modell für die Formel $F$ ist eine passende Belegung $\alpha$ mit $\widehat{\alpha}(F)$ = 1.
+	\item Notation: $\alpha \models F$
+\end{itemize}
+
+\subsubsection{Erfüllbarkeit einer Formel}
+
+\begin{itemize}
+	\item Eine Formel $F$ heißt erfüllbar, falls sie ein Modell $\alpha$ hat.
+	\item Eine Formel $F$ heißt unerfüllbar oder widersprüchlich, falls sie kein Modell besitzt
+	\item Eine Formel $F$ heißt allgemeingültig, bzw. Tautologie, falls jede zu $F$ passende Belegung ein Modell von $F$ ist.
+\end{itemize}
+
+\pagebreak
+\subsection{Äquivalenzen}
+
+\subsubsection{Äquivalenz}
+
+Zwei Formeln $F_1$ und $F_2$ heißen semantisch äquivalent, und wir schreiben
+\begin{equation}
+	F_1 \equiv F_2
+\end{equation}
+falls für alle passenden Belegungen $\alpha$ gilt:
+\begin{equation}
+	\widehat{\alpha}(F_1) = \widehat{\alpha}(F_2)
+\end{equation}
+
+\subsubsection{Äquivalenzen}
+
+\begin{tabular}{|c|c|}
+\hline 
+$A_0 \vee A_0 \equiv A_0$ & $A_0 \wedge A_0 \equiv A_0$ \\ 
+\hline 
+$A_0 \vee A_1 \equiv A_1 \vee A_0$ & $A_0 \wedge A_1 \equiv A_1 \wedge A_0$ \\ 
+\hline 
+$(A_0 \vee A_1) \vee A_2 \equiv A_0 \vee (A_1 \vee A_2)$ & $(A_0 \wedge A_1) \wedge A_2 \equiv A_0 \wedge (A_1 \wedge A_2$ \\ 
+\hline 
+$A_0 \vee (A_1 \wedge A_0) \equiv A_0$ & $A_0 \wedge (A_1 \vee A_0) \equiv A_0$ \\ 
+\hline 
+$A_0 \vee (A_1 \wedge A_2) \equiv (A_0 \vee A_1) \wedge (A_0 \vee A_2)$ & $A_0 \wedge (A_1 \vee A_2) \equiv (A_0 \wedge A_1) \vee (A_0 \wedge A_2)$ \\ 
+\hline 
+$\neg (A_0 \vee A_1) \equiv \neg A_0 \wedge \neg A_1$ & $\neg (A_0 \wedge A_1) \equiv \neg A_0 \vee \neg A_1$ \\ 
+\hline 
+$\neg A_0 \vee A_0 \equiv \top$ & $\neg A_0 \wedge A_0 \equiv \bot$ \\ 
+\hline
+\end{tabular} 
+
+\subsubsection{Ersetzung}
+
+\begin{itemize}
+	\item Seien $F, G$ Formeln und $A$ eine Variable/atomare Formel
+	\item $F_{[G/A]}$ sei die Formel, die entsteht, wenn man jedes $A$ in $F$ durch $G$ ersetzt.
+	\item Formal definiert man $F_{[G/A]}$ induktiv über den Aufbau von $F$:
+	\begin{itemize}
+		\item Ist $F$ eine atomare Formel
+		\begin{itemize}
+			\item Falls $F = A$ dann $F_{[G/A]} = A_{[G/A]}$ := G
+			\item Falls $F \neq A$ dann $F_{[G/A]}$ := F
+		\end{itemize}
+		\item Ist $F = \neg F_1$, dann
+		\begin{itemize}
+			\item $F_{[G/A]} := \neg (F_{1_{[G/A]}})$
+		\end{itemize}
+		\item Ist $F = F_1 \bigodot F_2$ eine zusammengesetzte Formel ($\bigodot \in \{ \vee, \wedge, \implies, \iff, \ldots \}$), dann
+		\begin{itemize}
+			\item $F_{[G/A]} = (F_1 \bigodot F_2)_{[G/A]} := F_{1{[G/A]}} \bigodot F_{2{[G/A]}}$.
+		\end{itemize}
+	\end{itemize}
+\end{itemize}
+
+\pagebreak
+\subsubsection{Modifikation einer Belegung}
+
+Sein $\alpha : M \mapsto \mathbb{B}$ eine Belegung, $A \in M$ und $b \in \mathbb{B}$. Mit $\alpha_{[A \mapsto b]}$ bezeichnen wir die Belegung, die so ist wie $\alpha$, nur dass sie $A$ auf $b$ abbildet.
+
+Die formale Definition ist:
+
+\begin{itemize}
+	\item $\alpha_{[A \mapsto b]}(A) := b$
+	\item $\alpha_{[A \mapsto b]}(A') := \alpha(A')$, falls $A \neq A'$.
+\end{itemize}
+
+\subsection{Minimale Logik}
+
+\subsubsection{Interdefinierbarkeit}
+
+Die Junktoren $\implies, \oplus, \uparrow, \downarrow$ werden nicht unbedingt benötigt, da man sie aus den anderen Junktoren definieren kann:
+
+\begin{itemize}
+	\item $F \implies G \equiv (\neg F \vee G)$
+	\item $F \oplus G \equiv (\neg F \wedge G) \vee (F \wedge \neg G)$
+	\item $F \uparrow G \equiv \neg (F \wedge G$
+	\item $F \downarrow G \equiv \neg (F \vee G$
+	\item $F \iff G \equiv (\neg F \vee G) \wedge (\neg G \vee F)$
+	\item $\top \equiv F \vee \neg F$
+	\item $\bot \equiv F \wedge \neg F$
+\end{itemize}
+
+Man könnte sogar entweder auf $\vee$ oder auf $\wedge$ verzichten, denn
+
+\begin{itemize}
+	\item $F \vee G \equiv \neg (\neg F \wedge \neg G)$
+	\item $F \wedge G \equiv \neg (\neg F \vee \neg G)$
+\end{itemize}
+
+\subsection{Normalformen}
+
+\subsubsection{Literale und Klauseln}
+
+\begin{itemize}
+	\item Ein Literal $L$ ist
+	\begin{itemize}
+		\item eine atomare Formel $A$, oder
+		\item eine negierte atomare Formel $\neg A$
+	\end{itemize}
+	\item Eine $\vee$-Klausel ist eine Disjunktion von Literalen \\
+	$K = L_1 \vee L_2 \vee \ldots \vee L_n$
+	\item Eine $\wedge$-Klausel ist eine Konjunktion von Literalen \\
+	$K = L_1 \wedge L_2 \wedge \ldots \wedge L_n$
+\end{itemize}
+
+\subsubsection{Normalformen}
+
+\begin{itemize}
+	\item Eine konjunktive Normalform (KNF) ist eine Konjunktion von $\vee$-Klauseln \\
+	$K = (L_{11} \vee \ldots \vee L_{1n}) \wedge \ldots \wedge (L_{m1} \vee \ldots \vee L_{mn})$
+	\begin{itemize}
+		\item Gegeben: Die Wertetabelle von $f$
+		\item Betrachte die Zeilen $(b_1, \ldots, b_n)$ mit $f(b_1, \ldots, b_n)$ = 0 \\
+		\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+		\hline 
+		$\alpha(A_1)$ & $\alpha(A_2)$ & $\alpha(A_3)$ & $\widehat{\alpha}(F)$ & $\widehat{\alpha}(L_1)$ & $\widehat{\alpha}(L_2)$ & $\widehat{\alpha}(L_3)$ & $\widehat{\alpha}(L_4)$ & $\widehat{\alpha}(L_5)$ \\ 
+		\hline 
+		0 & 0 & 0 & 0 & 0 & 1 & 1 & 1 & 1 \\ 
+		\hline 
+		0 & 0 & 1 & 1 & 1 & 1 & 1 & 1 & 1 \\ 
+		\hline 
+		0 & 1 & 0 & 0 & 1 & 0 & 0 & 0 & 0 \\ 
+		\hline 
+		0 & 1 & 1 & 0 & 1 & 1 & 0 & 1 & 1 \\ 
+		\hline 
+		1 & 0 & 0 & 1 & 1 & 1 & 1 & 1 & 1 \\ 
+		\hline 
+		1 & 0 & 1 & 0 & 1 & 1 & 1 & 0 & 1 \\ 
+		\hline 
+		1 & 1 & 0 & 1 & 1 & 1 & 1 & 1 & 1 \\ 
+		\hline 
+		1 & 1 & 1 & 0 & 1 & 1 & 1 & 1 & 0 \\ 
+		\hline 
+		\end{tabular}
+		\item $\widehat{\alpha}(F) = \widehat{\alpha}(L_1) \wedge \widehat{\alpha}(L_2) \wedge \widehat{\alpha}(L_3) \wedge \widehat{\alpha}(L_4) \wedge \widehat{\alpha}(L_5)$
+		\item $F := (A_1 \vee A_2 \vee A_3) \wedge (A_1 \vee \neg A_2 \vee A_3) \wedge (A_1 \vee \neg A_2 \vee \neg A_3) \wedge (\neg A_1 \vee A_2 \vee \neg A_3) \wedge (\neg A_1 \vee \neg A_2 \vee \neg A_3)$
+	\end{itemize}
+	\item Eine disjunktive Normalform (DNF) ist eine Disjunktion von $\wedge$-Klauseln \\
+	$D = (L_{11} \wedge \ldots \wedge L_{1n}) \vee \ldots \vee (L_{m1} \wedge \ldots \wedge L_{mn})$
+	\begin{itemize}
+		\item Gegeben: Die Wertetabelle von $f$
+		\item Betrachte die Zeilen $(b_1, \ldots, b_n)$ mit $f(b_1, \ldots, b_n)$ = 1 \\
+		\begin{tabular}{|c|c|c|c|c|c|c|}
+			\hline 
+			$\alpha(A_1)$ & $\alpha(A_2)$ & $\alpha(A_3)$ & $\widehat{\alpha}(F)$ & $\widehat{\alpha}(L_1)$ & $\widehat{\alpha}(L_2)$ & $\widehat{\alpha}(L_3)$ \\ 
+			\hline 
+			0 & 0 & 0 & 0 & 0 & 0 & 0 \\ 
+			\hline 
+			0 & 0 & 1 & 1 & 1 & 0 & 0 \\ 
+			\hline 
+			0 & 1 & 0 & 0 & 0 & 0 & 0 \\ 
+			\hline 
+			0 & 1 & 1 & 0 & 0 & 0 & 0 \\ 
+			\hline 
+			1 & 0 & 0 & 1 & 0 & 1 & 0 \\ 
+			\hline 
+			1 & 0 & 1 & 0 & 0 & 0 & 0 \\ 
+			\hline 
+			1 & 1 & 0 & 1 & 0 & 0 & 1 \\ 
+			\hline 
+			1 & 1 & 1 & 0 & 0 & 0 & 0 \\ 
+			\hline 
+		\end{tabular}
+		\item $\widehat{\alpha}(F) = \widehat{\alpha}(L_1) \vee \widehat{\alpha}(L_2) \vee \widehat{\alpha}(L_3)$
+		\item $F := (\neg A_1 \wedge \neg A_2 \wedge A_3) \vee (A_1 \wedge \neg A_2 \wedge \neg A_3) \vee (A_1 \wedge A_2 \wedge \neg A_3)$
+	\end{itemize}
+\end{itemize}
+
+\subsubsection{Syntaktische Erzeugung der KNF}
+
+\begin{enumerate}
+	\item Alle Negationen nach innen bringen
+	\begin{itemize}
+		\item $\neg \neg F \Rrightarrow F$
+		\item $\neg (F \vee G) \Rrightarrow \neg F \wedge \neg G$
+		\item $\neg (F \wedge G) \Rrightarrow \neg F \vee \neg G$
+	\end{itemize}
+	\item Distributibgesetz anwenden ($\vee$ nach innen bringen)
+	\begin{itemize}
+		\item $F \vee (G \wedge H) \Rrightarrow (F \vee G) \wedge (F \vee H)$
+		\item $(G \wedge H) \vee F \Rrightarrow (G \vee F) \wedge (H \vee F)$
+	\end{itemize}
+\end{enumerate}
+
+\subsection{Erfüllbarkeitstest}
+
+\subsubsection{Klauselrepräsentation}
+
+\begin{itemize}
+	\item Klausel repräsentiert durch: Menge von Literalen
+	\item KNF durch: Menge von Klauseln
+	\begin{itemize}
+		\item Menge von Mengen von Literalen
+		\item Passend, weil $\vee$ und $\wedge$
+		\begin{itemize}
+			\item idempotent und kommutativ
+			\item genau wie die Mengen: $\{ L_1, L_2, L_2 \} = \{ L_1, L_2 \} = \{ L_2, L_1 \}$
+		\end{itemize}
+		\item Noch kürzere Notation: $\overline{A}$ statt $\neg A$
+	\end{itemize}
+\end{itemize}
+
+\begin{equation}
+	\begin{split}
+		(\neg A_1 \vee \neg A_2 \vee A_3) \wedge (A_1 \vee \neg A_2 \vee \neg A_3) \wedge (A_1 \vee A_2 \vee \neg A_3) \\
+		\{ \{ \neg A_1 , \neg A_2, A_3 \}, \{ A_1, \neg A_2, \neg A_3 \}, \{ A_1, A_2, \neg A_3 \} \} \\
+		\{ \{ \overline{A_1}, \overline{A_2}, A_3 \}, \{ A_1, \overline{A_2}, \overline{A_3} \}, \{ A_1, A_2, \overline{A_3} \} \}
+	\end{split}
+\end{equation}
+
+\subsubsection{Leere Klausel, leere Klauselmenge}
+
+\begin{itemize}
+	\item $\vee$-Klausel $\{ L_1, \ldots, L_n \}$ erfüllt, wenn mindestens ein Literal erfüllt
+	\begin{itemize}
+		\item leere $\vee$-Klausel \{\} repräsentiert $\bot$
+	\end{itemize}
+	\item $\{ \{ L_{11}, \ldots, L_{1n} \}, \ldots, \{ L_{m1}, \ldots, L_{mn} \} \}$ erfüllt, wenn jede Klausel erfüllt
+	\begin{itemize}
+		\item leere $\vee$-Klauselmenge \{\} repräsentert $\top$
+	\end{itemize}
+	\item In der Interpretation als KNF also:
+	\begin{itemize}
+		\item \{\} repräsentiert $\top$
+		\item $\{ \{ \ldots, L_i, \ldots \}, \ldots, \{\}, \ldots, \{ \ldots, L_j, \ldots \} \}$ repräsentiert $\bot$
+	\end{itemize}
+	\item In der Repräsentation als DNF umgekehrt
+\end{itemize}
+
+\begin{itemize}
+	\item $K = \{ \{ \neg A, \neg B \}, \{ A, B, C \}, \{ B \}, \{ \neg A, \neg B, \neg C \} \}$
+	\begin{itemize}
+		\item Wähle A = 1. $K_{A=1} = \{ \{ \neg B \}, \{ B \}, \{ \neg B, \neg C \} \}$
+		\begin{itemize}
+			\item Wähle B = 1. $K_{A=1,B=1} = \{ \{\} \{ \neg C \} \}$
+			\begin{itemize}
+				\item Unerfüllbar, backtracking
+			\end{itemize}
+			\item Wähle B = 0. $K_{A=1,B=0} = \{\{\}\}$
+			\begin{itemize}
+				\item Unerfüllbar, backtracking
+			\end{itemize}
+		\end{itemize}
+		\item Wähle A = 0. $K_{A=0} = \{ \{ B, C \}, \{ B \} \}$
+		\begin{itemize}
+			\item Wähle B = 1. $K_{A=0,B=1} = \{\}$
+			\item Erfüllbar mit A=0, B=1
+		\end{itemize}
+	\end{itemize}
+\end{itemize}
+
+\subsection{Resolventenmethode}
+
+Seien $K_1$ und $K_2$ Klauseln und $L$ ein Literal, so dass
+
+\begin{itemize}
+	\item $L$ kommt in $K_1$ vor, also $K_1 = \{ L_1, \ldots, L_m, L \}$
+	\item $\neg L$ kommt in $K_2$ vor, also $K_2 = \{ L'_1, \ldots, L'_n, \neg L \}$
+\end{itemize}
+
+dann heißt $K_3 := (K_1 - \{ L \}) \cup (K_2 - \{ \neg L \})$ eine Resolvente von $K_1$ und $K_2$.
+
+\subsubsection{Resolutionssatz}
+
+\underline{Definition}: Sei $\mathcal{K}$ eine Menge von Klauseln. Definiere
+\begin{equation}
+	Res(\mathcal{K}) := \mathcal{K} \cup \{ R \mid R \text{ ist Resolvente zweier Klauseln aus } \mathcal{K} \}
+\end{equation}
+Fortgesetzte Klauselbildung beschreiben wir durch
+\begin{equation}
+	\begin{split}
+		Res^0(\mathcal{K}) &:= \mathcal{K} \\
+		Res^{n+1}(\mathcal{K)} &:= Res(Res^n(\mathcal{K})) \text{ für } n \geq 0
+	\end{split}
+\end{equation}
+Schließlich sei
+\begin{equation}
+	Res^\infty(\mathcal{K}) := \bigcup_{n < \infty} Res^n(\mathcal{K})
+\end{equation}
+
+Eine Klausel ist also in $Res^\infty(\mathcal{K})$, falls sie durch fortgesetzte Resolventenbildung aus Klauseln in $\mathcal{K}$ gewonnen werden kann.
+
+\underline{Vollständigkeitssatz}: Eine Menge $\mathcal{K}$ von Klauseln ist genau dann widersprüchlich, wenn die leere Klausel $\{\}$ in $Res^\infty(\mathcal{K})$ ist.
+
+\subsection{Interpolation}
+
+\subsubsection{Shannon-Expansion}
+
+Definiere
+\begin{equation}
+	\text{if A then B else C} := (A \wedge B) \vee (\neg A \wedge C)
+\end{equation}
+\underline{Lemma}: Für jede Formel $F$ und jedes Atom $A_i$ gilt:
+\begin{equation}
+	F \equiv \text{ if } A_i \text{ then } F_{[\top / A_i]} \text{ else } F_{[\bot / A_i]}
+\end{equation}
+\underline{Beweis}: Für jede passende Belegung $\alpha$ gilt
+\begin{enumerate}
+	\item Falls $\alpha(A_i) = 1$:
+	\begin{equation}
+		\begin{split}
+			\widehat{\alpha}(\text{ if } A_i \text{ then } F_{[\top / A_i]} \text{ else } F_{[\bot / A_i]}) &= \widehat{\alpha}((A_i \wedge F_{[\top / A_i]} \vee (\neg A_i \wedge F_{[\bot / A_i]} \\
+			&= \widehat{\alpha}(A_i) \& \widehat{\alpha}(F_{[\top / A_i]} \mid \neg \widehat{\alpha}(A_i) \& \widehat{\alpha}(F_{[\bot / A_i]} \\
+			&= \widehat{\alpha}(F_{[\top / A_i]} \\
+			&= \alpha_{[A_i \mapsto 1]}(F) \\
+			&= \alpha(F)
+		\end{split}
+	\end{equation}
+	\item Falls $\alpha(A_i) = 0$: analog.
+\end{enumerate}
+
+\subsubsection{Boolesche Quantifikation}
+
+\begin{itemize}
+	\item $\exists A.F := F_{[\top / A]} \vee F_{[\bot / A]}$
+	\item $\forall A.F := F_{[\top / A]} \wedge F_{[\bot / A]}$
+\end{itemize}
+
+\begin{equation}
+	\begin{split}
+		\exists A.(P \vee A \implies Q) &= (P \vee \top \implies Q) \vee (P \vee \bot \implies Q) \\
+		&\equiv Q \vee (P \implies Q) \\
+		&\equiv P \implies Q
+	\end{split}
+\end{equation}
+
+\begin{equation}
+	\begin{split}
+		\forall A.(P \vee A \implies Q) &= (P \vee \top \implies Q) \wedge (P \vee \bot \implies Q) \\
+		&\equiv Q \wedge (P \implies Q) \\
+		&\equiv Q
+	\end{split}
+\end{equation}
+
+\subsubsection{Craig Interpolation}
+
+\begin{itemize}
+	\item $P := \neg (R \wedge S) \implies (\neg U \wedge S)$
+	\item $Q := (V \implies R) \vee (V \implies \neg U)$
+\end{itemize}
+
+Man rechnet leicht nach, dass $\models P \implies Q$ ein Interpolant ist.
+
+\begin{equation}
+	\begin{split}
+		\exists S.\neg (R \wedge S) \implies (\neg U \wedge S) &= (\neg (R \wedge \bot) \implies (\neg U \wedge \bot)) \vee (\neg (R \wedge \top) \implies (\neg U \wedge \top) \\
+		&= \neg R \implies \neg U \\
+		&= U \implies R
+	\end{split}
+\end{equation}
+
+\subsection{Kompaktheit}
+
+\subsubsection{Lemma von König}
+
+\underline{König's Lemma}: Jeder endlich verzweigte unendliche Baum besitzt einen unendlichen Pfad. 
+
+\underline{Beweis}: Wir ''konstruieren'' einen unendlichen Pfad, d.h. ein unendliches Wort $\pi = (p_0, \ldots, p_i, \ldots)$, so dass jedes endliche Präfix zu dem Baum gehört.
+\begin{enumerate}
+	\item Beginne mit der Wurzel $\epsilon$
+	\item Weil diese nur endlich viele Söhne hat, der Baum aber unendlich viele Knoten, muss es einen Sohn geben, der Wurzel eines unendlichen Teilbaumes ist. Sei $p_o$ die kleinste Nummer eines solchen Sohnes.
+	\item Sei $p_op_1 \ldots p_{k-1}$ schon konstruiert, so dass $p_{k-1}$ einen unendlichen Unterbaum besitzt. Ein Sohn von $p_{k-1}$ muss Wurzel eines unendlichen Unterbaums sein. Sei $p_k$ solch ein Sohn mit der kleinsten Nummer.
+\end{enumerate}
+
+Dieser Prozess bricht nicht ab und liefert einen unendlichen Pfad $\pi = (p_0, \ldots p_k, \ldots)$.
+
+\subsubsection{Kompaktheitssatz der Aussagenlogik}
+
+\underline{Kompaktheitssatz}: Eine Formelmenge $\mathcal{F}$ ist erfüllbar, gdw. jede endliche Teilmenge von $\mathcal{F}$ erfüllbar ist.
+
+\underline{Beweis}: Für jede Zahl $n$ sei $\mathcal{F}_n$ die Menge aller Formeln aus $\mathcal{F}$, in denen höchstens die Atome $\{A_0, \ldots, A_n\}$ vorkommen. Bis auf logische Äquivalenz sind das nur endlich viele und $\mathcal{F}_n \subseteq \mathcal{F}_m$ für $n \leq m$.
+
+Nach Voraussetzung ist jedes $\mathcal{F}_n$ erfüllbar, es gibt also jeweils ein $\alpha_n$ mit $\alpha_n \models \mathcal{F}_n$.
+
+Wir identifizieren $\alpha_n$ mit $(\alpha(A_0), \ldots, \alpha(A_n)) = (b_0, \ldots, b_n) \in \mathbb{B}^n$ und betrachten
+\begin{equation}
+	\begin{split}
+		T_n &:= \{(b_0, \ldots, b_n) \in \mathbb{B}^n \mid (b_0, \ldots b_n) \models \mathcal{F}_N\} \\
+		T_n &:= \bigcup_{n \in \mathbb{N}} T_n
+	\end{split}
+\end{equation}
+
+$T$ ist unendlich und präfixabgeschlossen, also ein unendlicher Baum. Da jeder Knoten nur höchstens zwei Nachfolger hat, besitzt der Baum, nach König's Lemma, einen unendlichen Pfad $\pi = (p_0, \ldots, p_i, \ldots)$. Die Belegung$\alpha(A_i) := p_i$ ist nun ein Modell für alle $F \in \mathcal{F}$.
+
+\subsubsection{Semantische Folgerung}
+
+Sei $\mathcal{F}$ eine Menge von Formeln und $F$ eine Formel. Schreibe
+\begin{equation}
+	\mathcal{F} \models F
+\end{equation}
+falls jedes Modell von $\mathcal{F}$ auch ein Modell von  $F$ ist. Wir sagen, dass $F$ semantisch aus $\mathcal{F}$ folgt. Formal:
+\begin{equation}
+	\mathcal{F} \models F :\iff \forall \alpha.(\alpha \models \mathcal{F} \implies \alpha \models F)
+\end{equation}
+\underline{Satz}: $\mathcal{F} \models F$ gdw. $\mathcal{F} \cup \{\neg F\}$ ist widersprüchlich.
+
+\underline{Beweis}: Sei $\mathcal{F} \models F$ und $\alpha$ eine Belegung. Aus $\alpha \models \mathcal{F}$ folgt $\alpha \models F$ also $\alpha \nvDash \neg F$. Somit ist $\mathcal{F} \cup \{\neg F\}$ widersprüchlich.
+
+Umgekehrt sei $\mathcal{F} \cup \{\neg F\}$ widersprüchlich, und sei $\alpha$ ein Modell für $\mathcal{F}$, dann muss $\widehat{\alpha}(\neg F) = 0$ sein, d.h. $!\widehat{\alpha}(F) = 0$, also $\widehat{\alpha}(F) = 1$, somit $\alpha \models F$.
+
+\subsubsection{Kompaktheit für semantische Folgerung}
+
+\underline{Korollar}: Sei $\mathcal{F}$ eine Menge von Formeln und $F$ eine Formel, dann gilt
+\begin{equation}
+	\mathcal{F} \models F \text{ gdw. es gibt eine endliche Teilmenge } \mathcal{F}_0 \subseteq \mathcal{F} \text{ mit } \mathcal{F}_0 \models F
+\end{equation}
+
+\underline{Beweis}:
+\begin{equation}
+	\begin{split}
+		\mathcal{F} \models F &\iff \mathcal{F} \cup \{\neg F\} \text{ nicht erfüllbar} \\
+		&\iff \text{es gibt eine endliche Teilmenge } E_0 \subseteq \mathcal{F} \cup \{\neg F\} \\
+		& \text{ die nicht erfüllbar ist} \\
+		&\iff \text{es gibt eine endliche Teilmenge } \mathcal{F}_= \subseteq \mathcal{F} \text{, so dass } \mathcal{F}_0 \cup \{\neg F\} \\
+		& \text{ nicht erfüllbar ist} \\
+		&\iff \text{für eine endliche Teilmenge } \mathcal{F}_0 \subseteq \mathcal{F} \text{ gilt } \mathcal{F}_0 \models F.
+	\end{split}
+\end{equation}
+
+\subsubsection{Unendliche Klauselmengen}
+
+\begin{itemize}
+	\item Die Vollständigkeit der Resolventenmethode gilt auch für unendliche Klauselmengen:
+	\item \underline{Satz}: Eine (endliche oder unendliche) Menge von Klauseln ist nicht erfüllbar genau dann wenn durch Resolventenbildung die leere Klausel gewonnen werden kann
+	\item \underline{Beweis}: Kompaktheitssatz + Vollständigkeitssatz für endliche Klauselmengen.
+\end{itemize}
+
+\subsection{Horn Klauseln}
+
+\subsubsection{Horn Klauseln}
+
+Eine Klausel mit höchstens einem positiven Literal heißt Horn Klausel.
+
+\[ B \vee \neg A_1, \ldots \vee \neg A_n \quad \text{wobei } B, A_1, \ldots, A_n \text{ atomar} \]
+
+Äquivalent zu:
+
+\[ B \impliedby A_1 \wedge \ldots \wedge A_n \quad \text{ ''Programmklausel''} \]
+
+\subsubsection{Prolog}
+
+\begin{itemize}
+	\item Programm = Menge von Horn-Klauseln
+	\item Aufruf = Goal-Klausel
+\end{itemize}
+
+\begin{minipage}{.5\textwidth}
+	\begin{tabular}{|c|c|}
+		\hline 
+		Notation & Begriff \\ 
+		\hline 
+		$b :- a_1, \ldots, a_n.$ & Programmklausel \\ 
+		\hline 
+		$b.$ & Fakt \\ 
+		\hline 
+		$:- a_1, \ldots, a_n.$ & Aufruf, goal \\ 
+		\hline 
+	\end{tabular}
+\end{minipage}
+\begin{minipage}{.5\textwidth}
+	\begin{lstlisting}
+strasseNass :- schneit.
+gefaehrlich :- dunkel, friert.
+gefaehrlich :- strasseNass.
+friert	    :- schneit.
+schneit.
+dunkel.
+	\end{lstlisting}
+\end{minipage}
+
+\subsubsection{Resolution von Horn Klauseln}
+
+\begin{itemize}
+	\item Bei der Resolution einer Zielklausel
+	\begin{equation}
+		\neg G_1 \vee \ldots \vee \neg G_n
+	\end{equation}
+	mit einer Programmklausel
+	\begin{equation}
+		B \vee \neg A_1 \vee \ldots \vee \neg A_n
+	\end{equation}
+	entsteht wieder eine Zielklausel
+	\item Eine Zielklausel verkürzt sich nur bei Resolution mit einer Fakt-Klausel
+	\begin{equation}
+		B.
+	\end{equation}
+\end{itemize}
+
+\subsubsection{Backtracking}
+
+Prolog wählt immer
+\begin{itemize}
+	\item das erste Literal der Zielklausel
+	\item passende Programmklauseln der Reihe nach,
+	\item bei Fehlschlag: nächste passende Programmklausel
+	\begin{itemize}
+		\item alles zurück zum letzten Auswahlpunkt
+		\item führt zu Backtracking
+		\item Backtrackpunkte entstehen, wenn für das aktuelle Ziel mehrere Programmklauseln vorhanden sind
+	\end{itemize}
+\end{itemize}
+
+\subsubsection{Vollständigkeit}
+
+\begin{itemize}
+	\item \underline{Satz}: Die Prolog-Resoltuionsstrategie ist vollständig für Horn-Klauseln.
+	\item Sei $K$ eine Menge von Horn-Klauseln.
+	\begin{itemize}
+		\item $P$ die Menge der Programmklauseln
+		\item $G$ die Menge der Zielklauseln
+	\end{itemize}
+	\item Zielklauseln werden gebraucht
+	\begin{itemize}
+		\item allein aus $P$ kann man nie die leere Klausel gewinnen
+		\item \underline{Beweis}: Resolvente zweier Programmklauseln ist immer eine nichtleere Programmklausel
+	\end{itemize}
+	\item Es wird nur eine Zielklausel gebraucht
+	\begin{itemize}
+		\item Ist $P \cup G$ widersprüchlich, dann gibt es ein $\gamma \in G$ so dass $P \cup \{ \gamma \}$ widersprüchlich ist.
+		\item \underline{Beweis}: Programmklauseln mit Zielklauseln liefern Zielklauseln, und verschiedene Zielklauseln können nicht resolviert werden.
+	\end{itemize}
+	\item Resolvente zweier Programmklauseln nie notwendig
+	\begin{itemize}
+		\item schematischer Beweis, siehe vorherige Folie
+	\end{itemize}
+	\item Aus der Vollständigkeit der Resolventenmethode folgt daher die Vollständigkeit der SLD-Resolution für Horn-Klauseln.
+\end{itemize}
+
+\subsection{Prolog}
+
+\subsubsection{Datalog}
+
+\begin{itemize}
+	\item Prolog erlaubt auch atomare Formeln mit Variablen:
+	\begin{itemize}
+		\item \textbf{vater(X), bruder(X;Y), kennt(X,X), $\ldots$}
+		\item Variablen stehen für beliebige Objekte, gleiche Variablen innerhalb einer Klausel für gleiche Objekte
+		\item Objekte kleingeschrieben, Variablen groß
+	\end{itemize}
+\end{itemize}
+
+\begin{lstlisting}
+% anna ist weiblich.
+weiblich(anna).
+% eva ist weiblich.
+weiblich(eva).
+
+% otto ist Vater von eva.
+vater(otto,eva).
+vater(ernst,hans).
+vater(otto,anna).
+
+% X ist Tochter von Y falls Y vater von X und X weiblich.
+tochter(X,Y) :- vater(Y,X), weiblich(X).
+
+% X ist schwester von Y falls es ein Z gibt, so dass X tochter Z und Y tochter Z sind.
+schwester(X,Y) :- tochter(X,Z), tochter(Y,Z).
+\end{lstlisting}
+
+Mögliche goals u.A.:
+\begin{lstlisting}
+% Wer ist schwester von anna?
+:- schwester(anna,X).
+
+% Wer ist vater einer schwester von eva?
+:- vater(Y,X), schwester(X,eva).
+\end{lstlisting}
+
+\subsubsection{Funktionen}
+
+\begin{itemize}
+	\item In Prolog kann man nur Relationen beschreiben
+	\begin{itemize}
+		\item Ersetze Funktion $f$ durch ihren Graph $G_f$:
+		\begin{equation}
+			(x,y) \in G_f :\iff f(x) = y
+		\end{equation}
+		\item Statt Funktion $fakt: \mathbb{N} \mapsto \mathbb{N}$ schreibe Relation $G_{fakt} \subseteq \mathbb{N} \times \mathbb{N}$
+		\item Arithmetische Relation erlaubt: z.B. $N > 0$
+		\item Arithmetische Ausdrücke nur in Verbindung mit Schlüsselwort \textcolor{red}{is} erlaubt:
+		\begin{itemize}
+			\item $N1$ \textcolor{red}{is} $N+1$ : rechter Ausdruck wird ausgewertet und mit der Variablen $N1$ ''gematcht''
+		\end{itemize}
+	\end{itemize}
+\end{itemize}
+
+\begin{lstlisting}
+fakt(0,1).
+
+fakt(N,Z) :- N>0, N1 is N-1, fakt(N1,Z1), Z is Z1*N.
+\end{lstlisting}
+
+\begin{lstlisting}
+:- fakt(0,1).			% Antwort: yes
+:- fakt(10,3628800).		% Antwort: yes
+:- fakt(10,z).			% Antwort: z/3628800
+\end{lstlisting}
+
+\subsubsection{Listen}
+
+\begin{itemize}
+	\item Listen sind in Prolog eingebaute Datenstrukturen
+	\begin{itemize}
+		\item $[]$ leere Liste
+		\item $[anna, 21, otto, 27]$ Aufzählung
+		\item $[E \mid Es]$ nichtleere Liste mit erstem Element $E$ und Restliste $Es$
+		\item Beidseitiges Matching = Unifikation
+		\begin{itemize}
+			\item $[E \mid Es] = [1,anna,2,eva]$
+			\begin{itemize}
+				\item $E = 1$
+				\item $Es = [anna, 2, eva]$
+			\end{itemize}
+			\item $\_(underscore)$ ist wildcard
+			\begin{itemize}
+				\item matcht alles
+			\end{itemize}
+		\end{itemize}
+	\end{itemize}
+	\item Funktionen als Prädikate/Relationen realisiert
+	\begin{itemize}
+		\item Ersetze Funktion \\
+		$app: List \times List \mapsto List$ \\
+		durch Prädikat \\
+		$app \subseteq List \times List \times List$
+		\item Analog $odds, evens, merge, flip$ im Beispiel
+	\end{itemize}
+\end{itemize}
+
+\begin{lstlisting}
+mem(X,[X|_]).
+mem(X,[_|Xs]) :- mem(X,Xs).
+
+% Verkettet zwei Listen
+app([],X,X).
+app([X|Xs],Ys,[X|Zs]) :- app(Xs,Ys,Zs).
+
+% Dreht eine Liste um
+rev([],X,X).
+rev([X|Xs],Zs) :- rev(Xs,Ys), app(Ys,[X],Zs).
+
+% Filtert nur Elemente an ungeraden Positionen
+odds([],[]).
+odds([X],[X]).
+odds([H,_[T1],[H|Es]) :- odds(T1,Es).
+
+% Filtert Elemente an geraden Positionen
+evens([],[]).
+evens([H|T1],Zs) :- odds(T1,Zs).
+
+% Verschraenkt zwei Listen
+merge([],Y,Y).
+merge([X|Xs],Ys,[X|Zs]) :- merge(Ys,Xs,Zs).
+
+% Vertauscht je zwei konsekutive Elemente einer Liste
+flip(Xs,Es) :- evens(Xs,Ys), odds(Xs,Zs), merge(Ys,Zs,Es).
+\end{lstlisting}
+
+\subsection{Kalküle}
+
+\subsubsection{Korrektheit und Vollständigkeit}
+
+\begin{itemize}
+	\item Für einen Kalkül $\mathcal{K}$ schreiben wir
+	\begin{itemize}
+		\item $\mathcal{F} \vdash F$ falls man mit Hilfe des Kalküls $\mathcal{K}$ die Formel $F$ aus der Formelmenge $\mathcal{F}$ herleiten kann
+		\item $\mathcal{K}$ heißt korrekt, falls $\mathcal{F} \vdash_{\mathcal{K}} F$ nur dann wahr ist, wenn tatsächlich $\mathcal{F} \models F$ gilt (Es wird nichts falsches hergeleitet)
+		\item $\mathcal{K}$ heißt vollständig, falls immer wenn $\mathcal{F} \models F$ gilt, auch $\mathcal{F} \vdash_{\mathcal{K}} F$ gilt (Alles was stimmt, kann auch hergeleitet werden)
+		\item Meist schreibt man nur $\mathcal{F} \vdash F$
+	\end{itemize}
+\end{itemize}
+
+\subsubsection{Hilbert Kalkül}
+
+\begin{itemize}
+	\item Axiome: Alle Formeln der Form / alle Instanzen von
+	\begin{enumerate}
+		\item $P \implies (Q \implies P$
+		\item $(P \implies Q \implies R) \implies (P \implies Q) \implies (P \implies R)$
+		\item $(\neg Q \implies \neg P) \implies (P \implies Q)$
+	\end{enumerate}
+	\item Schlussregel $\frac{P, P \implies Q}{Q} \quad \text{ MP (modus ponens}$
+\end{itemize}
+
+\begin{itemize}
+	\item Lemma: $\vdash \neg \neg P \implies P$
+	\item Beweis: \\
+	\begin{tabular}{l l l}
+	& $\vdash \neg \neg P \implies (\neg \neg \neg \neg P \implies \neg \neg P)$ & Axiom 1 \\
+	$\{ \neg \neg P \}$ & $\vdash (\neg \neg \neg \neg P \implies \neg \neg P)$ & Deduktionstheorem \\
+	$\{ \neg \neg P \}$ & $\vdash (\neg P \implies \neg \neg  \neg P)$ & Axiom 3 und MP \\
+	$\{ \neg \neg P \}$ & $\vdash (\neg \neg P \implies P)$ & Axiom 3 und MP \\
+	$\{ \neg \neg P \}$ & $\vdash P$ & Deduktionstheorem \\
+	& $\vdash \neg \neg P \implies P$ & Deduktionstheorem \\ 
+	\end{tabular} 
+\end{itemize}
+
+\subsubsection{Tableaukalkül}
+
+TODO
+
+\subsubsection{Sequenzenkalkül}
+
+TODO
+
+\pagebreak
+\section{Prädikatenlogik}
+
+\subsection{Objekte}
+
+\begin{itemize}
+	\item Variablen $x_1, x_2, \ldots, x_i$ benennen Objekte
+	\item Funktionsnamen $f_i^{(n)}$ benennen Funktionen mit $n$ Argumenten
+	\begin{itemize}
+		\item Wenn die Stelligkeit $^{(n)}$ klar ist, lassen wir sie weg
+		\item Informell verwenden wir auch $g, h, \ldots$
+		\item Spezialfall $n = 0$: Konstanten
+		\item Für Konstanten verwenden wir gerne $a, b, c, \ldots$
+	\end{itemize}
+	\item Terme entstehen durch Kombination von Variablen, Konstanten und Funktionszeichen
+	\begin{itemize}
+		\item $f_{17}^{(3)}(x_1, g(x_2), a), f(h(g(x), g(a)), z), \ldots$
+		\item Terme benennen wir auch wieder Objekte
+	\end{itemize}
+\end{itemize}
+
+\subsubsection{Termdefinition}
+
+\begin{enumerate}
+	\item Jede Objektvariable $x_i$ ist ein Term
+	\item Jede Konstante $c$ ist ein Term
+	\item Ist $f$ ein $n$-stelliges Funktionszeichen und sind $t_1, \ldots, t_n$ Terme, dann ist auch $f(t_1, \ldots, t_n)$ ein Term
+\end{enumerate}
+
+\subsection{Prädikate}
+
+\subsubsection{Prädikatensymbole}
+
+\begin{itemize}
+	\item Eine $n$-stellige Relation auf einer Menge $X$ ist eine Teilmenge von $X^n$
+	\item Prädikatensymbole P sind Namen für Relationen
+	\item Prädikatensymbole haben Stelligkeiten wie Funktionszeichen
+	\item Typische Prädikatensymbole: $P_i^{(n)}$, P, Q, R
+	\item Beispiele:
+	\begin{itemize}
+		\item $\leq, \neq, =$ sind zweistellige Prädikatensymbole
+		\item \textit{istPrim, positiv, groß, weiblich, $\ldots$} sind einstellige Prädikatensymbole
+	\end{itemize}
+\end{itemize}
+
+\subsection{Syntax der Prädikatenlogik}
+
+\subsubsection{Signatur}
+
+\begin{itemize}
+	\item Eine Signatur $\Sigma = (\mathcal{F}, \mathcal{R})$ besteht aus
+	\begin{itemize}
+		\item einer Familie $\mathcal{F} = (f_j)_{j \in J}$ von $n_j$-stelligen Funktionszeichen
+		\item einer Familie $\mathcal{R} = (R_i)_{i \in I}$ von $n_i$-stelligen Prädikatssymbolen
+	\end{itemize}
+	\item Beispiel: Die Formel $\exists x.\forall y.P(f(g(x), a), r(b,y))$ setzt eine Signatur $\Sigma = (\mathcal{F}, \mathcal{R})$ voraus, wobei:
+	\begin{itemize}
+		\item $f, g, r, a, b \in \mathcal{F}$ mit Stelligkeiten (2,1,2,0,0)
+		\item $P \in \mathcal{R}$ mit Stelligkeit 2
+	\end{itemize}
+\end{itemize}
+
+\subsubsection{Sprache}
+
+\begin{itemize}
+	\item Sei $\Sigma = (\mathcal{F}, \mathcal{R})$ eine Signatur, dann bezeichnet man mit $\mathcal{L}(\Sigma)$ die Sprache der Prädikatenlogik = Menge aller $\Sigma$-Formeln:
+	\begin{itemize}
+		\item Terme $t$ werden gebildet aus Variablen und Funktionszeichen.
+		\item Atomare Aussagen $P(t_1, \ldots, t_n)$ nur mit diesen Termen und Relationssymbolen $P \in \mathcal{R}$.
+	\end{itemize}
+	\item Beispiele:
+	\begin{itemize}
+		\item Sei $\Sigma = (\{ +, s, 0 \}, \{ =, \leq \})$. Dann ist
+		\begin{itemize}
+			 \item $\forall x.(x = 0 \vee \exists y.s(y) = x) \in \mathcal{L}(\Sigma)$
+			 \item $\exists z.z \times x = x \not \in \mathcal{L}(\Sigma)$
+		\end{itemize}
+		\item Sei $\Sigma = (\{ vater^{(1)} \}, \{ \text{großvater}^{(2)}, =^{(2)} \})$. Dann ist
+		\begin{itemize}
+			\item $y = vater(vater(x)) \implies \text{großvater}(x,y) \in \mathcal{L}(\Sigma)$, aber
+			\item $vater(x,y) \wedge vater(y,z) \implies \text{großvater}(x,z) \not \in \mathcal{L}(\Sigma)$
+		\end{itemize}
+	\end{itemize}
+\end{itemize}
+
+\subsection{Semantik der Prädikatenlogik}
+
+\subsubsection{Sigma-Struktur}
+
+$\Sigma$-Strukturen liefern die zu Formeln aus $\mathcal{F}(\Sigma)$ passenden Strukturen. \\
+Sei $\Sigma = (\mathcal{F}, \mathcal{R})$. Eine $\Sigma$-Struktur $\mathfrak{A}$ besteht aus
+
+\begin{itemize}
+	\item einer nichtleeren Grundmenge $A$, (die Objekte)
+	\item je einer (konkreten) Operation $f^{\mathfrak{A}}:A^n \mapsto A$ für $n$-stellige Funktionszeichen $f \in \mathcal{F}$,
+	\item je einer (konkreten) Relation $R^{\mathfrak{A}} \subseteq A^n$ für $n$-stellige Relationszeichen $R \in \mathcal{R}$
+\end{itemize}
+
+Beispiele
+\begin{itemize}
+	\item Für $\Sigma = (\{ +,s,0 \}, \{ =,\leq \})$ sind passende $\Sigma$-Strukturen:
+	\begin{itemize}
+		\item $\mathfrak{A}_1 = (\mathbb{N}, \{ +^\mathbb{N},s^\mathbb{N},0^\mathbb{N} \}, \{ =^\mathbb{N}, \leq^\mathbb{N} \})$ mit $s^\mathbb{N}(n) := n + 1.$
+		\item $\mathfrak{A}_2 = (\{ 0,1 \}, \{ \bigoplus^\mathbb{B}, \neg^\mathbb{B}, \bot^\mathbb{B} \}, \{ =^\mathbb{B}, \leq^\mathbb{B} \})$ mit $\leq^\mathbb{B} (b_1,b_2): \iff (b_2 = 1 \vee b_1 = 0).$
+	\end{itemize}
+\end{itemize}
+
+\subsubsection{Semantik von Formeln}
+
+\begin{itemize}
+	\item Betrachte die Formel $\forall y.\exists x.(x + x = y)$
+	\item Ist sie wahr oder falsch?
+	\begin{itemize}
+		\item Hängt von der Struktur ab, in der sie interpretiert werden soll
+		\item Signatur $\Sigma$ benötigt zumindest (\{+\},\{=\})
+	\end{itemize}
+	\item Mögliche Strukturen mit Signatur $\Sigma$:
+	\begin{itemize}
+		\item $\mathfrak{A}_1 = (\mathbb{R}, \{ +^\mathbb{R} \}, \{ =^\mathbb{R} \})$
+		\begin{itemize}
+			\item Formel ist wahr
+		\end{itemize}
+		\item $\mathfrak{A}_2 = (\mathbb{N}, \{ +^\mathbb{N} \}, \{ =^\mathbb{N} \})$
+		\begin{itemize}
+			\item Formel ist falsch
+		\end{itemize}
+		\item $\mathfrak{A}_3 = (\{ 0,1,2 \}, \{ +^{mod 3} \}, \{ +^{mod 3} \})$
+		\begin{itemize}
+			\item Formel ist wahr
+		\end{itemize}
+	\end{itemize}
+\end{itemize}
+
+\begin{itemize}
+	\item Für jede Formel $F \in \mathcal{L}(\Sigma)$ definieren wir nun den Wahrheitswert von $F$ unter $\alpha$ durch
+	\begin{itemize}
+		\item $\widehat{\alpha}(R(t_1, \ldots, t_n)) :\iff (\widehat{\alpha}(t_1), \ldots, \widehat{\alpha}(t_n)) \in R^\mathfrak{A}$
+		\item $\widehat{\alpha}(\neg F) := ! \widehat{\alpha}(F)$
+		\item $\widehat{\alpha}(F_1 \wedge F_2) := \widehat{\alpha}(F_1) \text{ \&\& } \widehat{\alpha}(F_2)$
+		\item $\widehat{\alpha}(F_1 \vee F_2) := \widehat{\alpha}(F_1) \mid \mid \widehat{\alpha}(F_2)$
+		\item $\widehat{\alpha}(F_1 \implies F_2) := ! \widehat{\alpha}(F_1) \mid \mid \widehat{\alpha}(F_2)$
+		\item $\widehat{\alpha}(\forall x.F) := \min \limits_{\alpha \in A} \widehat{\alpha_{[x \mapsto \alpha]}}(F)$
+		\item $\widehat{\alpha}(\exists x.F) := \max \limits_{\alpha \in A} \widehat{\alpha_{[x \mapsto \alpha]}}(F)$
+	\end{itemize}
+\end{itemize}
+
+\subsubsection{Negation von Quantoren}
+
+\begin{itemize}
+	\item Lemma: Für jede Belegung $\alpha$ gilt:
+	\begin{itemize}
+		\item $\widehat{\alpha}(\neg \forall x.F) = \widehat{\alpha}(\exists x. \neg F)$
+		\item $\widehat{\alpha}(\neg \exists x.F) = \widehat{\alpha}(\forall x. \neg F)$
+	\end{itemize}
+\end{itemize}
+
+\subsection{Tautologien und Äquivalenzen}
+
+\subsubsection{Universeller Abschluss}
+
+TODO
+
+\subsubsection{Äquivalenz}
+
+TODO
+
+\subsubsection{Gebundene Variablen}
+
+TODO
+
+\end{document}

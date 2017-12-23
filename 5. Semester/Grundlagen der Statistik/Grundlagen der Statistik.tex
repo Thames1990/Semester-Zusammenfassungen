@@ -1,0 +1,80 @@
+\documentclass{scrartcl}
+
+\usepackage{ucs}
+\usepackage[utf8x]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage[hidelinks]{hyperref}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{color}
+\usepackage{listings}
+
+\lstset{frame=tb,
+language=R,
+keywordstyle=\color{blue},
+alsoletter={.}
+}
+
+\setlength\parindent{0pt}
+
+\title{Grundlagen der Statistik \\ Zusammenfassung}
+\author{Thomas Mohr}
+\date{}
+
+\begin{document}
+\maketitle
+\pagebreak
+\tableofcontents{}
+\pagebreak
+
+\section{Univariate deskriptive Statstik}
+
+\subsection{Grundbegriffe}
+
+\begin{itemize}
+	\item Merkmalsträger (Beobachtungseinheiten) \\
+	Objekte einer Stichprobe, z.B. Personen, Geräte, etc.
+	\item Merkmale (Variablen) \\
+	Interessierende Größe, Eigenschaften der Beobachtungseinheiten, z.B. Alter, Geschlecht, Vorliegen eines Defektes, etc.
+	\item Merkmalsausprägungen \\
+	Die verschiedenen Werte, die ein Merkmal annehmen kann, z.B. männlich/weiblich, Defekt ja/nein, etc.
+\end{itemize}
+
+\subsection{Merkmalstypen}
+
+\begin{tabular}{|c|c|}
+\hline 
+dichotom & Nur zwei Ausprägungen \\ 
+\hline 
+nominal & Kategorien \textbf{ohne} Reihenfolge \\ 
+\hline 
+ordinal & Kategorien \textbf{mit} Reihenfolge \\ 
+\hline 
+diskret & Endlich oder abzählbar unendlich viele Ausprägungen \\ 
+\hline 
+stetig & Alle Werte in einem reelen Interval als Ausprägung \\ 
+\hline 
+\end{tabular} 
+
+\subsection{Merkmalstypen in R}
+
+\begin{tabular}{|c|c|}
+\hline 
+\textbf{Merkmalstyp} & \textbf{Variablentyp in R} \\ 
+\hline 
+nominal & factor \\ 
+\hline 
+ordinal & ordered factor \\ 
+\hline 
+diskret & integer \\ 
+\hline 
+stetig & double \\ 
+\hline 
+\end{tabular} 
+
+\subsection{Aufgaben}
+
+
+
+\end{document}
