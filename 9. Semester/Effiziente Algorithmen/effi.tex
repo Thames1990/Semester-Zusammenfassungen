@@ -27,55 +27,42 @@
 
 \subsection{Stable Matching}
 
-\subsubsection{Praktisches Problem}
-
-Ordne Medizinstudenten Praktikumsplätze in Krankenhäusern zu, wobei die gegenseitigen Präferenzen beachtet werden.
-
-\subsubsection{Eingabe}
-
-$ M = \{ m_1,\ldots,m_n \} $ (''Männer'') \\
-$ W = \{ w_1,\ldots,w_n \} $ (''Frauen'') \\
-jeder $ m \in M $ ordnet alle Elemente aus $ W $ nach Präferenz
-jede $ w \in W $ ordnet alle Elemente aus $ M $ nach Präferenz
-
-\subsubsection{Aufgabe}
-
-Finde paarweise Zuordnung zwischen den Elementen aus $ M $ und $ W $, so dass für jeden $ m \in M $ und jede $ w \in W $, die nicht $ m $ zugeordnet ist, gilt (Stabilität):
-\begin{enumerate}
-	\item $ m $ zieht ihm zugeordnete $ w' $ gegenüber $ w $ vor, oder
-	\item $ w $ zieht ihr zugeordneten $ m' $ gegenüber $ m $ vor
-\end{enumerate}
-Stabilität beschreibt hierbei, dass die Paarungen tatsächlich vorteilhaft sind für einen von beiden. D.h., wenn $ (m,w) $ ein Paar ist, aber $ m $ lieber ein Paar mit $ w' $ bilden würde, bzw. $ w $ lieber ein Paar mit $ m' $ bilden würde, so wäre ihre Verbindung instabil.
-
-\subsubsection{Beispiel}
-
-\begin{minipage}{.5\linewidth}
-	\begin{align*}
+\begin{itemize}
+	\item Eingabe: Zwei gleichgroße Mengen $ M = \{ m_1,\ldots,m_n \} $ und $ W = \{ w_1,\ldots,w_n \} $, welche in diesem Beispiel Männer und Frauen darstellen.
+	\item Aufgabe: Finde paarweise Zuordnung zwischen den Elementen aus $ M $ und $ W $, so dass für jeden $ m \in M $ und jede $ w \in W $, die nicht $ m $ zugeordnet ist, gilt (Stabilität):
+	\begin{enumerate}
+		\item $ m $ zieht ihm zugeordnete $ w' $ gegenüber $ w $ vor, oder
+		\item $ w $ zieht ihr zugeordneten $ m' $ gegenüber $ m $ vor
+	\end{enumerate}
+	Stabilität beschreibt hierbei, dass die Paarungen tatsächlich vorteilhaft sind für einen von beiden. D.h., wenn $ (m,w) $ ein Paar ist, aber $ m $ lieber ein Paar mit $ w' $ bilden würde, bzw. $ w $ lieber ein Paar mit $ m' $ bilden würde, so wäre ihre Verbindung instabil.
+	\item Beispiel: \\
+	\begin{minipage}{.5\linewidth}
+		\begin{align*}
 		M = \{ X,Y,Z \} \\
 		X: A < B < C \\
 		Y: B < A < C \\
 		Z: A < B < C
-	\end{align*}
-\end{minipage}
-\begin{minipage}{.5\linewidth}
-	\begin{align*}
+		\end{align*}
+	\end{minipage}
+	\begin{minipage}{.5\linewidth}
+		\begin{align*}
 		W = \{ A,B,C \} \\
 		A: Y < X < Z \\
 		B: X < Y < Z \\
 		C: X < Y < Z
-	\end{align*}
-\end{minipage}
-
-\begin{itemize}
-	\item Zuordnung $ (X,C),(Y,B),(Z,A) $ \\
-	Ist diese Zuordnung stabil? Nein! $ X $ zieht $ A $ vor und $ A $ zieht $ X $ vor.
-	\item Zuordnung $ (X,A),(Y,B),(Z,C) $ \\
-	Ist die Zuordnung stabil? Ja!
-	\begin{enumerate}
-		\item Niemand will mit $ Z $ oder $ C $ tauschen
-		\item $ X $ hat Traumfrau
-		\item $ Y $ hat Traumfrau
-	\end{enumerate}
+		\end{align*}
+	\end{minipage}
+	\begin{itemize}
+		\item Zuordnung $ (X,C),(Y,B),(Z,A) $ \\
+		Ist diese Zuordnung stabil? Nein! $ X $ zieht $ A $ vor und $ A $ zieht $ X $ vor.
+		\item Zuordnung $ (X,A),(Y,B),(Z,C) $ \\
+		Ist die Zuordnung stabil? Ja!
+		\begin{enumerate}
+			\item Niemand will mit $ Z $ oder $ C $ tauschen
+			\item $ X $ hat Traumfrau
+			\item $ Y $ hat Traumfrau
+		\end{enumerate}
+	\end{itemize}
 \end{itemize}
 
 \subsubsection{Propose-\&-Reject}
