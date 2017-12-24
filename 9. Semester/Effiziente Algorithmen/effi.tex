@@ -307,4 +307,111 @@ als $ f $.
 	\end{enumerate}
 \end{itemize}
 
+\section{Greedyalgorithmen}
+
+\subsection{Interval scheduling}
+
+\begin{itemize}
+	\item Eingabe: Intervalle (Jobs) mit Startzeiten $ s_i $ und Endzeiten $ f_i $, $ 1 \leq i \leq n $.
+	\item Aufgabe: Finde größtmögliche Menge nichtüberlappender Intervalle.
+	\item Greedy-Strategie: Nimm Job mit frühestmöglicher Endzeit
+	\item Dieser Algorithmus liefert immer eine optimale Lösung mit Laufzeit $ \mathcal{O}(n \log n) $.
+\end{itemize}
+
+\subsection{Interval Partitioning}
+
+\begin{itemize}
+	\item Eingabe: Intervalle (Jobs) mit Startzeiten $ s_i $ und Endzeiten $ f_i $, $ 1 \leq i \leq n $.
+	\item Aufgabe: Finde kleinstmögliche Menge von ''Zeitstrahlen'', so dass alle Jobs, auf diese verteilt, nicht überlappen.
+	\item Die \textbf{Tiefe} einer Intervallmenge ist die maximale Zahl überlappender Intervalle.
+	\item Greedy-IP liefert immer eine optimale Lösung mit Laufzeit $ \mathcal{O}(n \log n) $.
+\end{itemize}
+
+\begin{algorithm}[H]
+	Sortiere Jobs nach aufsteigenden Startzeiten, d.h. $ s_1 \leq s_2 \leq \ldots \leq s_n $ \\
+	$ d \leftarrow 0 $ \\
+	\For{$ r \gets 1 $ \KwTo $ n $}{
+		\If{Job $ j_r $ ''passt auf Zeitstrahl'' $ k \in \{ 1,\ldots,d \} $}{
+			Job $ j_r $ wird Zeitstrahl $ k $ zugeordnet
+		}
+		\Else{
+			öffne neuen Zeitstrahl $ d+1 $ \\
+			ordne Job $ j_r $ Zeitstrahl $ d+1 $ zu \\
+			$ d \leftarrow d+1 $
+		}
+	}
+	\caption{Interval Partitioning}
+\end{algorithm}
+
+\subsection{Verspätungsminimierung}
+
+\begin{itemize}
+	\item Eingabe: Jobs $ j, 1 \leq j \leq n $, mit Zeitdauer $ t_j $ und ''Frist'' $ d_j $.
+	\item Aufgabe: Finde Ausführungsreihenfolge der Jobs, so dass \textbf{maximale Verspätung} minimiert wird, d.h. minimiere $ L := \max_j l_j $, wobei $ l_j := \max \{ 0, f_j - d_j \} $, und $ f_j $ die Beendigungszeit von $ j $ in dieser Ausführungsreihenfolge ist.
+	\item Greedy-Strategie: Führe Jobs gemäß steigender Frist $ d_j $ aus.
+	\item Der Algorithmus liefert immer eine optimale Lösung mit Laufzeit $ \mathcal{O}(n \log n) $.
+\end{itemize}
+
+\subsection{Kürzeste Wege in Graphen}
+
+\begin{itemize}
+	\item Eingabe: Gerichteter Graph $ G = (V,E) $ mit Längeangaben $ l_e \geq 0 $ für jede Kante $ e \in E $, Startknoten $ s $ und Zielknoten $ t $.
+	\item Aufgabe: Finde kürzesten Pfad (Summe der Kantenlängen) von $ s $ nach $ t $.
+	\item Greedy-Ansatz
+	\begin{itemize}
+		\item Starte mit $ S := \{ s \} $.
+		\item Vergrößere $ S $ schrittweise um je einen Knoten.
+		\item Für jeden Knoten in $ S $ ist kürzester Pfad entdeckt.
+		\item Kandidaten für Hinzunahme zu $ S $ sind Knote mit mindestens einem Nachbarn in $ S $. Erweiterung von $ S $ immer von Knoten aus, der geringste Distanz zu $ s $ hat (unter den noch nicht betrachteten Knoten).
+	\end{itemize}
+	\item Mittels des Algorithmus von Dijkstra lassen sich alle kürzesten Pfade ausgehend von $ s $ in $ \mathcal{O}(m \log n) $ Schritten mittels eines Priority Queue berechnen.
+\end{itemize}
+
+\subsection{Minimale Spannbäume}
+
+\begin{itemize}
+	\item Eingabe: Zusammenhängender ungerichteter Graph $ G $ mit beliebigen Kantengewichten.
+	\item Aufgabe: Finde einen Baum in $ G $, der alle Knoten von $ G $ enthält und bei dem die Summe der Kantengewichte minimal ist.
+	\item Berühmte Greedy-Algorithmen:
+	\begin{itemize}
+		\item Kruskal: Wähle ''billigste'' Kante, die keinen Kreis erzeugt.
+		\item Prim: Erzeuge Baum ausgehend von einem Startknoten durch Erweiterung um billigste Kante.
+	\end{itemize}
+	\item Beide genannten Algorithmen können das MST-Problem in $ \mathcal{O}(m \log n) $ Schritten lösen.
+\end{itemize}
+
+\subsection{Kodierung}
+
+\begin{itemize}
+	\item Eingabe: Zeichenkette $ T $ über endlichem Alphabet $ \Sigma = \{ c_1,\ldots,c_n \} $, für jeden Buchstaben $ c_i $ eine ''relative Häufigkeit'' $ f(c_i) \geq 0 $, wobei $ \sum_{1}^{n} f(c_i) = 1 $.
+	\item Aufgabe: Kodiere $ T $ über Binäralphabet $ \{ 0,1 \} $, sodass der entstehende Code minimale Länge hat.
+	\item Eine Kodierung $ \gamma: \Sigma \rightarrow \{ 0,1 \}^+ $ heißt \textbf{Präfix-Code} bzw. \textbf{präfixfrei}, falls es keine zwei Buchstaben $ a,b \in \Sigma $ gibt, so dass $ \gamma(a) $ ein Präfix von $ \gamma(b) $ ist.
+\end{itemize}
+
+\subsubsection{Problemformulierung}
+
+\begin{itemize}
+	\item \textbf{Modifizierte Aufgabenstellung}: Finde eine präfixfreie Kodierung $ rightsquigarrow $ Finde vollständigen Binärbaum, dessen Blätter mit de Elementen aus $ \Sigma $ beschriftet sind (1:1), so dass die Kosten des Baums $ T $
+	\[ cost(T) = \sum_{i=1}^{n} f(c_i) \cdot (\text{''Tiefe von $ c_i $ im Baum''}) \]
+	minimal sind.
+\end{itemize}
+
+\subsubsection{Huffmann-Algorithmus}
+
+\begin{algorithm}[H]
+	\If{$ \mid \Sigma \mid = 2 $}{
+		kodiere einen Buchstaben mit 0, den anderen mit 1
+	}
+	\Else{
+		$ a,b := $ ''Buchstaben mit kleinster Häufigkeit'' \\
+		lösche $ a $ und $ b $ aus $ \Sigma $ und füge neuen Buchstaben $ \overline{ab} $ hinzu \\
+		$ f(\overline{ab}) := f(a) + f(b) $ \\
+		Konstruiere rekursiv präfixfreien Code mit Baum $ T' $ \\
+		Ersetze in $ T' $ das Blatt $ \overline{ab} $ durch den Unterbaum
+	}
+	\caption{Huffmann-Algorithmus}
+\end{algorithm}
+
+Der Algorithmus von Huffman findet in $ \mathcal{O}(n \log n) $ Zeit eine optimale präfixfreie Kodierung.
+
 \end{document}
