@@ -403,4 +403,73 @@ als $ f $.
 
 Der Algorithmus von Huffman findet in $ \mathcal{O}(n \log n) $ Zeit eine optimale präfixfreie Kodierung.
 
+\section{Divide-\&-Conquer}
+
+\subsection{Grundprinzip}
+
+\begin{itemize}
+	\item Zerlege Problem in mehrere (meist zwei) Teilprobleme.
+	\item Löse jeden Teil rekursiv.
+	\item Kombiniere die Lösungen der Teilprobleme zu Gesamtlösung.
+\end{itemize}
+
+\subsection{Rekursionsungleichungen}
+
+\[ T(n) = aT(\lceil \frac{n}{b} \rceil) + \mathcal{O}(n^d) \]
+
+\subsubsection{Master Theorem}
+
+\begin{itemize}
+	\item Sei $ T(n) = aT(\lceil \frac{n}{b} \rceil) + \mathcal{O}(n^d)  $ für Konstanten $ a > 0, b > 1 $ und $ d \geq 0 $, dann
+	\[ T(n) = \begin{cases}
+		\mathcal{O}(n^d) & \text{, falls } d > \log_b a \\
+		\mathcal{O}(n^d \log n) & \text{, falls } d = \log_b a \\
+		\mathcal{O}(n^{\log_b a}) & \text{, falls } d < \log_b a
+	\end{cases} \]
+\end{itemize}
+
+\subsubsection{Zählen von Inversionen}
+
+\begin{itemize}
+	\item Eingabe: Eine feste Odnung $ a_1,a_2,\ldots,a_n $ der Zahlen von 1 bis $ n $.
+	\item Aufgabe: Bestimme die Anzahl von Inversionen im Vergleich zur Ordnung $ 1,2,\ldots,n $, wobei eine \textbf{Inversion} ein Paar $ (i,j), 1 \leq i < j \leq n $, mit $ a_i > a_j $ ist.
+	\item Lösungsansatz:
+	\begin{enumerate}
+		\item Teile Eingabe in 2 Hälften
+		\item Zähle Inversionen je Hälfte
+		\item Gesamtzahl der Invesionen = Addition de beiden Werte plus ''Inversionen zwischen den Hälften''.
+	\end{enumerate}
+	\item Die Zahl der Inversionen einer Folge von $ n $ verschiedenen Zahlen aus $ \{ 1,\ldots,n \} $ lässt sich in $ \mathcal{O}(n \log n) $ ermitteln. (Brute-force-Ansatz bräuchte $ \mathcal{O}(n^2) $ Zeit).
+\end{itemize}
+
+\subsection{Closest Pair}
+
+\begin{itemize}
+	\item Eingabe: $ n $ Punkte in der Euklidischen Ebene.
+	\item Aufgabe: Finde Punktepaar mit geringstem Abstand.
+	\item Beispiel ($ \mathcal{O}(n^2) $): \\
+	\includegraphics[width=\linewidth]{figures/closest-pair.pdf}
+	\item Einfacher Spezialfall: Alle Punkte auf einer Geraden sortieren ($ \mathcal{O}(n \log n) $) \\
+	\includegraphics[width=\linewidth]{figures/closest-pair-gerade.pdf}
+\end{itemize}
+
+\subsubsection{Algorithmus}
+
+\begin{itemize}
+	\item Teile ''Punktwolke'' in zwei gleich große Hälften
+	\item Paar ist entweder in einer der beiden Hälften, oder je ein Punkt in einer der beiden Hälften.
+	\item Nur schmaler grenzstreifen ist zu untersuchen
+	\item Jeder Punkt im Grenzstreifen ist nur mit konstant vielen anderen innerhalb des Grenzstreifens zu vergleichen.
+	\item Closest Pair lässt sich in $ \mathcal{O}(n \log n) $ Zeit lösen.
+\end{itemize}
+
+\subsection{Matrixmultiplikation}
+
+\begin{itemize}
+	\item Eingabe: Zwei $ n \times n $ Matrizen $ A $ und $ B $
+	\item Aufgabe: Berechne $ C = A \cdot B $
+	\item Schulmethode: ''Zeile mal Spalte'' $ \rightsquigarrow \mathcal{O}(n^3) $ Elementaroperationen
+	\item D\&C-Idee: Partitionierung in vier quadratische Teilmatrizen
+\end{itemize}
+
 \end{document}
