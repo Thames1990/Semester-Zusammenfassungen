@@ -4,6 +4,7 @@
 \usepackage[utf8x]{inputenc}
 \usepackage[english]{babel}
 \usepackage{graphicx}
+\usepackage{svg}
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage[ruled,linesnumbered]{algorithm2e}
@@ -100,28 +101,28 @@
 		\item Eingabe: Intervalle mit Start- \& Endzeiten
 		\item Aufgabe: Finde größtmögliche Menge nichtüberlappender Intervalle
 		\item Beispiel für Greedy \\
-		\includegraphics[width=\linewidth]{figures/interval-scheduling.pdf}
+		\includesvg[width=\linewidth]{figures/interval-scheduling.svg}
 	\end{itemize}
 	\item Gewichtetes Interval Scheduling
 	\begin{itemize}
 		\item Eingabe: Intervalle mit Start- \& Endzeiten und positiven Gewichten
 		\item Aufgabe: Finde Lösung mit größtmöglichem Gesamtgewicht
 		\item Beispiel für dynamisches Programmieren: \\
-		\includegraphics[width=\linewidth]{figures/gewichtetes-interval-scheduling.pdf}
+		\includesvg[width=\linewidth]{figures/gewichtetes-interval-scheduling.svg}
 	\end{itemize}
 	\item Bipartites Matching
 	\begin{itemize}
 		\item Eingabe: Bipartiter Graph
 		\item Aufgabe: Finde größtmögliche ''unabhängige'' (keine gemeinsamen Endpunkte) Kantenmenge
 		\item Beispiel für Netzwerkflüsse: \\
-		\includegraphics{figures/bipartites-matching.pdf}
+		\includesvg{figures/bipartites-matching.svg}
 	\end{itemize}
 	\item Independent set
 	\begin{itemize}
 		\item Eingabe: Ungerichteter Graph
 		\item Aufgabe: Finde größtmögliche ''unabhängige'' (paarweise nicht benachbarte) Knotenmenge
 		\item Beispiel (NP-schwer): \\
-		\includegraphics{figures/independent-set.pdf}
+		\includesvg{figures/independent-set.svg}
 		\item Vorige Probleme sind Spezialfälle von \textbf{Independent Set}
 	\end{itemize}
 	\item Competitive Facility Location
@@ -130,7 +131,7 @@
 		\item Regeln: Zwei Spieler wählen alternierend Knoten; gewählter Knoten wird samt Nachbarn gelöscht.
 		\item Ziel: Spieler 1 will Knoten so wählen, dass Spieler 2 möglichst wenige Pnkte macht
 		\item Beispiel (PSPACE-vollständig): \\
-		\includegraphics[width=\linewidth]{figures/competitive-facility-location.pdf}
+		\includesvg[width=\linewidth]{figures/competitive-facility-location.svg}
 	\end{itemize}
 \end{enumerate}
 
@@ -145,10 +146,10 @@
 
 \begin{itemize}
 	\item $ T(n) = \mathcal{O}(f(n)) $ falls $ \exists c > 0, n_0 \geq 0: \forall n \geq n_0 : T(n) \leq c \cdot f(n) $ \\
-	\includegraphics[width=\linewidth]{figures/o-notation.pdf}
+	\includesvg[width=\linewidth]{figures/o-notation.svg}
 	\item $ T(n) = \Omega(f(n)) $ falls $ \exists c > 0, n_0 \geq 0 : \forall n \geq n_0: T(n) \geq c \cdot f(n) $
 	\item $ T(n) = \Theta(f(n)) $ falls $ T(n) = \mathcal{O}(f(n)) $ und $ T(n) = \Omega(f(n)) $ \\
-	\includegraphics[width=\linewidth]{figures/theta.pdf}
+	\includesvg[width=\linewidth]{figures/theta.svg}
 	\item $ T(n) = o(f(n)) $ falls $ \forall c > 0 : \exists n_0 \geq 0 \forall n \geq n_0 : T(n) < c \cdot f(n) $
 	\item $ T(n) = \omega(f(n)) $ falls $ f(n) = o(T(n)) $
 \end{itemize}
@@ -169,14 +170,14 @@ als $ f $.
 	\item $ G = (V,E) $
 	\item Konvention: $ n .= \mid V \mid, m:= \mid E \mid $
 	\item Gerichteter Graph: $ e \in E $ mit $ e = (u,v), u, v \in V $ (geordnetes Paar) \\
-	\includegraphics[width=\linewidth]{figures/gerichteter-graph.pdf}
+	\includesvg[width=\linewidth]{figures/gerichteter-graph.svg}
 	\item Ungerichteter Graph: $ e \in E $ mit $ e = \{ u,v \}, u, v \in V $ (ungeordnetes Paar) \\
-	\includegraphics[width=\linewidth]{figures/ungerichteter-graph.pdf}
+	\includesvg[width=\linewidth]{figures/ungerichteter-graph.svg}
 \end{itemize}
 
 \subsubsection{Repräsentation}
 
-\includegraphics[width=\textwidth]{figures/graph.pdf}
+\includesvg[width=\textwidth]{figures/graph.svg}
 
 \begin{itemize}
 	\item Adjazenzmatrix
@@ -185,26 +186,26 @@ als $ f $.
 		\item $ A_{i,j} = 1 \iff \{ v_i,v_j \} \in E $
 		\item Hoher Speicherbedarf für Graphen mit wenigen Kanten (''dünn'', ''sparse'')
 	\end{itemize}
-	\includegraphics{figures/adjazenz-matrix.pdf}
+	\includesvg{figures/adjazenz-matrix.svg}
 	\item Adjazenzliste
 	\begin{itemize}
 		\item Array/Liste von Nachbarn für jeden Knoten
 		\item Jeder Array-Eintrag führt zur Liste von Nachbarn
 	\end{itemize}
-	\includegraphics{figures/adjazenz-liste.pdf}
+	\includesvg{figures/adjazenz-liste.svg}
 \end{itemize}
 
 \subsubsection{Bekannte Begriffe}
 
 \begin{itemize}
 	\item Pfad: Folge von Knoten, aufeinanderfolgende sind benachbart \\
-	\includegraphics[width=\linewidth]{figures/pfad.pdf}
+	\includesvg[width=\linewidth]{figures/pfad.svg}
 	\item Kreis: Pfad $ v_1,\ldots,v_l $ mit $ v_1=v_l $ \\
-	\includegraphics[width=\linewidth]{figures/kreis.pdf}
+	\includesvg[width=\linewidth]{figures/kreis.svg}
 	\item Ungerichteter zusammenhängender Graph: Zwischen allen Knotenpaaren existiert ein Pfad \\
-	\includegraphics{figures/ungerichteter-zusammenhaengender-graph.pdf}
+	\includesvg{figures/ungerichteter-zusammenhaengender-graph.svg}
 	\item Baum: Ungerichtet, kreisfrei, zusammenhängend \\
-	\includegraphics{figures/baum.pdf}
+	\includesvg{figures/baum.svg}
 \end{itemize}
 
 \subsubsection{Graphtraversierung}
@@ -223,7 +224,7 @@ als $ f $.
 	\item Mit BFS findet man alle kürzesten Pfade ausgehend von $ s $
 \end{itemize}
 
-\includegraphics[width=\linewidth]{figures/bfs.pdf}
+\includesvg[width=\linewidth]{figures/bfs.svg}
 
 \paragraph{Tiefensuche (DFS)}\mbox{} \\
 \begin{algorithm}[H]
@@ -240,7 +241,7 @@ als $ f $.
 	\caption{DFS}
 \end{algorithm}
 
-\includegraphics[width=\linewidth]{figures/dfs.pdf}
+\includesvg[width=\linewidth]{figures/dfs.svg}
 
 \begin{itemize}
 	\item DFS kann in $ \mathcal{O}(n+m) $ Zeit durchgeführt werden.
@@ -250,16 +251,16 @@ als $ f $.
 
 \subsection{Bipartite Graphen}
 
-\includegraphics{figures/bipartiter-graph.pdf}
+\includesvg{figures/bipartiter-graph.svg}
 
 \begin{itemize}
 	\item Ein Graph $ G = (V,E) $ ist \textbf{bipartit}, falls $ V = V_1 \cup V_2 $ mit $ V_1 \cap V_2 = \emptyset $ und $ E \subseteq V_1 \times V_2 $.
 	\item Äquivalent:
 	\begin{itemize}
 		\item $ G $ ist zweifärbbar \\
-		\includegraphics{figures/zweifaerbbar.pdf}
+		\includesvg{figures/zweifaerbbar.svg}
 		\item $ G $ hat keinen Kreis ungerader Länge \\
-		\includegraphics[width=\linewidth]{figures/kreis-ungerader-laenge.pdf}
+		\includesvg[width=\linewidth]{figures/kreis-ungerader-laenge.svg}
 	\end{itemize}
 \end{itemize}
 
@@ -271,9 +272,9 @@ als $ f $.
 	\item Beispiel
 	\begin{itemize}
 		\item Stark zusammenhängend \\
-		\includegraphics{figures/stark-zusammenhaengend.pdf}
+		\includesvg{figures/stark-zusammenhaengend.svg}
 		\item Nicht stark zusammenhängend \\
-		\includegraphics[width=\linewidth]{figures/nicht-stark-zusammenhaengend.pdf}
+		\includesvg[width=\linewidth]{figures/nicht-stark-zusammenhaengend.svg}
 	\end{itemize}
 \end{itemize}
 
@@ -283,7 +284,7 @@ als $ f $.
 	\item Sei $ G = (V,E) $ ein gerichteter Graph. Eine \textbf{topologische Sortierung} ist eine totale Ordnung $ v_1,v_2,\ldots,v_n $ mit Knoten aus $ V $, so dass für jede Kante $ (v_i,v_j) \in E $ gilt: $ i < j $.
 	\item DAG: ''directed acyclic graph'': gerichteter, azyklische Graph
 	\item Beispiel: \\
-	\includegraphics[width=\linewidth]{figures/task-scheduling.pdf}
+	\includesvg[width=\linewidth]{figures/task-scheduling.svg}
 	\item $ G $ ist gerichtet azyklisch $ \iff G $ hat top. Sortierung
 	\item Eine topologische Sortierung eines Graphen $ G $, falls existierend, kann in $ \mathcal{O}(n+m) $ Zeit gefunden werden. Beweisidee:
 	\begin{enumerate}
@@ -354,7 +355,7 @@ als $ f $.
 	\item Mittels des Algorithmus von Dijkstra lassen sich alle kürzesten Pfade ausgehend von $ s $ in $ \mathcal{O}(m \log n) $ Schritten mittels eines Priority Queue berechnen.
 \end{itemize}
 
-\includegraphics[width=\textwidth]{figures/kuerzeste-wege.pdf}
+\includesvg[width=\textwidth]{figures/kuerzeste-wege.svg}
 
 \subsection{Minimale Spannbäume}
 
@@ -448,9 +449,9 @@ Der Algorithmus von Huffman findet in $ \mathcal{O}(n \log n) $ Zeit eine optima
 	\item Eingabe: $ n $ Punkte in der Euklidischen Ebene.
 	\item Aufgabe: Finde Punktepaar mit geringstem Abstand.
 	\item Beispiel ($ \mathcal{O}(n^2) $): \\
-	\includegraphics[width=\linewidth]{figures/closest-pair.pdf}
+	\includesvg[width=\linewidth]{figures/closest-pair.svg}
 	\item Einfacher Spezialfall: Alle Punkte auf einer Geraden sortieren ($ \mathcal{O}(n \log n) $) \\
-	\includegraphics[width=\linewidth]{figures/closest-pair-gerade.pdf}
+	\includesvg[width=\linewidth]{figures/closest-pair-gerade.svg}
 \end{itemize}
 
 \subsubsection{Algorithmus}
