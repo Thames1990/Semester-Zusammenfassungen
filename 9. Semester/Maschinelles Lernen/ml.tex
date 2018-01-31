@@ -1,0 +1,133 @@
+\documentclass{scrartcl}
+
+\usepackage{ucs}
+\usepackage[utf8x]{inputenc}
+\usepackage[english]{babel}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{hyperref}
+
+\setlength\parindent{0pt}
+
+\title{Maschinelles Lernen \\ Zusammenfassung}
+\author{Thomas Mohr}
+\date{}
+
+\begin{document}
+\maketitle
+\pagebreak
+\tableofcontents
+\pagebreak
+
+\section{Grundlagen}
+
+\subsection{(Un)-überwachtes Lernen}
+
+\begin{itemize}
+	\item Eine \textbf{überwachte} Lernaufgabe liegt vor, wenn wir Beispiele 
+	haben, die das zu lernende Attribut bereits tragen (Zielvariable).
+	\begin{itemize}
+		\item \textbf{Regression} im Fall von kontinuierlichen Werten (z.B. $ 
+		\mathbb{R} $)
+		\item \textbf{Klassifikation} im Fall von diskreten Labeln (z.B. 
+		\textit{TRUE, FALSE}; ausgezeichnet, durchschnittlich, schlecht)
+	\end{itemize}
+	\item Eine \textbf{unüberwachte} Lernaufgabe liegt vor, wenn es kein 
+	Attribut gibt, das wir lernen wollen und für das wir bereits Beispiele 
+	haben.
+	\begin{itemize}
+		\item Clustering, also die Unterteilung der Daten in eine Menge 
+		von Gruppen
+		\item Finden von Ausreißern
+	\end{itemize}
+\end{itemize}
+
+\subsection{Inkrementelles Lernen}
+
+\begin{itemize}
+	\item Anstatt das Modell stets von Null an zu lernen, wird das alte Modell 
+	mit neuen Beispielen erweitert.
+	\item 
+\end{itemize}
+
+\subsection{Aktives Lernen}
+
+\begin{itemize}
+	\item Aktive Lernverfahren erzeugen die Beispiele selbst, d.h., sie sagen 
+	dem Benutzer, welches Tupel benötigt wird.
+\end{itemize}
+
+\subsection{Data cleansing}
+
+\begin{itemize}
+	\item Fehlende Werte auffüllen
+	\item Rauschen aus den Daten entfernen
+	\item Daten glätten
+	\item Ausreißer entfernen
+	\item Identische Tupel identifizieren
+	\item Daten komprimieren
+\end{itemize}
+
+\subsection{Datensatz}
+
+\begin{itemize}
+	\item Ein Datensatz ist eine Tabelle
+	\item Eine Instanz (auch Objekt) ist eine Zeile in dieser Tabelle
+	\item Ein Attribut ist ein Feld, das ein Merkmal des Objekts repräsentiert. 
+	Mögliche Arten von Attributen sind
+	\begin{itemize}
+		\item nominal (kategorisch)
+		\begin{itemize}
+			\item Keine sinnvolle Ordnung
+			\item Wir können nicht rechnen (z.B. Mittelwert, Median, Abstände)
+		\end{itemize}
+		\item ordinal (sortierte Kategorien)
+		\begin{itemize}
+			\item Sinnvolle Ordnung
+			\item Der Unterschied zwischen zwei Ausprägungen ist i.d.R. 
+			unbekannt
+		\end{itemize}
+		\item binär
+		\begin{itemize}
+			\item Können nur zwei Werte annehmen
+		\end{itemize}
+		\item numerisch
+		\begin{itemize}
+			\item Messbare Quantitäten
+			\item Abstand zwischen zwei Werten kann quantifiziert werden
+			\item Auf den Attributen kann gerechnet werden
+			\item Wir unterscheiden
+			\begin{itemize}
+				\item diskrete Attribute (endliche oder abzählbar unendliche 
+				Menge von womöglichen Ausprägungen)
+				\item kontinuierliche Werte, reele Zahlen
+				\item Attribute mit echtem Nullpunkt (Gewicht, Größe)
+				\item Attribute ohne echten Nullpunkt (Jahresangaben, 
+				Temperatur in °C)
+			\end{itemize}
+		\end{itemize}
+	\end{itemize}
+	\item Ein Datensatz besitzt $ N $ Instanzen und $ d $ Attribute
+	\begin{itemize}
+		\item $ x_i $ beschreibt die $ i $-te Instanz
+		\item $ x_{ij} $ beschreibt das $ j $-te Attribut der $ i $-ten Instanz
+		\item $ x $ beschreibt einen $ d $-dimensionalen Vektor
+		\item Liegt eine überwachte Lernaufgabe vor, so ist das Label der $ i 
+		$-ten Instanz $ t_i $
+	\end{itemize}
+\end{itemize}
+
+\section{Deskriptive Statistik}
+
+\section{Regression}
+
+\section{Klassifikation}
+
+\section{Clustering}
+
+\section{Warenkorbanalyse}
+
+\section{Analyse von Graphdaten}
+
+\end{document}
