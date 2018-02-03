@@ -48,7 +48,6 @@
 \begin{itemize}
 	\item Anstatt das Modell stets von Null an zu lernen, wird das alte Modell 
 	mit neuen Beispielen erweitert.
-	\item 
 \end{itemize}
 
 \subsection{Aktives Lernen}
@@ -119,6 +118,374 @@
 \end{itemize}
 
 \section{Deskriptive Statistik}
+
+\subsection{Beschreibung von Daten}
+
+\begin{itemize}
+	\item Wir betrachten nun Spalten des Datensatzes, also z.B. Spalte $ j $
+	\[ X_j = (x_{1j},\ldots,x_{Nj}) \]
+\end{itemize}
+
+\subsection{Mittelwert}
+
+\begin{itemize}
+	\item Der Erwartungswert (Mittelwert) macht Aussagen zur Lage (dem 
+	''Zentrum'') der Daten
+	\[ \mu_j := \sum_{i=1}^{N} x_{ij} \cdot p(x_{ij}) = \frac{1}{N} 
+	\sum_{i=1}^{N} x_{ij} \]
+	\item Ist eine Gewichtung vorhanden, so kann der gewichtete 
+	\underline{Mittelwert} herangezogen werden
+	\[ \mu'_j := \frac{\sum_{i=1}^{N} w_i x_{ij}}{\sum_{i=1}^{N} w_i} \]
+	\item Problematisch bei Ausreißern
+\end{itemize}
+
+\subsection{Median und Midrange}
+
+\begin{itemize}
+	\item Der Median ist der mittlere Wert in der \underline{sortierten} Folge 
+	$ X_j $
+	\item Das mittlere Element muss nicht existieren
+	\begin{itemize}
+		\item Per Definition wählen wir dann als Median den Wert
+		\[ \frac{1}{2} (x_{\frac{N}{2},j} + x_{\frac{N}{2+1},j}) \]
+		im Fall numerischer Daten
+		\item Im Fall von ordinalen Daten kann der Median das \underline{linke} 
+		oder das \underline{rechte} Element sein, oder jede mögliche Ausprägung 
+		dazwischen
+	\end{itemize}
+	\item Der Midrange ist das arithmetische Mittel von Maximum und Minimum von 
+	$ X_j $
+\end{itemize}
+
+\subsection{Modus}
+
+\begin{itemize}
+	\item Der Modus ist die am häufigsten vorkommende Ausprägung
+	\item Somit ist der Modus auch für nominale Attribute berechenbar
+	\item WIrd die maximale Häufigkeit für mehr als einen Wert angenommen, so 
+	gibt es mehr als einen Modus
+	\item Kommt jede Ausprägung maximal einmal vor, so ist der Modus nicht 
+	existent
+\end{itemize}
+
+\subsection{Varianz und Schiefe}
+
+\begin{itemize}
+	\item Über einen Vergleich von Modus, Median und Mittelwert können wir 
+	(erste) Aussagen zur Schiefe machen
+	\item Über Maximum und Minimum können wir die Ausbreitung bestimmen
+	\item Mit dem Moment 2-ter und 3-ter Ordnung können wir beides auch 
+	quantisieren
+	\item Das Moment $ k $-ter Ordnung des $ j $-ten Attributs ist definiert als
+	\[ m_j^{(k)} = E((X_j - \mu_j)^k) \]
+	mit $ E(X) = \sum_{1 \leq i \leq N} x_{ij} p(x_{ij}) $ und $ \mu_j $ ist 
+	Erwartungswert von $ X_j $
+\end{itemize}
+
+\subsubsection{Moment $ k $-ter Ordnung}
+
+\begin{itemize}
+	\item $ k=1:? $
+	\item $ k=2:Var(X_j) := E((X_j - \mu_j)^2) = E(X_j^2) - \mu_j^2 $
+	\[  \]
+	\begin{itemize}
+		\item Die Varianz gibt die erwartete quadratische Abweichung vom 
+		Mittelwert an
+		\item Sie ist also ein Maß für die Streuung der Daten (um den 
+		Mittelwert)
+		\item Die Quadratwurzel der Varianz wird als Standardabweichung 
+		bezeichnet und mit $ \sigma $ symbolisiert
+	\end{itemize}
+	\item $ k=3:v(X_j) := E((X_j - \mu_j)^3) $
+	\begin{itemize}
+		\item Die Schiefe ist eine Kennzahl für die Asymmetrie einer Verteilung
+		\[ v(X) = \frac{3(\overline{X} - \tilde{X})}{s} \]
+		\item $ v(X_j) < 0 $: Verteilung ist linksschief
+		\item $ v(X_j) > 0 $: Verteilung ist rechtsschief
+		\item $ v(X_j) = 0 $: Verteilung symmetrisch
+	\end{itemize}
+	\item $ k=4:w(X_j) := E((X_j - \mu_j)^4) $
+	\begin{itemize}
+		\item Die Kurtosis ist eine Kennzahl für die Wölbung einer Verteilung
+		\[ w(X) = \frac{1}{N} \sum_{i=1}^{N} (\frac{x_i - \overline{X}}{s})^4 \]
+		\item $ w(X) < 0 $: Verteilung ist platykurtisch (flachgipflig)
+		\item $ w(X) > 0 $: Verteilung ist leptokurtisch (steilgipflig)
+		\item $ w(X) = 0 $: Verteilung ist mesokurtisch (normalgipflig)
+	\end{itemize}
+\end{itemize}
+
+\subsection{Quantil}
+
+\begin{itemize}
+	\item Zur Berechnung der Quantile wird $ X_j $ zunächst aufsteigend sortiert
+	\item Das $ k $-te Quantil ist der Wert $ x $ aus $ X_j $, so dass maximal 
+	$ \frac{k}{q} $ der Werte in $ X_j $ kleiner als $ x $ sind, und $ 
+	\frac{(q-k)}{q} $ größer; für $ 0<k<q $.
+	\item Es gibt somit $ (q-1) $ $ q $-Quantile
+	\item Sei $ p := \frac{k}{q} $. Dann ist das $ k $-te $ q $-Quantil von $ 
+	X_j $ definiert als:
+	\[ x_{pj} := \begin{cases}
+		\frac{1}{2} (x_{Np} + x_{Np+1}) & Np \text{ gerade} \\
+		x_{\lfloor Np+1 \rfloor} & Np \text{ ungerade}
+	\end{cases} \]
+\end{itemize}
+
+\subsubsection{Interquantile range (IQR)}
+
+\begin{itemize}
+	\item Ist definiert als $ IQR = Q3 - Q1 $
+	\item Es gibt an, wie die 50\% der mittleren Daten streuen
+	\item Der IQR kann zudem benutzt werden, um Ausreißer zu erkennen
+	\begin{itemize}
+		\item Berechne $ \Delta = 1.5 \cdot IQR $
+		\item Ein Ausreißer ist ein Wert, der
+		\begin{itemize}
+			\item kleiner $ Q1 - \Delta $ ist
+			\item größer $ Q3 + \Delta $ ist
+		\end{itemize}
+	\end{itemize}
+	\item $ Q1,Q2,Q3,IQR $ sowie Minimum und Maximum können graphisch im 
+	Boxplot zusammengefasst werden
+\end{itemize}
+
+\subsection{Korrelation zwischen Attributen}
+
+\begin{itemize}
+	\item Wir betrachten nun einen (möglichen) Zusammenhang der Spalten $ X_i $ 
+	und $ X_j $
+	\item Je nach Attribut existieren unterschiedliche Maße
+	\begin{itemize}
+		\item Korrelationskoeffizienten und Varianz für numerische Daten
+		\item Rangkorrelationskoeffizienten für ordinale Daten
+		\item $ \chi^2 $-Test für nominale Attribute
+	\end{itemize}
+\end{itemize}
+
+\subsubsection{Kovarianz für numerische Daten}
+
+\begin{itemize}
+	\item Erlaubt zu messen, wie startk sich zwei Variablen gemeinsam ändern
+	\item Wir benötigen den Begriff des Erwartungswerts, der hier aber dem 
+	Mittelwert entspricht
+	\[ E(X_j) = \overline{X_j} = \frac{1}{N} \sum_{i=1}^{N} x_{ij} \]
+	\item $ Cov(X_i,X_j) = E((X_i - \overline{X_i})(X_j - \overline{X_j})) = 
+	E(X_iX_j) - \overline{X_i} \cdot \overline{X_j} $
+	\item Tendieren $ X_i $ und $ X_j $ dazu sich gemeinsam zu ändern, so ist $ 
+	Cov(X_i,X_j) $ positiv, bei entgegengesetzter Änderung negativ
+	\item Das Maß ist nicht normalisiert
+\end{itemize}
+
+\subsubsection{Korrelationskoeffizienten für numerische Daten}
+
+\begin{itemize}
+	\item Der Korrelationskoeffizient ist normalisiert im Interval $ [-1,1] $
+	\[ cor(X_i,X_j) = \frac{Cov(X_i,X_j)}{\sqrt{Var(X_i)} \sqrt{Var(X_j)}} \]
+	\item Wir haben keine Korrelation bei einem Wert von 0
+	\item Positive (negative) Korrelation liegt bei positiven (negativen) 
+	Werten vor
+\end{itemize}
+
+\subsubsection{Rangkorrelationskoeffizient}
+
+\begin{itemize}
+	\item Der (Spearman) Rangkorrelationskoeffizient basiert auf den Rängen der 
+	Elemente; wir betrachten die Spalten $ X_i $ und $ X_j $. Er wird berechnet 
+	als
+	\[ r_s(X_i,X_j) = \frac{\sum_{1 \leq k \leq N} (rank(x_{ki}) - 
+	\mu Rank(X_i)) \cdot (rank(x_{kj}) - \mu Rank(X_j)}{\sqrt{\sum_{1 \leq k 
+	\leq N} (rank(x_{ki}) - \mu Rank(X_i))^2} \sqrt{\sum_{1 \leq k \leq N} 
+(rank(x_{kj}) - \mu Rank(X_j))^2}} \]
+	mit $ \mu Rank(X_i) $ ist der mittlere Rang in Spalte $ i $
+	\item Der Rang wird aufsteigend anhand der Werte bestimmt. Der kleinste 
+	Wert nimmt dabei Rang 1 ein, der zweitkleinste Rang 2, usw. Tritt ein Wert 
+	mehrfach auf, so ergibt sich der Rang aus dem Arithmetischen Mittel.
+	\item $ rs $ ist normalisiert in $ [-1,1] $
+\end{itemize}
+
+\subsubsection{$ \chi^2 $-Test}
+
+\begin{itemize}
+	\item Seien $ a_1,\ldots,a_c $ die $ c $ Werte, die das Attribut $ X_k $ 
+	aufweist, $ b_1,\ldots,b_r $ die $ r $ Werte, die wir in der Spalte $ X_l $ 
+	finden
+	\item Berechne in $ o_{ij} $ die beobachtete Anzahl der Ereignisse, dass $ 
+	X_k $ den Wert $ a_i $ und $ X_l $ den Wert $ b_j $ \underline{gemeinsam} 
+	annehmen
+	\item Wir können auch die erwartete Anzahl berechnen (für nicht korrelierte 
+	Atrribute):
+	\[ e_{ij} = \frac{1}{N} (|X_k=a_i| \cdot |X_l=b_j|) \]
+	\item Die Pearson $ \chi^2 $ Statistik kann wie folgt berechnet werden:
+	\[ \chi^2 = \sum_{i=1}^{c} \sum_{j=1}^{r} \frac{(o_{ij} - 
+	e_{ij})^2}{e_{ij}} \]
+	\item Die Statistik testet die \underline{Null-Hypothese der 
+	Unabhängigkeit} zweier Variablen
+	\item Der Test basiert auf einem Signifikanzniveau mit $ (r-1) \cdot (c-1) 
+	$ Freiheitsgraden
+	\begin{itemize}
+		\item Das Signifikanzniveau ist die Wahrscheinlichkeit, mit der die 
+		Nullhypothese fälschlicherweise verworfen wird kann, obwohl sie 
+		eigentlich richtig ist.
+	\end{itemize}
+	\item Die Hypothese kann abgelehnt werden, wenn der Wert der Prüfgröße 
+	größer ist als das $ (1-a) $-Quantil der $ \chi^2 $ Verteilung
+\end{itemize}
+
+\subsection{Visualisierung}
+
+\subsubsection{Boxplots}
+
+\begin{itemize}
+	\item $ IQR $ ist die breite Mitte der Box
+	\item Das untere Quartil ($ X_{0,25} $) ist die untere/linke Kante der Box
+	\item Das obere Quartil ($ X_{0,75} $) ist die obere/rechte Kante der Box
+	\item Der Median ist durch eine Linie in der Box gekennzeichnet
+	\item Die langen Enden der Box heißen Whisker und geben die Grenzen für 
+	Ausreißer an. Alle Werte die außerhalb der Whisker, und damit des 
+	zulässigen Bereichs liegen, heißen Ausreißer.
+\end{itemize}
+
+\subsubsection{Histogramme}
+
+\begin{itemize}
+	\item Werden zur Darstellung von Häufigkeitsverteilungen verwendet
+	\item Bei numerischen Attributen müssen disjunkte Klassen definiert werden
+	\begin{itemize}
+		\item Die Balkenbreite kann durch zwei Verfahren bestimmt werden:
+		\begin{itemize}
+			\item Scott-Regel: $ w = \dfrac{3,49 \cdot \sigma}{\sqrt[3]{N}} $
+			\item Regel von Diaconis: $ w = \frac{2(Q3-Q1)}{\sqrt[3]{N}} $
+		\end{itemize}
+		\item Die Häufigkeit ist proportional zum Flächeninhalt
+	\end{itemize}
+\end{itemize}
+
+\subsubsection{Quantil-Plots}
+
+\begin{itemize}
+	\item Ein Quantil-Plot erlaubt es das Verhalten der Werte eines Attributs 
+	abzuschätzen
+	\item Die Daten im $ i $-ten Attribut werden sortiert und das $ k $-te 
+	Element wird abgetragen auf $ f_k = \frac{k-0,5}{N} $
+\end{itemize}
+
+\paragraph{Quantil-Quantil-Plots (qq-Plots)}
+
+\begin{itemize}
+	\item Die Quantile einer Verteilung werden gegen die Quartile einer anderen 
+	Verteilung abgetragen
+	\item Die Werte in werden in den Attributen $ X_i $ und $ X_j $ sortiert
+	\item Enthalten beide Attribute die gleiche Anzahl an Elementen, so wird $ 
+	x_{ki} $ auf $ x_{kj} $ mit $ 1 \leq k \leq N $ abgebildet.
+	\item Ansonsten ist $ |X_i| < |X_j| $ und nur $ |X_i| $ Punkte können 
+	geplottet werden
+	\begin{itemize}
+		\item $ x_{ki} $ ist das $ \frac{k-0,5}{|X_i|} $ Quantil
+		\item Das $ \frac{k-0,5}{|X_i|} $ Quantil von $ X_j $ muss dann 
+		interpoliert werden
+	\end{itemize}
+\end{itemize}
+
+\subsection{Distanzen}
+
+\begin{itemize}
+	\item Ähnlichkeits- oder Distanzmaß, dass ein Objekt-Paar auf einen 
+	numerischen Wert abbildet
+	\item Metrik:
+	\begin{itemize}
+		\item Identität: $ d(x_i,x_j) = 0 \iff x_i = x_j $
+		\item Symmetrie: $ d(x_i,x_j) = d(x_j,x_i) $
+		\item Dreiecksungleichung: $ d(x_i,x_j) \leq d(x_i,x_k) + d(x_k,x_j) $
+		\item $ d(\cdot,\cdot) $ beschreibt hier ein Funktion und ist nicht mit 
+		der Anzahl an Attributen zu verwechseln
+	\end{itemize}
+	\item Eine Distanz kann in eine Ähnlichkeit und umgekehrt umgewandelt 
+	werden. Ist $ d: 0 \times 0 \rightarrow [0,1] $, so kann $ s(x_i,x_j) = 1 - 
+	d(x_i,x_j) $ definiert werden
+\end{itemize}
+
+\subsubsection{Distanz auf numerischen Attributen}
+
+\begin{itemize}
+	\item Minkowski Abstand (Metrik)
+	\[ d_h(x_i,x_j) = \sqrt[h]{|x_{i1} - x_{j1}|^h + \ldots + |x_{id} - 
+	x_{jd}|^h} \]
+	\begin{itemize}
+		\item $ h=1 $: Manhattan Distanz
+		\item $ h=2 $: Euklidische Distanz
+		\item Supremum Distanz für $ h \rightarrow \inf $, die zu $ \max_{1 
+		\leq f \leq d} |x_{if} - x_{jf}| $ konvergiert
+	\end{itemize}
+\end{itemize}
+
+\subsubsection{Distanz auf ordinalen Attributen}
+
+\begin{itemize}
+	\item Betrachtung der Ränge und einer darauf basierenden Abbildung
+	\item Sei $ M_f $ die Menge möglicher Ränge für das Attribut $ f $
+	\item Ersetze Wert $ x_{if} $ durch dessen Rang $ r_{if} \in \{ 
+	1,\ldots,M_f \} $
+	\item Nun kann mit den Rängen gearbeitet werden, allerdings sollte zuvor 
+	normalisiert werden:
+	\[ z_{if} = \frac{r_{if} - 1}{M_f - 1} \in [0,1] \]
+	\item Die $ z_{if} $ sind numerisch und können beispielsweise mit der 
+	Minkowski Distanz verglichen werden
+\end{itemize}
+
+\subsubsection{Distanz auf nominalen Attributen}
+
+\begin{itemize}
+	\item Werden Objekte durch $ d $ nominale Attribute beschrieben, so kann 
+	die Distanz zwischen $ x_i $ und $ x_j $ wie folgt berechnet werden
+	\[ d(x_i,x_j) = \frac{d-m}{d} \]
+	wobei $ m $ die Anzahl der Übereinstimmungen ist
+\end{itemize}
+
+\subsubsection{Distanz auf binären Attributen}
+
+\begin{center}
+	\begin{tabular}{|c|c|c|c|}
+		\hline
+		& 1 & 0 & $ \sum $ \\ 
+		\hline
+		1 & $ q $ & $ r $ & $ q+r $ \\ 
+		\hline
+		0 & $ s $ & $ t $ & $ s+t $ \\ 
+		\hline
+		$ \sum $ & $ q+s $ & $ r+t $ & $ d $ \\
+		\hline
+	\end{tabular} 
+\end{center}
+
+\begin{itemize}
+	\item Je nachdem, ob Attribute symmetrisch sind, können zwei verschiedene 
+	Distanzen definiert werden
+	\begin{itemize}
+		\item Ist sowohl der Zustand ''0'' als auch ''1'' gleichwertig, so 
+		definieren wir die DIstanz als
+		\[ d(x_i,x_j) = \frac{r+s}{d} \]
+		\item Im Fall eines asymmetrischen Attributs tragen die ''1''-en die 
+		tatsächliche Information; ''0''-en sind nicht von Interesse
+		\[ d)(x_i,x_j) = \frac{r+s}{q+r+s} \]
+		\item Der Jaccard-Koeffizient ist ein häufig vorkommendes 
+		\underline{Ähnlichkeitsmaß}
+		\[ s(x_i,x_j) = 1 - d(x_i,x_j) = \frac{q}{q+r+s} \]
+	\end{itemize}
+\end{itemize}
+
+\subsubsection{Distanz auf gemischten Typen}
+
+\begin{itemize}
+	\item Sei $ d $ die Anzahl unterschiedlicher Attributstypen
+	\[ d(x_i,x_j) = \frac{\sum_{f=1}^{d} \delta_{ij}^{(f)} \frac{|x_{if} - 
+	x_{jf}|}{\max_{1 \leq h \leq N} x_{hf} - \min_{1 \leq h \leq N} 
+	x_{hf}}}{\sum_{f=1}^{d} \delta_{ij}^{(f)}} \]
+	\item $ \delta_{if}^{(f)} $ ist ein binärer Indikator
+	\begin{itemize}
+		\item Er ist 0, falls ($ x_{if} $ oder $ x_{jf} $ unbekannt sind, oder 
+		wenn) $ x_{if} = x_{jf} = 0 $ und das binäre Attribut $ f $ 
+		asymmetrisch ist; ansonsten ist $ \delta_{if}^{(f)} = 1 $.
+	\end{itemize}
+\end{itemize}
 
 \section{Regression}
 
