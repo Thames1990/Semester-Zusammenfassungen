@@ -10,6 +10,8 @@
 
 \setlength\parindent{0pt}
 
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+
 \title{Maschinelles Lernen \\ Zusammenfassung}
 \author{Thomas Mohr}
 \date{}
@@ -484,6 +486,77 @@
 		\item Er ist 0, falls ($ x_{if} $ oder $ x_{jf} $ unbekannt sind, oder 
 		wenn) $ x_{if} = x_{jf} = 0 $ und das binäre Attribut $ f $ 
 		asymmetrisch ist; ansonsten ist $ \delta_{if}^{(f)} = 1 $.
+	\end{itemize}
+\end{itemize}
+
+\subsection{Dimensionsreduktion und Einbettung in den Vektorraum}
+
+\subsubsection{Multidimensionale Skalierung}
+
+\begin{itemize}
+	\item Überführung von Punkten aus einem $ d $-dimensionalen Raum in einen $ 
+	m $-dimensionalen Raum $ (d > m) $ oder metrischer Raum in Vektorraum
+	\item Die paarweisen Euklidischen Abstände sollen dabei möglichst wenig 
+	verändert werden
+	\item Es gilt
+	\begin{align*}
+		d(x_i,x_j)^2 &= d_{ij}^2 = \sum_{k=1}^{d} (x_{ik} - x_{jk})^2 \\
+		&= \underbrace{\sum_{k=1}^{d} (x_{ik})^2}_{b_{ii}} - 2 
+		\underbrace{\sum_{k=1}^{d} x_{ik} x_{jk}}_{b{ij}} + 
+		\underbrace{\sum_{k=1}^{d} (x_{jk})^2}_{b_{jj}} \\
+		&= b_{ii} + b_{jj} - 2b_{ij}
+	\end{align*}
+	\item Zentriere Daten im Urpsrung: $ \sum_{i=1}^{N} x_{ij} = 0 \quad 
+	\forall j = 1,\ldots,d $
+	\item Die $ b_{ij} $ können zu einer $ (N \times N) $-Matrix $ B $ 
+	zusammengefasst werden. Daher gilt $ B=XX^T $.
+	\item $ X $ ist die gesuchte Matrix, die den Datensatz durch $ N $ 
+	Attribut-Vektoren beschreibt und die es nun zu approximieren gilt
+	\item Spektrale Zerlegung:
+	\[ X = CD^{\frac{1}{2}} \]
+	mit $ C $ ist die Matrix, deren Spalten den Eigenvektoren von $ B $ 
+	entsprechen; $ D $ ist eine diagonale Matrix mit den Eigenwerten
+\end{itemize}
+
+\subsection{Hauptkomponentenanalyse}
+
+\begin{itemize}
+	\item Die Hauptkomponentenanalyse (PCA) projiziert ein Objekt $ x \in 
+	\mathbb{R}^d $ auf $ z \in \mathbb{R}^d $ wie folgt:
+	\[ z=w^Tx \]
+	\item Ziel ist es durch eine Projektion die Varianz auf den neuen 
+	Attributen $ Z_1,\ldots,Z_d $ zu maximieren
+	\item Tatsächlich beträgt dabei die Korrelation zwischen allen Paaren $ 
+	(Z_i,Z_j) $ auch 0
+	\item Gesucht ist ein neuer $ m (<d) $ dimensionaler Raum, auf dem die 
+	Daten mit minimalem Informationsverlust projiziert werden können
+	\item Projiziere $ x_i $ nach $ z_i = w_1^T x_i $
+	\item Der Mittelwert der projizierten Punkte ist $ w_1^T \overline{x} $ und 
+	deren Varianz
+	\begin{align*}
+		\frac{1}{N} \sum_{i=1}^{N} (w_1^T x_i - w_1^T \overline{x})^2 &= 
+		\frac{1}{N} \sum_{i=1}^{N} (w_1^T (x_i - \overline{x}))^2 \\
+		&= w_1^T \underbrace{\frac{1}{N} \sum_{i=1}^{N} (x_i - 
+		\overline{x})(x_i - \overline{x})^T}_{\text{Kovarianz-Matrix } \sum} 
+		w_1 \\
+		&= w_1^T \sum w_1
+	\end{align*}
+	\item Berechne die Kovarianz-Matrix
+	\[ \sum = \begin{pmatrix}
+		cov(X_1,X_1) & \ldots & cov(X_1,X_d) \\
+		\vdots & \ddots & \vdots \\
+		cov(X_d,X_1) & \ldots & cov(X_d,X_d)
+	\end{pmatrix} \]
+	\item Die Varianz, also $ w_1^T \sum w_1 $ soll maximiert werden
+	\begin{itemize}
+		\item Ohne die Bedingung $ \norm{w_1} = 1 \iff w_1^T w_1 = 1 $ wäre die 
+		Lösung $ \norm{w_1} \rightarrow \inf $
+		\item Die Nebenbedigung soll in die Funktion kodiert (Lagrange 
+		Multiplikator $ \lambda_1 \in \mathbb{R}_{\geq 0} $) kodiert und 
+		maximiert werden:
+		\[ w_1^T \sum w_1 + \lambda_1 (1 - w_1^T w_1) \]
+		\item Ableiten nach $ w_1 $ und gleich Null setzen liefert
+		\[ \sum w_1 = \lambda_1 w_1 \]
 	\end{itemize}
 \end{itemize}
 
