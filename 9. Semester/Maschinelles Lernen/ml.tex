@@ -31,9 +31,10 @@
 	haben, die das zu lernende Attribut bereits tragen (Zielvariable).
 	\begin{itemize}
 		\item \textbf{Regression} im Fall von kontinuierlichen Werten (z.B. $ 
-		\mathbb{R} $)
+		\mathbb{R} $) - eigentlich numerisch
 		\item \textbf{Klassifikation} im Fall von diskreten Labeln (z.B. 
-		\textit{TRUE, FALSE}; ausgezeichnet, durchschnittlich, schlecht)
+		\textit{TRUE, FALSE}; ausgezeichnet, durchschnittlich, schlecht) - 
+		eigentlich nominal oder ordinal
 	\end{itemize}
 	\item Eine \textbf{unüberwachte} Lernaufgabe liegt vor, wenn es kein 
 	Attribut gibt, das wir lernen wollen und für das wir bereits Beispiele 
@@ -530,34 +531,6 @@
 	(Z_i,Z_j) $ auch 0
 	\item Gesucht ist ein neuer $ m (<d) $ dimensionaler Raum, auf dem die 
 	Daten mit minimalem Informationsverlust projiziert werden können
-	\item Projiziere $ x_i $ nach $ z_i = w_1^T x_i $
-	\item Der Mittelwert der projizierten Punkte ist $ w_1^T \overline{x} $ und 
-	deren Varianz
-	\begin{align*}
-		\frac{1}{N} \sum_{i=1}^{N} (w_1^T x_i - w_1^T \overline{x})^2 &= 
-		\frac{1}{N} \sum_{i=1}^{N} (w_1^T (x_i - \overline{x}))^2 \\
-		&= w_1^T \underbrace{\frac{1}{N} \sum_{i=1}^{N} (x_i - 
-		\overline{x})(x_i - \overline{x})^T}_{\text{Kovarianz-Matrix } \sum} 
-		w_1 \\
-		&= w_1^T \sum w_1
-	\end{align*}
-	\item Berechne die Kovarianz-Matrix
-	\[ \sum = \begin{pmatrix}
-		cov(X_1,X_1) & \ldots & cov(X_1,X_d) \\
-		\vdots & \ddots & \vdots \\
-		cov(X_d,X_1) & \ldots & cov(X_d,X_d)
-	\end{pmatrix} \]
-	\item Die Varianz, also $ w_1^T \sum w_1 $ soll maximiert werden
-	\begin{itemize}
-		\item Ohne die Bedingung $ \norm{w_1} = 1 \iff w_1^T w_1 = 1 $ wäre die 
-		Lösung $ \norm{w_1} \rightarrow \inf $
-		\item Die Nebenbedigung soll in die Funktion kodiert (Lagrange 
-		Multiplikator $ \lambda_1 \in \mathbb{R}_{\geq 0} $) kodiert und 
-		maximiert werden:
-		\[ w_1^T \sum w_1 + \lambda_1 (1 - w_1^T w_1) \]
-		\item Ableiten nach $ w_1 $ und gleich Null setzen liefert
-		\[ \sum w_1 = \lambda_1 w_1 \]
-	\end{itemize}
 \end{itemize}
 
 \section{Regression}
