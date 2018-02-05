@@ -7,6 +7,7 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{hyperref}
+\usepackage{blkarray}
 
 \setlength\parindent{0pt}
 
@@ -534,6 +535,203 @@
 \end{itemize}
 
 \section{Regression}
+
+\begin{itemize}
+	\item Es liegen numerische Daten vor
+	\item Es existiert eine Zielvariable, die wir aus den anderen hervorgesagt 
+	werden soll
+	\item Ein Modell
+	\[ f: \mathbb{R}^d \rightarrow \mathbb{R} \]
+	soll gelernt werden
+	\item Das Problem wir als
+	\begin{itemize}
+		\item univariat bezeichnet, falls $ d=1 $
+		\item multivariat bezeichnet, falls $ d>1 $
+	\end{itemize}
+	\item Ein Modell $ y(x) $ muss bewertet werden können
+	\item Dazu wird eine Fehlerfunktion $ L: \mathbb{R} \times \mathbb{R} 
+	\rightarrow \mathbb{R} $ benötigt, die den Fehler auf den zukünftigen 
+	Eingaben misst
+	\item Eine gängige Wahl für die Regression ist der quadratische Fehler:
+	\[ (y(x), t) \rightarrow (y(x) - t)^2 \]
+	\item Das Risiko (der erwartete Fehler) kann somit wie folgt angegeben 
+	werden:
+	\[ R(y) = E[L] = \int L(t, y(x)) dP(x,t) \]
+	\item Dieses Risiko kann jedoch nicht berechnet werden
+\end{itemize}
+
+\subsection{Bewertung und Fehler}
+
+\begin{itemize}
+	\item Die Approximation $ R(y) = \int L(t, y(x)) dP(x,t) $ führt zum 
+	\underline{empirischen Risiko}:
+	\begin{align*}
+		R_{emp}(y) &= \frac{1}{N} \sum_{i=1}^{N} L(y(x_i), t_i) \\
+		&= \frac{1}{N} \sum_{i=1}^{N} (y(x_i) - t_i)^2
+	\end{align*}
+	\item Dieser Ausdruck kann ausgewertet werden. Es wird eine Funktion (ein 
+	Modell) $ y: \mathbb{R}^d \rightarrow \mathbb{R} $ gesucht, die das 
+	empirische Risiko minimiert
+\end{itemize}
+
+\subsubsection{Fitten eines Polynoms}
+
+\begin{itemize}
+	\item Nun wird der multivariate Fall betrachtet ($ x_{i0} = 1 $ für $ 1 
+	\leq i \leq N $)
+	\begin{itemize}
+		\item Somit wird eines neues Attribut $ X_0 $ hinzugefügt, mit Wert 1 
+		für jede Instanz
+		\[
+			\begin{blockarray}{ccc}
+				X_0 & \ldots & X_d \\
+				\begin{block}{(ccc)}
+					1 & \ldots & x_{1d} \\
+					\vdots & \ddots & \vdots \\
+					1 & \ldots & x_{Nd} \\
+				\end{block}
+			\end{blockarray}
+		\]
+		\begin{align*}
+			y(x_i, w) &= w_0x_{i0} + w_1x_{i1} + w_2x_{i2} + \ldots + w_dx_{id} 
+			\\
+			&= \sum_{j=0}^{d} w_jx_{ij}
+		\end{align*}
+	\end{itemize}
+	\item Nun muss das optimale $ w $ gefunden werden, also jenes, für das
+	\[ R_{emp}(w) = \frac{1}{N} \sum_{i=1}^{N} L(y(x_i), t_i) \]
+	minimiert wird
+	\item Gesucht wird also $ w^* = A^{-1} y $ mit
+	\[ A = \begin{pmatrix}
+		\sum_{i} x_{i0}x_{i0} & \sum_{i} x_{i1}x_{i0} & \sum_{i} 
+		x_{i2}x_{i0} & \ldots & \sum_{i} x_{id}x_{i0} \\
+		\sum_{i} x_{i0}x_{i1} & \sum_{i} x_{i1}x_{i1} & \sum_{i} 
+		x_{i2}x_{i1} & \ldots & \sum_{i} x_{id}x_{i1} \\
+		\vdots & \vdots & \vdots & \ddots & \vdots \\
+		\sum_{i} x_{i0}x_{id} & \sum_{i} x_{i1}x_{id} & \sum_{i} 
+		x_{i2}x_{id} & \ldots & \sum_{i} x_{id}x_{id}
+	\end{pmatrix} \]
+	\[ w = \begin{pmatrix}
+		w_0 \\
+		w_1 \\
+		w_2 \\
+		\vdots \\
+		w_d
+	\end{pmatrix} \]
+	\[ y = \begin{pmatrix}
+		\sum_i t_i x_{i0} \\
+		\sum_i t_i x_{i1} \\
+		\sum_i t_i x_{i2} \\
+		\vdots \\
+		\sum_i t_i x_{id} \\
+	\end{pmatrix} \]
+	\item Die Berechnung kann effizienter gestaltet werden durch $ w^* = 
+	(D^TD)^{-1} D^Tt $
+	\[ D = \begin{pmatrix}
+		x_{i0} & x_{11} & x_{12} & \ldots & x_{1d} \\
+		x_{i0} & x_{21} & x_{22} & \ldots & x_{2d} \\
+		\vdots & \vdots & \vdots & \ddots & \vdots \\
+		x_{i0} & x_{N1} & x_{N2} & \ldots & x_{Nd} \\
+	\end{pmatrix} \]
+	\[ t = \begin{pmatrix}
+		t_1 \\
+		t_2 \\
+		t_3 \\
+		\vdots \\
+		t_N
+	\end{pmatrix} \]
+\end{itemize}
+
+\subsection{Overfitting}
+
+\begin{itemize}
+	\item Es wird nicht nur das durch die Daten zugrundeliegende Modell, 
+	sondern auch das Rauschen, gelernt
+	\item Jedoch soll ein Modell erzeugt werden, das gut 
+	\underline{generalisiert}
+	\item Es kann ein Regularisierungsterm verwendet werden, um hohe 
+	Koeffizienten zu bestrafen
+	\[ R'(w) = \frac{1}{2} \sum_{i=1}^{N} (y(x_i,w) - t_i)^2 + 
+	\frac{\lambda}{2} \norm{w}^2 \]
+	\item Ein $ \lambda = 0 $ führt zu dem alten Ansatz; je größer $ \lambda $, 
+	desto stärker werden hohe Koeffizienten bestraft
+	\item Es soll eine gute \underline{Generalisierung} erreicht werden, 
+	demzufolge muss
+	\[ \int L(t, y(x)) dP(x,t) \]
+	minimiert werden
+	\item Es wird ein Datensatz zum Lernen und einer zum Validieren benötigt
+	\item Ist nur ein Datensatz gegeben, so kann die $ k $-fold 
+	Kreuzvalidierung Anwendung finden
+	\item Eine weitere Methode (bei wenigen Daten) ist das Bootstrapping
+\end{itemize}
+
+\subsection{$ k $-fold Kreuzvalidierung}
+
+\begin{itemize}
+	\item Die Daten werden zufällig permutiert und in $ k $ (annähernd) große 
+	Buckets verteilt
+	\item Es wird beginnend bei $ i=1 $ das Bucket $ i $ beiseite gelegt
+	\item Die verbleibenden Buckets werden als Trainingsdaten verwendet; das 
+	beiseite gelegte als Testdatensatz
+	\item Somit ergeben sich $ k $ Ergebnisse, mit denen die Modelle bewertet 
+	werden können
+	\item Aggregierung z.B. durch Mittelwert und Standardabweichung führt zu 
+	Punktschätzer
+\end{itemize}
+
+\subsection{Evalutation der Modelle}
+
+\subsubsection{Wilcoxon Test}
+
+\begin{itemize}
+	\item Es werden zwei Stichproben danach getestet, ob
+	\begin{itemize}
+		\item der Mittelwert der einen Stichprobe kleiner-gleich dem Mittelwert 
+		der anderen Probe ist (einseitiger Test)
+		\[ H_0 : \mu_1 \leq \mu_2 \]
+		und 
+		\[ H_1 : \mu_1 > \mu_2 \]
+		\item die Mittelwerte identisch sind (zweiseitiger Test)
+		\[ H_0 : \mu_1 = \mu_2 \]
+		und
+		\[ H_1 : \mu_1 \neq \mu_2 \]
+	\end{itemize}
+	\item Für den Test müssen folgende Stichprobenvariablen berechnet werden ($ 
+	R_{\cdot, 1} $ ist der Vektor der eimpirischen Fehler der ersten 
+	Parametrisierung, $ R_{\cdot, 2} $ analog):
+	\[ D_i = R_{i,1} - R_{i,2} \]
+	\item Berechnet werden folgende Werte
+	\begin{align*}
+		rg_i &= rang(|D_i|) \\
+		W_+ &= \sum_{i=1}^{N} \mathbb{I}_{R_{i,1}, - R_{i,2} > 0} rg_i \\
+		W_- &= \sum_{i=1}^{N} \mathbb{I}_{R_{i,1}, - R_{i,2} < 0} rg_i \\
+		W &= \mathbb{I}_q = \begin{cases}
+			1 & q \\
+			0 & \neg q
+		\end{cases}
+	\end{align*}
+	\item Gilt $ R_{i,1} - R_{i,2} = 0 $, so wird das Paar keinem der Werte $ 
+	W_+ $ und $ W_- $ zugeordnet
+\end{itemize}
+
+\subsubsection{Bootstrapping}
+
+\begin{itemize}
+	\item Bei sehr kleinen Datensätzen würden die Folds (Kreuzvalidierung) sehr 
+	klein werden
+	\item Daher werden zufällig $ N $ gleichverteilte Instanzen aus dem 
+	Datensatz der Größe $ N $ gezogen; das Ziehen erfolgt \underline{mit 
+	Zurücklegen}
+	\item Diese Prozedur kann $ k $-mal wiederholt werden, um mehrere 
+	Trainings- und Testdatensätze zu erzeugen
+	\item Es gilt
+	\begin{align*}
+		\underbrace{(1 - \frac{1}{N})^N}_{\substack{\text{Instanz } x_i \text{ 
+		wird nach } \\ N \text{ Ziehungen nicht gezogen}}} &\approx e^{-1} \\
+		&= 0,368
+	\end{align*}
+	\item Somit enthält der Trainingsdatensatz $ 63,2\% $ der Instanzen
+\end{itemize}
 
 \section{Klassifikation}
 
