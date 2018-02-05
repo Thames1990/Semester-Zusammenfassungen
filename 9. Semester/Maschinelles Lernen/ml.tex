@@ -699,7 +699,7 @@
 		\[ H_1 : \mu_1 \neq \mu_2 \]
 	\end{itemize}
 	\item Für den Test müssen folgende Stichprobenvariablen berechnet werden ($ 
-	R_{\cdot, 1} $ ist der Vektor der eimpirischen Fehler der ersten 
+	R_{\cdot, 1} $ ist der Vektor der empirischen Fehler der ersten 
 	Parametrisierung, $ R_{\cdot, 2} $ analog):
 	\[ D_i = R_{i,1} - R_{i,2} \]
 	\item Berechnet werden folgende Werte:
@@ -714,6 +714,33 @@
 	\end{align*}
 	\item Gilt $ R_{i,1} - R_{i,2} = 0 $, so wird das Paar keinem der Werte $ 
 	W_+ $ und $ W_- $ zugeordnet.
+\end{itemize}
+
+\paragraph{Beispiel}
+
+\begin{center}
+	\begin{tabular}{|c|c|c|c|c|c|c|}
+		\hline 
+		$ R_1 $ & $ R_2 $ & $ D_i $ & $ |D_i| $ & $ rg_i $ & $ W_+ $ & $ W_- $ 
+		\\ 
+		\hline 
+		5 & 8 & -3 & 3 & 2,5 &  & 2,5 \\ 
+		\hline 
+		3 & 10 & -7 & 7 & 5 &  & 5 \\ 
+		\hline 
+		15 & 12 & 3 & 3 & 2,5 & 2,5 &  \\ 
+		\hline 
+		25 & 20 & 5 & 5 & 4 & 4 &  \\ 
+		\hline 
+		18 & 19 & -1 & 1 & 1 &  & 1 \\ 
+		\hline 
+	\end{tabular} 
+\end{center}
+
+\begin{itemize}
+	\item Berechne Minimum aus den Summen von $ W_+ $ und $ W_- $:
+	\[ \min \{ 6.5,8.5 \} = 6.5 \]
+	\item $ \forall i. R_{i,1} - R_{i,2} \neq 0 \implies n=N=5 $
 \end{itemize}
 
 \subsubsection{Bootstrapping}
@@ -817,6 +844,70 @@
 	\item Interessant ist vor allem die AUC, also die Fläche unter der 
 	ROC-Kurve. Ist diese eins, so liefert der Klassifizierer ein optimales 
 	Ergebnis.
+\end{itemize}
+
+\subsection{Entscheidungsbäume}
+
+\begin{itemize}
+	\item Der Entscheidungsbaum ist ein hierarchisches Modell.
+	\item Es werden lokale Regionen durch eine Sequenz von Aufteilungen 
+	identifiziert.
+	\item Jeder Knoten definiert eine Testfunktion mit einem diskreten Ergebnis.
+	\item Es wird an der Wurzel gestartet und ein Durchlauf entlang eines 
+	Pfades bis zum Blatt wird gestartet.
+	\item Die Baum-Induktion erfolgt durch eine Stichprobe (Trainingsdaten); 
+	die Verfahren sind greedy und suchen in jedem Schritt die lokal beste 
+	Aufteilung.
+	\item Die Zahl der Elemente, die Knoten $ m $ erreichen, sei $ N_m $ (in 
+	der Wurzel ist diese Zahl $ N $).
+	\item $ N_m^{(i)} $ der Elemente gehört zu Klasse $ C_i $ und somit gilt:
+	\[ \sum_i N_m^{(i)} = N_m \]
+	\item Die Schätzung am Knoten $ m $ beträgt:
+	\begin{align*}
+		\hat{P}(C_i \mid x,m) &\equiv p_m^{(i)} \\
+		&= \frac{N_m^(i)}{N_m}
+	\end{align*}
+	\item Ein Knoten ist rein, wenn die Schätzung entweder $ 0 $ oder $ 1 $ ist.
+	\item Bei reinen Knoten ist keine weitere Zerlegung notwendig; es wird ein 
+	Blatt gebildet.
+	\item Eine Möglichkeit zur Messung der Unreinheit ist die Entropie:
+	\[ I_m = -\sum_{i=1}^{k} p_m^{(i)} \log_2 p_m^{(i)} \]
+	mit $ \lim\limits_{n \rightarrow 0} n \log_2 n = 0 $ und daher $ 0 \log_2 0 
+	\stackrel{def}{=} 0 $.
+	\item Eine uniforme Verteilung hat eine höhere Entropie als eine 
+	nicht-uniforme Verteilung.
+\end{itemize}
+
+\paragraph{Beispiel}
+
+\begin{itemize}
+	\item Betrachtet wird der Knoten $ m $ (zu Beginn die Wurzel).
+	\begin{itemize}
+		\item Welches Attribut soll zur nächsten Verzweigung gewählt werden?
+		\item Es werden univariate Bäume verwendet; multivariate bringen im 
+		Allgemeinen keine Vorteile.
+	\end{itemize}
+	\item Angenommen es wird das Attribut $ a, 1 \leq a \leq d $ betrachtet.
+	\begin{itemize}
+		\item Ist es numerisch, gibt es zwei Verzweigungen gemäß Test $ x_{ia} 
+		\leq \theta_0 $.
+		\item Ist es diskret, so gibt es so viele Verzweigungen, wie das 
+		Attribut (verschiedene) Ausprägungen hat.
+		\item Es gibt im Allgemeinen $ v $ Verzweigungen.
+	\end{itemize}
+	\item Von den $ N_m $ Elementen, die Knoten $ m $ erreichen, nehmen $ 
+	N_{mj} $ die $ j $-te der $ v $ Verzweigungen, $ N_{mj}^{(i)} $ davon 
+	gehören zur Klasse $ i $.
+	\item Für die Kinder von $ m $ können die Wahrscheinlichkeiten für die 
+	Klasse $ i $ ermittelt werden, für Kind $ j $ gilt insbesondere:
+	\begin{align*}
+		\hat{P}(C_i \mid x,m,j) &\equiv p_{mj}^{(i)} \\
+		&= \frac{N_{mj}^{(i)}}{N_{mj}}
+	\end{align*}
+	\item Würde im Attribut $ a $ verzweigt werden, so ergibt sich bei einem $ 
+	k $-Klassen Problem eine neue Entropie von:
+	\[ I'_m = -\sum_{j=1}^{v} \frac{N_{mj}}{N_m} \cdot \sum_{i=1}^{k} 
+	p_{mj}^{(i)} \log_2 p_{mj}^{(i)} \]
 \end{itemize}
 
 \section{Clustering}
