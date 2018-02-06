@@ -8,6 +8,7 @@
 \usepackage{amssymb}
 \usepackage{hyperref}
 \usepackage{blkarray}
+\usepackage{tabulary}
 
 \setlength\parindent{0pt}
 
@@ -121,6 +122,7 @@
 	\end{itemize}
 \end{itemize}
 
+\pagebreak
 \section{Deskriptive Statistik}
 
 \subsection{Beschreibung von Daten}
@@ -350,6 +352,8 @@
 	zulässigen Bereichs liegen, heißen Ausreißer.
 \end{itemize}
 
+\includegraphics[width=\linewidth]{figures/boxplot.png}
+
 \subsubsection{Histogramme}
 
 \begin{itemize}
@@ -364,6 +368,33 @@
 		\item Die Häufigkeit ist proportional zum Flächeninhalt.
 	\end{itemize}
 \end{itemize}
+
+\paragraph{Beispiel}
+
+\begin{center}
+	\tymin=35pt
+	\begin{tabulary}{\linewidth}{|C|C|C|C|C|}
+		\hline 
+		Klasse $ j $ & Zahl der PKW pro 1000 & Anzahl der Länder (absolute 
+		Häufigkeit) $ n_j $ & Klassenbreite $ d_j $ & Rechteckshöhe 
+		(Häufigkeitsdichte) $ h_j = \frac{n_j}{h_j} $ \\ 
+		\hline 
+		1 & $ 0-200 $ & 5 & 200 & 0,025 \\ 
+		\hline 
+		2 & $ 200-300 $ & 6 & 100 & 0,06 \\ 
+		\hline 
+		3 & $ 300-400 $ & 6 & 100 & 0,06 \\ 
+		\hline 
+		4 & $ 400-500 $ & 9 & 100 & 0,09 \\ 
+		\hline 
+		5 & $ 500-700 $ & 6 & 200 & 0,03 \\ 
+		\hline 
+		Summe $ \sum $ &  & 32 &  &  \\ 
+		\hline 
+	\end{tabulary} 
+\end{center}
+
+\includegraphics[width=\linewidth]{figures/hist.png}
 
 \subsubsection{Quantil-Plots}
 
@@ -827,18 +858,22 @@
 		\item \textit{falsch positiv} (fp)
 		\item \textit{falsch negativ} (fn)
 	\end{itemize}
-	\begin{tabular}{|c|c|c|c|}
-		\hline 
-		& \multicolumn{3}{|c|}{Predicted class}  \\ 
-		\hline 
-		True class & Positive & Negative & Total \\ 
-		\hline 
-		Positive & $ tp $: true positive & $ fn $: false negative & $ p $ \\ 
-		Negative & $ fp $: false positive & $ tn $: true negative & $ n $ \\ 
-		\hline 
-		Total & $ p' $ & $ n' $ & $ N $ \\ 
-		\hline 
-	\end{tabular} 
+	\begin{center}
+		\begin{tabular}{|c|c|c|c|}
+			\hline 
+			& \multicolumn{3}{|c|}{Predicted class}  \\ 
+			\hline 
+			True class & Positive & Negative & Total \\ 
+			\hline 
+			Positive & $ tp $: true positive & $ fn $: false negative & $ p $ 
+			\\ 
+			Negative & $ fp $: false positive & $ tn $: true negative & $ n $ 
+			\\ 
+			\hline 
+			Total & $ p' $ & $ n' $ & $ N $ \\ 
+			\hline 
+		\end{tabular} 
+	\end{center}
 	\item Die ROC-Kurve trägt für verschiedene Parametrisierungen eines 
 	Algorithmus (z.B. Loss-Matrix) $ \frac{fp}{n} $ gegen $ \frac{tp}{p} $ ab.
 	\item Interessant ist vor allem die AUC, also die Fläche unter der 
@@ -908,6 +943,183 @@
 	k $-Klassen Problem eine neue Entropie von:
 	\[ I'_m = -\sum_{j=1}^{v} \frac{N_{mj}}{N_m} \cdot \sum_{i=1}^{k} 
 	p_{mj}^{(i)} \log_2 p_{mj}^{(i)} \]
+\end{itemize}
+
+\section{Probabilistische Verfahren}
+
+\begin{itemize}
+	\item Es werden nun Wahrscheinlichkeitsverteilungen auf den Attributen und 
+	der Zielvariable betrachtet.
+	\item Gegeben ist ein univariater Datensatz, anhand dessen Kunden, 
+	basierend auf dem Attribut \textit{Einkommen} $ X_1 $, auf Kreditwürdigkeit 
+	hin klassifiziert werden sollen.
+	\item Die Kreditwürdigkeit kann durch eine Bernoulli Variable dargestellt 
+	werden, bedingt durch die Variable $ X_1 $.
+	\item $ C=1 $ entspricht dabei hohem Ausfallrisiko, und $ C=0 $ einem 
+	geringem Ausfallrisiko
+	\item Wäre $ P(C \mid X_1) $ bekannt, so könnte für einen neuen Kunden $ 
+	x_{N+1} $ basierend auf $ P(C=1 \mid x_{N+1,1}) > 0.5 $ eine Entscheidung 
+	getroffen werden.
+	\item Es könnte sogar die Fehlerwahrscheinlichkeit
+	\[ 1 - \max \{ P(C=0 \mid x_{N+1,1}, x_{N+1,2}), P(C=1 \mid x_{N+1,1}, 
+	x_{N+1,2}) \} \]
+	berechnet oder eine Ablehnungsoption verwendet werden.
+\end{itemize}
+
+\subsection{Satz von Bayes}
+
+\begin{itemize}
+	\item Mit dem Satz von Bayes kann $ P(C \mid x) $ berechnet werden:
+	\[ P(C \mid x) = \frac{P(C) p(x \mid C)}{p(x)} \]
+	\begin{itemize}
+		\item $ P(C) $ ist die \textbf{a-priori} Wahrscheinlichkeit.
+		\item $ p(x \mid C) $, der \textbf{Klassen-Likelihood}, ist die 
+		Wahrscheinlichkeit, dass ein zu $ C $ gehörendes Ereignis den 
+		Beobachtungswert $ x $ hat.
+		\item $ p(x) $ ist die \textbf{Evidenz}, die Randwahrscheinlichkeit, 
+		dass die Beobachtung $ x $ gemacht wird (nicht direkt berechenbar).
+	\end{itemize}
+\end{itemize}
+
+\subsubsection{Summenregel (Wahrscheinlichkeit)}
+
+\includegraphics[width=\linewidth]{figures/summenregel.png}
+
+\begin{itemize}
+	\item Angenommen $ p(X = x_i, Y = y_j) = \frac{n_{ij}}{N} $ ist bekannt.
+	\item Es gilt
+	\begin{align*}
+		p(X = x_i) &= \frac{c_i}{N} \\
+		&= \sum_j \frac{n_{ij}}{N}
+	\end{align*}
+	und damit
+	\begin{align*}
+		p(X = x_i) &= \sum_j \frac{n_{ij}}{N} \\
+		&= \sum_j p(X = x_i, Y = y_j)
+	\end{align*}
+\end{itemize}
+
+\subsubsection{Produktregel (Wahrscheinlichkeit)}
+
+\includegraphics[width=\linewidth]{figures/produktregel.png}
+
+\begin{itemize}
+	\item Tatsächlich ist bekannt: $ p(Y = y_j \mid X = x_i) = 
+	\frac{n_{ij}}{c_i} $.
+	\item Ferner ist bekannt: $ p(X = x_i) = \frac{c_i}{N} $.
+	\item Daraus ergibt sich
+	\begin{align*}
+		p(X = x_i, Y = y_j) &= \frac{n_{ij}}{N} \\
+		&= \frac{n_{ij}}{c_i} \cdot \frac{c_i}{N}
+	\end{align*}
+	und somit
+	\[ p(X = x_i, Y = y_j) = p(Y = y_j \mid X = x_i) p(X = x_i) \]
+\end{itemize}
+
+\begin{itemize}
+	\item $ P(C) $ und $ p(x \mid C) $ können basierend auf den Daten oder 
+	einer Stichprobe davon berechnet werden.
+	\item $ p(x) = p(x \mid C=1) P(C=1) + p(x \mid C=0) P(C=0) $ im Fall eines 
+	binären Klassifikationsproblems
+	\item Im allgemeinen Fall gibt es $ k $ Klassen:
+	\[ P(C_i \mid x) = \frac{P(C_i) p(x \mid C_i)}{\sum_k P(C_k) p(x \mid C_k)} 
+	\]
+	\item Klasse $ k $ wird gewählt, falls $ k = \arg \max_i P(C_i \mid x) $
+\end{itemize}
+
+\subsubsection{Univariater Fall}
+
+\begin{itemize}
+	\item Die Dichten der Verteilungen $ P(C_i) $ und $ p(x \mid C_i) $ müssen 
+	für alle $ i $ geschätzt werden.
+	\item Es kann eine (bis auf die Parameter) bekannte Verteilung vorliegen.
+	\begin{itemize}
+		\item Es gibt Tests, um auf eine bestimmte Verteilung hin zu testen.
+		\item Es reichen jedoch auch Histrogramme und qq-Plots.
+		\item Die Berechnung der unbekannten Parameter erfolgt durch 
+		Optimierung (Maximum Likelihood).
+	\end{itemize}
+	\item Die Verteilung kann sich aus mehreren bekannten Dichten 
+	zusammensetzen (z.B. Mixture of Gaussians).
+	\item Wenn die Dichte nicht bekannt ist, so kann auf ein $ k $-NN oder 
+	Kernel Verfahren zurückgegriffen werden.
+\end{itemize}
+
+\subsubsection{Schätzung der a-priori Wahrscheinlichkeiten}
+
+\begin{itemize}
+	\item Die a-priori Wahrscheinlichkeiten werden aus dem Datensatz geschätzt 
+	mit
+	\[ p(C_k) = \frac{N_k}{N} \]
+	wobei $ N_k $ die Anzahl der Instanzen mit der Klassenzugehörigkeit $ k $ 
+	ist und $ N $ die Anzahl der Daten im Datensatz.
+\end{itemize}
+
+\subsubsection{Dichteschätzer}
+
+\begin{itemize}
+	\item Gegeben sind unabhängige und identisch verteilte Stichproben:
+	\[ X = \{ x_{i1} \}_{i=1}^N = \{ x_i \}_{i=1}^N \]
+	\item Die $ x_i $ sind nach einer bis auf $ \theta $ bekannten Dichte $ p(x 
+	\mid \theta) $ gezogen worden.
+	\item Gefunden werden soll das $ \theta $, bei dem die $ x_i $ am 
+	wahrscheinlichsten aus $ p(x \mid \theta) $ gezogen wurden.
+	\item Aufgrund der iid Annahme ergibt sich die Likelihood:
+	\begin{align*}
+		l(\theta \mid X) &\equiv p(X \mid \theta) \\
+		&= \sum_{i=1}^{N} p(x_i \mid \theta)
+	\end{align*}
+	\item Ziehen des Logarithmus (log-Likelihood) und Ableiten ermöglicht nun 
+	das Maximieren.
+\end{itemize}
+
+\paragraph{Gauss-Verteilung}
+
+\begin{itemize}
+	\item $ p(x \mid \mu, \sigma) = \frac{1}{\sigma \sqrt{2 \pi}}^{\frac{-(x - 
+	\mu)^2}{2 \sigma^2}} $
+	\item Die Maximum Likelihood (ML) Schätzer sind
+	\begin{align*}
+		\hat{m} &= \frac{\sum_{i=1}^{N} x_i}{N} \\
+		\hat{s}^2 &= \frac{\sum_{i=1}^{N} (x_i - \hat{m})^2}{N}
+	\end{align*}
+\end{itemize}
+
+\paragraph{Bernoulli-Verteilung und deren Verallgemeinerung}
+
+\begin{itemize}
+	\item $ P(x \mid p) = p^x (1-p)^{1-x}, x \in \{ 0,1 \} $
+	\item Der ML Schätzer ist $ \hat{p} = \frac{\sum_{i=1}^{N} x_i}{N} $
+	\item Verallgemeinert auf $ k $ Zustände erhält man ($ \sum_{j=1}^{k} p_j = 
+	1 $)
+	\[ P(x_{i1}, \ldots, x_{ik} \mid p) = \prod_{j=1}^{k} p_j^{x_{ij}} \]
+	und als ML Schätzer
+	\[ \hat{p} = \frac{\sum_{i=1}^{N} x_{ij}}{N} \]
+\end{itemize}
+
+\paragraph{Binomialverteilung}
+
+\begin{itemize}
+	\item Verwandt mit dem Bernoulli Experiment
+	\item $ m $ ist die Anzahl der Beobachtungen mit $ x=1 $ für ein Bernoulli 
+	Experiment (bzw. die zugehörige Variable)
+	\item $ Bin(m \mid N,p) = \binom{N}{m} p^m (1-p)^{N-m} $
+	\item $ E(m) = Np $
+	\item $ Var(m) = Np(1-p) $
+\end{itemize}
+
+\subsubsection{Verteilungen}
+
+\begin{itemize}
+	\item Setzt sich eine Verteilung aus $ n $ Verteilungen (z.B. 
+	Normalverteilungen) zusammen, so gilt:
+	\[ p(x) = \sum_{j=1}^{n} \pi_j \mathcal{N} (x \mid \mu_j, \sigma_j) \]
+	\item $ \sum_{j=1}^{n} \pi_j = 1 $
+	\item Nun sollen die Parameter $ \mu_j, \sigma_j, \pi_j, (1 \leq j \leq n) 
+	$ aus den Daten geschätzt werden.
+	\item Mit der log-Likelihood Methode ergibt sich:
+	\[ \sum_{i=1}^{N} \log  \sum_{j=1}^{n} \pi_j \mathcal{N} (x_i \mid \mu_j, 
+	\sigma_j) \rightarrow \max \]
 \end{itemize}
 
 \section{Clustering}
