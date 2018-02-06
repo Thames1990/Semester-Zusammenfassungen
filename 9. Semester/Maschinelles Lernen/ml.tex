@@ -9,6 +9,7 @@
 \usepackage{hyperref}
 \usepackage{blkarray}
 \usepackage{tabulary}
+\usepackage{caption}
 
 \setlength\parindent{0pt}
 
@@ -149,16 +150,14 @@
 
 \begin{itemize}
 	\item Der Median ist der mittlere Wert in der \underline{sortierten} Folge 
-	$ X_j $.
-	\item Das mittlere Element muss nicht existieren.
-	\begin{itemize}
-		\item Per Definition wählen wir dann als Median den Wert
-		\[ \frac{1}{2} (x_{\frac{N}{2},j} + x_{\frac{N}{2+1},j}) \]
-		im Fall numerischer Daten.
-		\item Im Fall von ordinalen Daten kann der Median das \underline{linke} 
-		oder das \underline{rechte} Element sein, oder jede mögliche Ausprägung 
-		dazwischen.
-	\end{itemize}
+	$ X_j $:
+	\[ \overline{x} = \begin{cases}
+		x_{\frac{n+1}{2}} & n \text{ ungerade} \\
+		\frac{1}{2}(x_{\frac{n}{2}} + x_{\frac{n}{2} + 1}) & n \text{ gerade}
+	\end{cases} \]
+	\item Im Fall von ordinalen Daten kann der Median das \underline{linke} 
+	oder das \underline{rechte} Element sein, oder jede mögliche Ausprägung 
+	dazwischen.
 	\item Der Midrange ist das arithmetische Mittel von Maximum und Minimum von 
 	$ X_j $.
 \end{itemize}
@@ -194,7 +193,7 @@
 \begin{itemize}
 	\item $ k=1:? $
 	\item $ k=2:Var(X_j) := E((X_j - \mu_j)^2) = E(X_j^2) - \mu_j^2 $
-	\[  \]
+	\[ Var(X) = \frac{1}{N} \sum_{i=1}^{N} (\frac{x_i - \overline{X}}{s})^2 \]
 	\begin{itemize}
 		\item Die Varianz gibt die erwartete quadratische Abweichung vom 
 		Mittelwert an.
@@ -206,7 +205,7 @@
 	\item $ k=3:v(X_j) := E((X_j - \mu_j)^3) $
 	\begin{itemize}
 		\item Die Schiefe ist eine Kennzahl für die Asymmetrie einer Verteilung:
-		\[ v(X) = \frac{3(\overline{X} - \tilde{X})}{s} \]
+		\[ v(X) = \frac{1}{N} \sum_{i=1}^{N} (\frac{x_i - \overline{X}}{s})^3 \]
 		\item $ v(X_j) < 0 $: Verteilung ist linksschief
 		\item $ v(X_j) > 0 $: Verteilung ist rechtsschief
 		\item $ v(X_j) = 0 $: Verteilung symmetrisch
@@ -215,9 +214,9 @@
 	\begin{itemize}
 		\item Die Kurtosis ist eine Kennzahl für die Wölbung einer Verteilung:
 		\[ w(X) = \frac{1}{N} \sum_{i=1}^{N} (\frac{x_i - \overline{X}}{s})^4 \]
-		\item $ w(X) < 0 $: Verteilung ist platykurtisch (flachgipflig)
-		\item $ w(X) > 0 $: Verteilung ist leptokurtisch (steilgipflig)
-		\item $ w(X) = 0 $: Verteilung ist mesokurtisch (normalgipflig)
+		\item $ w(X) < 3 $: Verteilung ist platykurtisch (flachgipflig)
+		\item $ w(X) > 3 $: Verteilung ist leptokurtisch (steilgipflig)
+		\item $ w(X) = 3 $: Verteilung ist mesokurtisch (normalgipflig)
 	\end{itemize}
 \end{itemize}
 
@@ -226,15 +225,14 @@
 \begin{itemize}
 	\item Zur Berechnung der Quantile wird $ X_j $ zunächst aufsteigend 
 	sortiert.
-	\item Das $ k $-te Quantil ist der Wert $ x $ aus $ X_j $, so dass maximal 
-	$ \frac{k}{q} $ der Werte in $ X_j $ kleiner als $ x $ sind, und $ 
-	\frac{(q-k)}{q} $ größer; für $ 0<k<q $.
-	\item Es gibt somit $ (q-1) $ $ q $-Quantile.
-	\item Sei $ p := \frac{k}{q} $. Dann ist das $ k $-te $ q $-Quantil von $ 
-	X_j $ definiert als:
+	\item Berechne danach $ N \cdot p $
+	\begin{itemize}
+		\item $ N $ ist die Anzahl der Werte in der Stichprobe
+		\item $ p $ ist das Quantil (z.B. $ Q2 = Q_{0.5} \implies p = 0.5 $)
+	\end{itemize}
 	\[ x_{pj} := \begin{cases}
-		\frac{1}{2} (x_{Np} + x_{Np+1}) & Np \text{ gerade} \\
-		x_{\lfloor Np+1 \rfloor} & Np \text{ ungerade}
+		\frac{1}{2} (x_{Np} + x_{Np+1}) & Np \text{ ganzzahlig} \\
+		x_{\lceil Np \rceil} & Np \text{ nicht ganzzahlig}
 	\end{cases} \]
 \end{itemize}
 
@@ -272,12 +270,12 @@
 \subsubsection{Kovarianz für numerische Daten}
 
 \begin{itemize}
-	\item Erlaubt zu messen, wie startk sich zwei Variablen gemeinsam ändern
-	\item Wir benötigen den Begriff des Erwartungswerts, der hier aber dem 
-	Mittelwert entspricht:
-	\[ E(X_j) = \overline{X_j} = \frac{1}{N} \sum_{i=1}^{N} x_{ij} \]
-	\item $ Cov(X_i,X_j) = E((X_i - \overline{X_i})(X_j - \overline{X_j})) = 
-	E(X_iX_j) - \overline{X_i} \cdot \overline{X_j} $
+	\item Erlaubt zu messen, wie stark sich zwei Variablen gemeinsam ändern:
+	\begin{align*}
+		Cov(X_i,X_j) &= E((X_i - \overline{X_i})(X_j - \overline{X_j})) \\
+		&= E(X_iX_j) - \overline{X_i} \cdot \overline{X_j} \\
+		&= \frac{1}{N} \sum_{i=1}^{N} (X_i - \overline{X})(Y_i - \overline{Y})
+	\end{align*}
 	\item Tendieren $ X_i $ und $ X_j $ dazu sich gemeinsam zu ändern, so ist $ 
 	Cov(X_i,X_j) $ positiv, bei entgegengesetzter Änderung negativ.
 	\item Das Maß ist nicht normalisiert.
@@ -287,7 +285,12 @@
 
 \begin{itemize}
 	\item Der Korrelationskoeffizient ist normalisiert im Interval $ [-1,1] $:
-	\[ cor(X_i,X_j) = \frac{Cov(X_i,X_j)}{\sqrt{Var(X_i)} \sqrt{Var(X_j)}} \]
+	\begin{align*}
+		cor(X_i,X_j) &= \frac{Cov(X_i,X_j)}{\sqrt{Var(X_i)} \sqrt{Var(X_j)}} \\
+		&= \frac{\sum_{i=1}^{N} (X_i - \overline{X})(Y_i - 
+		\overline{Y})}{\sqrt{\sum_{i=1}^{N} (X_i - \overline{X})^2} 
+		\sqrt{\sum_{i=1}^{N} (Y_i - \overline{Y})^2}}
+	\end{align*}
 	\item Wir haben keine Korrelation bei einem Wert von 0.
 	\item Positive (negative) Korrelation liegt bei positiven (negativen) 
 	Werten vor.
@@ -325,6 +328,13 @@
 	\item Die Pearson $ \chi^2 $ Statistik kann wie folgt berechnet werden:
 	\[ \chi^2 = \sum_{i=1}^{c} \sum_{j=1}^{r} \frac{(o_{ij} - 
 	e_{ij})^2}{e_{ij}} \]
+	\item Dabei ist
+	\begin{itemize}
+		\item $ o_{ij} $ die beobachtete Häufigkeit in Zeile $ i $ und Spalte $ 
+		j $
+		\item $ e_{ij} $ die erwartete Häufigkeit in Zeile $ i $ und Spalte $ j 
+		$
+	\end{itemize}
 	\item Die Statistik testet die \underline{Null-Hypothese der 
 	Unabhängigkeit} zweier Variablen.
 	\item Der Test basiert auf einem Signifikanzniveau mit $ (r-1) \cdot (c-1) 
@@ -337,6 +347,40 @@
 	\item Die Hypothese kann abgelehnt werden, wenn der Wert der Prüfgröße 
 	größer ist als das $ (1-a) $-Quantil der $ \chi^2 $ Verteilung.
 \end{itemize}
+
+\paragraph{Beispiel}
+
+\begin{center}
+	\captionof{table}{Beobachtete Häufigkeit}
+	\begin{tabular}{|c|c|c|c|c|c|c|c|}
+		\hline 
+		& $ b $ & $ c $ & $ d $ & $ e $ & $ f $ & $ g $ & $ \sum $ \\ 
+		\hline 
+		$ \alpha $ & 17 & 132 & 103 & 95 & 39 & 4 & 390 \\ 
+		\hline 
+		$ \beta $ & 5 & 6 & 32 & 95 & 90 & 9 & 239 \\ 
+		\hline 
+		$ \gamma $ & 1 & 12 & 44 & 121 & 148 & 45 & 371 \\ 
+		\hline 
+		$ \sum $ & 23 & 150 & 179 & 311 & 279 & 58 & 1.000 \\ 
+		\hline 
+	\end{tabular} 
+	\captionof{table}{Erwartete Häufigkeit}
+	\begin{tabular}{|c|c|c|c|c|c|c|c|}
+		\hline 
+		& $ b $ & $ c $ & $ d $ & $ e $ & $ f $ & $ g $ & $ \sum $ \\ 
+		\hline 
+		$ \alpha $ & 8,97 & 58,5 & 69,81 & 121,29 & 108,81 & 22,62 & 390 \\ 
+		\hline 
+		$ \beta $ & 5,497 & 35,85 & 42,781 & 74,329 & 66,681 & 13,862 & 239 \\ 
+		\hline 
+		$ \gamma $ & 8,533 & 55,65 & 66,409 & 115,381 & 103,509 & 21,518 & 371 
+		\\ 
+		\hline 
+		$ \sum $ & 23 & 150 & 179 & 311 & 279 & 58 & 1.000 \\ 
+		\hline 
+	\end{tabular} 
+\end{center}
 
 \subsection{Visualisierung}
 
