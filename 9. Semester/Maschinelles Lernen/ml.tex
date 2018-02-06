@@ -1027,7 +1027,7 @@
 	\item Klasse $ k $ wird gewählt, falls $ k = \arg \max_i P(C_i \mid x) $
 \end{itemize}
 
-\subsubsection{Univariater Fall}
+\subsubsection{Satz von Bayes – im univariaten Fall}
 
 \begin{itemize}
 	\item Die Dichten der Verteilungen $ P(C_i) $ und $ p(x \mid C_i) $ müssen 
@@ -1120,6 +1120,196 @@
 	\item Mit der log-Likelihood Methode ergibt sich:
 	\[ \sum_{i=1}^{N} \log  \sum_{j=1}^{n} \pi_j \mathcal{N} (x_i \mid \mu_j, 
 	\sigma_j) \rightarrow \max \]
+\end{itemize}
+
+\paragraph{Wenn die Daten nicht einer bekannten Verteilung folgen?}
+
+\begin{itemize}
+	\item Dichte basierend auf Histogramm
+	\item Die Punkte stammen aus einer unbekannten Verteilung mit Dichte $ 
+	p(\cdot) $
+	\item Die Punkte sind im 1-dimensionalen Euklidischen Raum eingebettet
+	\item $ p(x) $ soll geschätzt werden. Dazu wird ein kleines Interval $ R $ 
+	um $ x $ betrachtet.
+	\item Bilde $ P = \int_R p(x) dx $ und ziehe Stichprobe der Größe $ N $ aus 
+	$ p(x) $
+	\item Jeder Punkt hat eine Wahrscheinlichkeit von $ P $ in $ R $ zu fallen.
+	\item Die Zahl $ K $ der Punkte, die in $ R $ fallen, ist binomialverteilt
+	\[ Bin(K \mid N,P) = \binom{N}{K} p^k (1-P)^{N-K} \]
+	\item Die Varianz und der Erwartungswert der Binomialverteilung sind 
+	bekannt:
+	\begin{itemize}
+		\item Der erwartete \underline{Anteil} der Punkte, die in $ R $ fallen, 
+		ist $ P $.
+		\item Für die Varianz um \underline{diesen} Mittelwert $ 
+		\frac{P(1-P)}{N} $
+	\end{itemize}
+	\item Dadurch kann festgestellt werden, dass:
+	\begin{itemize}
+		\item Für große $ N $ hat die Verteilung einen scharfen Peak um das 
+		erwartete $ P $ und damit $ K \approx NP $.
+		\item Wird das Interval ausreichend klein gemacht, so dass $ p(x) $ 
+		annähernd konstant in $ R $ ist, so erhält man $ P \approx p(x) V $ mit 
+		$ V $ ist ''Volumen'' von $ R $.
+		\item Kombinieren beider Beobachtungen führt zu:
+		\[ p(x) = \frac{K}{NV} \]
+	\end{itemize}
+	\item $ K $ kann nun fixiert und $ V $ aus den Daten ermittelt werden ($ k 
+	$-NN)
+	\item Alternativ kann $ V $ fixiert und $ K $ aus den Daten ermittelt 
+	werden (Kernel-Technik).
+	\item Betrachte zunächst die $ k $-NN Methode:
+	\begin{itemize}
+		\item $ p(x) $ soll an $ x $ geschätzt werden. Wähle $ K $ fest, aber 
+		beliebig.
+		\item Lege Interval um $ x $ und lasse es wachsen, bis es genau $ K $ 
+		Punkte umfasst.
+		\item $ p(x) = \frac{K}{NV} $ mit $ N $ der Stichproben
+	\end{itemize}
+	\item Das Kernelverfahren verwendet eine Kernel-Funktion:
+	\[ \kappa(u) = \begin{cases}
+		1 & |u| \leq \frac{1}{2} \\
+		0 & \text{sonst}
+	\end{cases} \]
+	\item $ \kappa $ repräsentiert ein Einheitsintervall (Parzen-Fenster).
+	\item $ \kappa(\frac{x - x_i}{h}) $ ist 1, falls der Punkt $ x_i $ in einem 
+	Interval der Länge $ h $ und Mitte $ x $ liegt.
+	\item Die Gesamtanzahl ist somit
+	\[ K_x = \sum_{i=1}^{N} \kappa (\frac{x - x_i}{h}) \]
+	\item Es ist bereits bekannt, dass $ p(x) = \frac{K}{NV} $ und es ergibt 
+	sich damit
+	\[ p(x) = \frac{1}{Nh} \sum_{t=1}^{N} \kappa (\frac{x - x_i}{h}) \]
+	mit $ V=h $.
+	\item Es kann auch ein Gauß-Kern verwendet werden, um zu einer stetigen 
+	Dichte zu gelangen:
+	\[ p(x) = \frac{1}{N} \sum_{t=1}^{N} \frac{1}{\sqrt{w \pi h^2}} \cdot
+	\mathrm{e}^{\frac{\norm{x-x_i}^2}{2h^2}} \]
+	\item Dabei repräsentiert $ h $ die Standardabweichung der Gauß-Komponente.
+\end{itemize}
+
+\subsubsection{Satz von Bayes – im multivariaten Fall}
+
+\begin{itemize}
+	\item Es bleibt vieles beim Alten:
+	\[ P(C \mid x) = \frac{P(C) p(x \mid C)}{p(x)} \]
+	\item Die Dichten $ p(x \mid C) $ und $ p(x) $ sind nun aber multivariat.
+	\begin{itemize}
+		\item Der ML Schätzer funktioniert wie gewohnt; es gibt jedoch mehr 
+		Parameter zu schätzen.
+		\item Nach wie vor können Mixtures, z.B. Mixture of Gaussians verwendet 
+		werden.
+	\end{itemize}
+\end{itemize}
+
+\paragraph{Multivariate Normalverteilung}
+
+\begin{itemize}
+	\item $ p(x \mid \sum, \mu) = \frac{1}{(2\pi)^{\frac{d}{2}} 
+	|\sum|^{\frac{1}{2}}} $
+	\item Mit den ML Schätzern:
+	\begin{align*}
+		m_j &= \frac{\sum_{i=1}^{N} x_{ij}}{N} \\
+		s_{ij} &= \frac{\sum_{k=1}^{N} (x_{ki} - m_i)(x_{kj} - m_j)}{N}
+	\end{align*}
+	\item Die Kernel- und $ k $-NN Schätzer müssen nur geringfügig angepasst 
+	werden:
+	\begin{itemize}
+		\item Anstatt eines Intervalls, wird eine Hyperkugel um $ x $ gelegt; 
+		die Kugel wächst, bis sie genau $ K $ Daten enthält.
+		\item Im Fall des Kernels repräsentiert das Parzen Fenster nun kein 
+		Interval mehr, sondern eine Hyperkugel.
+	\end{itemize}
+	\item Es können jedoch auch vereinfachende Annahmen gemacht werden (Naive 
+	Bayes).
+	\item Eine (naive) Möglichkeit zur Vereinfachung ist anzunehmen, dass für 
+	jede Klasse $ C_k $ die Verteilungen der individuellen Attribute bedingt 
+	unabhängig sind; dann gilt:
+	\[ p(x_i \mid C_k) = \prod_{1 \leq l \leq d} p(x_{il} \mid C_k) \]
+	\item Somit ergibt sich final:
+	\[ P(C_k \mid x_i) = \frac{P(C_k) \prod_{l=1}^{d} p(x_{il} \mid 
+	C_k)}{\sum_j P(C_j) \prod_{l=1}^{d} p(x_{il} \mid C_j)} \]
+\end{itemize}
+
+\subsection{Gradientenabstieg}
+
+\begin{itemize}
+	\item Das Mixture of Gaussians Modell konnte nicht analytisch gelöst werden.
+	\item Es kann jedoch der Gradient berechnet werden.
+	\item \underline{Annahme}: $ f(x) $ ist zu minimieren und der Gradient $ 
+	\nabla f(f) $ ist bekannt.
+\end{itemize}
+
+\subsection{Exponentielle Verteilungen}
+
+\begin{itemize}
+	\item Gegeben durch
+	\[ p(x \mid \eta) = h(x) g(\eta) \mathrm{e}^{\eta^T u(x)} \]
+	mit
+	\[ g(\eta) \int h(x) \mathrm{e}^{\eta^T u(x)} dx = 1 \]
+	\item $ x $ kann Skalar oder Vektor sein (sowohl diskret oder 
+	kontinuierlich).
+	\item $ \eta $ sind sogenannte \textit{natürliche} Parameter der Verteilung.
+	\item $ u(x) $ ist eine Funktion von $ x $.
+\end{itemize}
+
+\subsubsection{Bernoulli Verteilung}
+
+\begin{itemize}
+	\item Ist bekanntlich gegeben durch:
+	\[ p(x \mid \mu) = \mu^x (1-\mu)^{1-x} \]
+	\item Rechts wird eine Potenz des Logarithmus verwendet
+	\begin{align*}
+		p(x \mid \mu) &= \mathrm{e}^{x \ln \mu + (1-x) \ln (1-\mu)} \\
+		&= (1-\mu) \mathrm{e}^{\ln(\frac{\mu}{1-\mu})x}
+	\end{align*}
+	und erkennen, dass
+	\begin{align*}
+		\eta &= \ln(\frac{\mu}{1-\mu}) \\
+		u(x) &= x \\
+		h(x) &= 1 \\
+		g(\eta) &= \sigma(-\eta)
+	\end{align*}
+	mit
+	\[ \sigma(\eta) = (1+\mathrm{e}^{-\eta})^{-1} \]
+	\item Damit gilt:
+	\[ p(x \mid \mu) = \sigma (-\eta) \mathrm{e}^{\eta x} \]
+\end{itemize}
+
+\subsubsection{Normalverteilung}
+
+\begin{itemize}
+	\item Ist bekanntlich gegeben durch:
+	\begin{align*}
+		p(x \mid \mu, \sigma^2) &= \frac{1}{\sqrt{2 \pi \sigma^2}} 
+		\mathrm{e}^{\frac{1}{2 \sigma^2} (x-\mu)^2} \\
+		&=\frac{1}{\sqrt{2 \pi \sigma^2} \mathrm{e}^{(-\frac{1}{2 \sigma^2} + 
+		\frac{\mu}{\sigma^2}x \frac{1}{2 \sigma^2} \mu^2)}}
+	\end{align*}
+	\item Betrachte sofort das Ergebnis mit $ \eta = (\eta_1, \eta_2) $ und
+	\begin{align*}
+		\eta &= \binom{\frac{\mu}{\sigma^2}}{\frac{-1}{2 \sigma^2}} \\
+		u(x) &= \binom{x}{x^2} \\
+		h(x) &= (2\pi)^{- \frac{1}{2}} \\
+		g(\eta) &= (-2 \eta_2)^{\frac{1}{2}} \mathrm{e}^{\frac{\eta_1^2}{4 
+		\eta_2}}
+	\end{align*}
+\end{itemize}
+
+\subsection{Ausreichende Statistik}
+
+\begin{itemize}
+	\item Es kann auch der Likelihood berechnet werden:
+	\[ p(X \mid \eta) = (\prod_{i=1}^{N} h(x_i)) g(\eta)^N \mathrm{e}^{\eta^T} 
+	\sum_{i=1}^{N} u(x_i) \]
+	\item Setzen des Gradienten von $ \ln (p(X \mid \eta)) $ btgl. $ \eta $ 
+	gleich Null liefert:
+	\[ - \nabla \ln g(\eta_{ML}) = \frac{1}{N} \sum_{i=1}^{N} u(x_i) \]
+	\item Für die Bernoulli-Verteilung genügt es die Summe der $ x $ zu 
+	speichern.
+	\item Für die Normalverteilung wird die Summe von $ x $ und $ x^2 $ 
+	benötigt.
+	\item Für $ N \rightarrow \inf $ ergibt sich $ E(u(x)) $ und $ \eta_{ML} $ 
+	geht in das wahre $ \eta $ über.
 \end{itemize}
 
 \section{Clustering}
